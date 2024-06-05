@@ -4,7 +4,7 @@ import fs from 'fs';
 import { revalidateTag } from 'next/cache';
 import { db } from '@/lib/db';
 import { eq } from 'drizzle-orm';
-import { Facility, Category } from '@/lib/db/schema';
+import { Facility, Category } from '../../../../../../packages/db/src/schema/schema';
 
 export async function uploadImage(id: number, formData: FormData) {
   const file = formData.get('file') as File;

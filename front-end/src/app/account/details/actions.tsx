@@ -2,7 +2,7 @@
 
 import { db } from '@/lib/db';
 import { eq } from 'drizzle-orm';
-import { User } from '@/lib/db/schema';
+import { User } from '../../../../../packages/db/src/schema/schema';
 import { revalidatePath, revalidateTag } from 'next/cache';
 
 export async function Update(id: string, formData: FormData) {

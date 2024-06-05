@@ -1,7 +1,7 @@
 'use server';
 import { db } from '@/lib/db';
 import { eq } from 'drizzle-orm';
-import { ReservationFees } from '@/lib/db/schema';
+import { ReservationFees } from '../../../../packages/db/src/schema/schema';
 import { revalidateTag } from 'next/cache';
 
 export default async function removeFee(feeId: any) {

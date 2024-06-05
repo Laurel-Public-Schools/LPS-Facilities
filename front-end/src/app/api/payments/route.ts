@@ -4,7 +4,7 @@ import { Client } from 'square';
 import generateId from '@/functions/calculations/generate-id';
 import { db } from '@/lib/db';
 import { eq } from 'drizzle-orm';
-import { Reservation } from '@/lib/db/schema';
+import { Reservation } from '../../../../../packages/db/src/schema/schema';
 import { revalidateTag } from 'next/cache';
 
 const { checkoutApi } = new Client({

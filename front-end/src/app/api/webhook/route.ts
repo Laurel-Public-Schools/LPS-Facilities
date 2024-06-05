@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { eq, and, gte, or, sql } from 'drizzle-orm';
 import { revalidateTag } from 'next/cache';
-import { Reservation } from '@/lib/db/schema';
+import { Reservation } from '../../../../../packages/db/src/schema/schema';
 
 export async function POST(req: NextRequest) {
   try {

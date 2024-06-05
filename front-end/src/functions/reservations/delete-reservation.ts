@@ -1,6 +1,6 @@
 'use server';
 import { db } from '@/lib/db';
-import { Reservation } from '@/lib/db/schema';
+import { Reservation } from '../../../../packages/db/src/schema/schema';
 import { eq } from 'drizzle-orm';
 import { revalidatePath, revalidateTag } from 'next/cache';
 

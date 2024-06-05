@@ -10,12 +10,12 @@ import { FacilityQuery } from '@/lib/db/queries/facility';
 
 import type { z } from 'zod';
 import type {
-  NewReservation} from '@/lib/db/schema';
+  NewReservation} from '../../../../packages/db/src/schema/schema';
 import {
   Events,
   Reservation,
   ReservationDate,
-} from '@/lib/db/schema';
+} from '../../../../packages/db/src/schema/schema';
 import { db } from '@/lib/db';
 import { revalidateTag } from 'next/cache';
 import { newReservationEmail } from '../emails/reservationEmail';

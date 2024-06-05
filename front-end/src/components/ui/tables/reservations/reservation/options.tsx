@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import type { SelectFacility as Facility } from '@/lib/db/schema';
+import type { SelectFacility as Facility } from '../../../../../../../packages/db/src/schema/schema';
 import { Button } from '@/components/ui/buttons';
 import { useToast } from '@/components/ui/use-toast';
 import { updateEmail } from '@/functions/emails';

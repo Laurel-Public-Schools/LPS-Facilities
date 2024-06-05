@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/lib/db';
-import { User } from '@/lib/db/schema';
+import { User } from '../../../../packages/db/src/schema/schema';
 import { eq } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
 import jwt, { Secret } from 'jsonwebtoken';

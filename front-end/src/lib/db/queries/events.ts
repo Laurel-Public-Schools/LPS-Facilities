@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { Events, Facility } from '@/lib/db/schema';
+import { Events, Facility } from '../../../../../packages/db/src/schema/schema';
 import { eq, sql, and, gte, lt, asc } from 'drizzle-orm';
 
 export const EventsQuery = db.query.Events.findMany({

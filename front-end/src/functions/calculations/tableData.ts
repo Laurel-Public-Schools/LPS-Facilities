@@ -1,5 +1,5 @@
 'use server';
-import { Category, SelectFacility } from '@/lib/db/schema';
+import { Category, SelectFacility } from '../../../../packages/db/src/schema/schema';
 import type {
   Reservation,
   TableReservation,

@@ -1,6 +1,6 @@
 'use server';
 import { db } from '@/lib/db';
-import { Reservation } from '@/lib/db/schema';
+import { Reservation } from '../../../../packages/db/src/schema/schema';
 import { eq, sql } from 'drizzle-orm';
 
 export default async function PiP(id: any) {

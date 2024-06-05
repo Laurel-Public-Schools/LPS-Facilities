@@ -6,7 +6,7 @@ import reservationEmail from '@/functions/emails/reservationEmail';
 import CreateGoogleEvents from '../google/multipleDates';
 import { db } from '@/lib/db';
 import { eq, sql, and } from 'drizzle-orm';
-import { Reservation, ReservationDate, User } from '@/lib/db/schema';
+import { Reservation, ReservationDate, User } from '../../../../packages/db/src/schema/schema';
 
 export async function approveReservation(id: number) {
   const response = await CreateGoogleEvents(id);

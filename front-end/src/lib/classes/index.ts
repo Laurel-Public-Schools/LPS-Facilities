@@ -1,4 +1,4 @@
-import type {SelectReservation, SelectReservationDate, SelectReservationFees, SelectFacility, SelectCategory, SelectUser} from '../db/schema';
+import type {SelectReservation, SelectReservationDate, SelectReservationFees, SelectFacility, SelectCategory, SelectUser} from '../../../../packages/db/src/schema/schema';
 
 export type ReservationClassType = SelectReservation & {
   Facility?: SelectFacility;

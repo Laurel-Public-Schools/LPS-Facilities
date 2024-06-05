@@ -2,8 +2,8 @@ import type { NextRequest} from 'next/server';
 import { NextResponse } from 'next/server';
 import { AllEventsQuery } from '@/lib/db/queries/events';
 import { db } from '@/lib/db';
-import { Events  } from '@/lib/db/schema';
-import type {InsertEvents} from '@/lib/db/schema';
+import { Events  } from '../../../../../packages/db/src/schema/schema';
+import type {InsertEvents} from '../../../../../packages/db/src/schema/schema';
 import { revalidateTag } from 'next/cache';
 import { eq } from 'drizzle-orm';
 

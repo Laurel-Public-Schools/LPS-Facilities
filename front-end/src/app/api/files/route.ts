@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { Client } from 'minio';
 import { revalidatePath } from 'next/cache';
-import { Reservation } from '@/lib/db/schema';
+import { Reservation } from '../../../../../packages/db/src/schema/schema';
 
 const minioClient = new Client({
   endPoint: 's3.laurel.k12.mt.us',

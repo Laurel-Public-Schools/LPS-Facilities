@@ -2,7 +2,7 @@
 import path from 'path';
 import fs from 'fs';
 import { db } from '@/lib/db';
-import { Facility, Category } from '@/lib/db/schema';
+import { Facility, Category } from '../../../../../../packages/db/src/schema/schema';
 import { CategoryDescriptions } from '@/lib/types/constants';
 import { revalidateTag } from 'next/cache';
 

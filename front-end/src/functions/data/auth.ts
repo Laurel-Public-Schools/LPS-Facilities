@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { authOptions } from '@/lib/auth';
 import { getServerSession } from 'next-auth/next';
-import { SelectKey_User_role } from '@/lib/db/schema';
+import { SelectKey_User_role } from '../../../../packages/db/src/schema/schema';
 
 interface User {
   id: string;

@@ -1,7 +1,7 @@
 'use server';
 import { db } from '@/lib/db';
-import { User  } from '@/lib/db/schema';
-import type {InsertUser} from '@/lib/db/schema';
+import { User  } from '../../../../packages/db/src/schema/schema';
+import type {InsertUser} from '../../../../packages/db/src/schema/schema';
 import bcrypt from 'bcryptjs';
 import { revalidateTag } from 'next/cache';
 import generateId from '@/functions/calculations/generate-id';

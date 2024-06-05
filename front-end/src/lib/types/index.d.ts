@@ -6,7 +6,7 @@ import type {
   ReservationFees,
   SelectEvents,
   SelectFacility,
-} from '../db/schema';
+} from '../../../../packages/db/src/schema/schema';
 import type { Path, UseFormRegister } from 'react-hook-form';
 import type { $Enums, Category } from '@prisma/client';
 

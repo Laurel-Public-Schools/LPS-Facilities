@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "jsx": "preserve",
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./src/*"]
     },
     "plugins": [
       {
@@ -19,7 +19,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/template.tsx"
+    "src/app/template.tsx",
+    "../packages/db/src/schema/schema.ts"
   ],
   "exclude": ["node_modules"]
 }

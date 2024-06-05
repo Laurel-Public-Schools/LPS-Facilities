@@ -3,7 +3,7 @@
 import React from 'react';
 import { Separator } from '@/components/ui/separator';
 import { JiraModal } from '@/components/forms';
-import type { SelectFacility as Facility } from '@/lib/db/schema';
+import type { SelectFacility as Facility } from '../../../../../packages/db/src/schema/schema';
 
 import ReservationOptions from '@/components/ui/tables/reservations/reservation/options';
 

@@ -3,7 +3,7 @@
 import { revalidateTag } from 'next/cache';
 import { db } from '@/lib/db';
 import { eq } from 'drizzle-orm';
-import { Reservation, ReservationDate } from '@/lib/db/schema';
+import { Reservation, ReservationDate } from '../../../../packages/db/src/schema/schema';
 import { GetReservationbyID } from '@/lib/db/queries/reservations';
 import { CreateGoogleEvent } from '../google/singleDate';
 

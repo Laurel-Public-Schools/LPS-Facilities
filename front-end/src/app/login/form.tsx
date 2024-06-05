@@ -1,12 +1,13 @@
-'use client';
+"use client"
 
-import { signIn } from 'next-auth/react';
+import { signIn } from '@local/auth';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/buttons';
 import { Input } from '@/components/ui/input';
 
 async function Login(formData: FormData) {
+
   try {
     signIn('credentials', {
       email: formData.get('email') as string,

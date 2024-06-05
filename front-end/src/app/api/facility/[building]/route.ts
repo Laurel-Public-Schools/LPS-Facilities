@@ -3,7 +3,7 @@ import { serializeJSON } from '@/utils/serializeJSON';
 import { BuildingQuery } from '@/lib/db/queries/facility';
 import { db } from '@/lib/db';
 import { like } from 'drizzle-orm';
-import { Facility } from '@/lib/db/schema';
+import { Facility } from '../../../../../../packages/db/src/schema/schema';
 
 export async function GET(
   request: Request,

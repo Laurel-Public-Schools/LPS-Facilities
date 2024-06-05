@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { Facility, Reservation, Events } from '@/lib/db/schema';
+import { Facility, Reservation, Events } from '../../../../../packages/db/src/schema/schema';
 import { eq, and, gte, or, sql, like } from 'drizzle-orm';
 
 const today = new Date().toISOString();
