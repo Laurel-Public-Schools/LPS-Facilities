@@ -12,14 +12,14 @@ export default function IsAdminNav({
   const { data: session, status } = useSession();
 
   if (
-    session?.user.roles === 'ADMIN_ADMIN' ||
-    session?.user.roles === 'CAL_ADMIN' ||
-    session?.user.roles === 'GR_ADMIN' ||
-    session?.user.roles === 'HS_ADMIN' ||
-    session?.user.roles === 'LMS_ADMIN' ||
-    session?.user.roles === 'WE_ADMIN' ||
-    session?.user.roles === 'SO_ADMIN' ||
-    session?.user.roles === 'SUP_ADMIN'
+    session?.user.role === 'ADMIN_ADMIN' ||
+    session?.user.role === 'CAL_ADMIN' ||
+    session?.user.role === 'GR_ADMIN' ||
+    session?.user.role === 'HS_ADMIN' ||
+    session?.user.role === 'LMS_ADMIN' ||
+    session?.user.role === 'WE_ADMIN' ||
+    session?.user.role === 'SO_ADMIN' ||
+    session?.user.role === 'SUP_ADMIN'
   ) {
     return <> {children} </>;
   } else {

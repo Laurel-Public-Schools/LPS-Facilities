@@ -52,7 +52,12 @@ function dumbAdapter(
       return pgTable(name, columns, extraConfig);
   }
 }
-export const adapter = DrizzleAdapter(db) as Adapter;
+export const adapter = DrizzleAdapter(
+  db,
+  // @ts-ignore - this is a hack to make the adapter less picky about column names
+  dumbAdapter as PgTableFn<undefined>,
+) as Adapter;
+
 
 const {
   handlers: { GET, POST },
@@ -60,11 +65,9 @@ const {
   signIn,
   signOut,
 } = NextAuth({
-  secret: env.NEXTAUTH_SECRET,
+
   adapter: adapter,
-  session: {
-    strategy: "jwt",
-  },
+
   ...authConfig,
 });
 

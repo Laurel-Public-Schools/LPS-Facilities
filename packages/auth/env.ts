@@ -9,6 +9,7 @@ export const env = createEnv({
     AZURE_AD_CLIENT_SECRET: z.string().min(1),
     AZURE_TENANT_ID: z.string().min(1),
     DATABASE_URL: z.string().min(1),
+
   },
   client: {},
   experimental__runtimeEnv: {},

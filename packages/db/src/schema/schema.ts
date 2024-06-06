@@ -79,7 +79,7 @@ export const User_role = pgEnum('User_role', [
 export type SelectKey_User_role = typeof User_role;
 
 export const facilities_db = pgSchema('facilities_db');
-
+export const pgTable = pgTableCreator(name => `facilities_db_${name}`)
 export const ReservationFees = facilities_db.table(
   'ReservationFees',
   {

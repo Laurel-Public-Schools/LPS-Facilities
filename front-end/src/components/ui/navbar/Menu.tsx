@@ -21,7 +21,7 @@ import Link from 'next/link';
 
 export function AuthenticatedMenu() {
   const { data: session, status } = useSession();
-
+  console.log('session: ',session)
   if (status === 'loading') {
     return (
       <NavigationMenuItem>

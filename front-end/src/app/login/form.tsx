@@ -1,34 +1,42 @@
-"use client"
 
+import { isRedirectError } from "next/dist/client/components/redirect";
 import { signIn } from '@local/auth';
 import Link from 'next/link';
-
+import { AuthError } from 'next-auth';
 import { Button } from '@/components/ui/buttons';
 import { Input } from '@/components/ui/input';
 
 async function Login(formData: FormData) {
+  "use server"
 
-  try {
-    signIn('credentials', {
+   await signIn('credentials', {
       email: formData.get('email') as string,
       password: formData.get('password') as string,
-      callbackUrl: '/',
+      redirectTo: '/',
     });
-  } catch (error) {
-    alert('something went wrong');
-  }
+
 }
 
 export default function LoginForm() {
+
   return (
     <div className="drop-shadow-md shadow-lg p-4 bg-gray-100">
+      <form action={async () => {
+        "use server"
+        await signIn('azure-ad', {
+          redirect: true,
+          
+        })
+      }}
+      >
       <Button
-        onClick={() => signIn('azure-ad', { callbackUrl: '/' })}
+        type = "submit"
         size="lg"
         className="w-full shadow"
       >
         Use District Staff Account
       </Button>
+      </form>
       <form action={Login}>
         <div className="mb-6">
           <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">

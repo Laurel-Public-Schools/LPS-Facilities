@@ -28,6 +28,7 @@ const blockedCountries = [
 export default middleware((req) => {
     const response = NextResponse.next();
     const token = req.auth;
+    
 
     /**
      * Geo IP Blocking for specific countries.
@@ -36,10 +37,10 @@ export default middleware((req) => {
      * @param {string} country - The country code of the req.
      * @param {string[]} blockedCountries - An array of country codes to block.
      */
-    // const country = req.geo?.country;
-    // if (country && blockedCountries.includes(country)) {
-    //   return NextResponse.redirect(new URL('/404', req.url));
-    // }
+    const country = req.geo?.country;
+    if (country && blockedCountries.includes(country)) {
+      return NextResponse.redirect(new URL('/404', req.url));
+    }
 
     /**
      * A path was changed during some refactoring, and this
@@ -58,30 +59,31 @@ export default middleware((req) => {
     }
 
     if (req.nextUrl.pathname.startsWith('/api/users') && token) {
-      if (token.user.roles === 'USER' || token.user.roles === null) {
+      if (token.user.role === 'USER' || token.user.role === null) {
         return new Response('Unauthorized', { status: 401 });
       }
     }
 
     // Redirects to the 404 page if a user tries to access the admin dashboard without being an admin.
     if (req.nextUrl.pathname.startsWith('/admin') && token) {
-      if (token.user.roles === 'USER' || token.user.roles === null) {
+      if (token.user.role === 'USER' || token.user.role === null) {
         return NextResponse.redirect(new URL('/404', req.url));
       }
     }
-  })
+  }
+)
 
 
 // The matcher property is used to specify which paths the middleware should run on.
 export const config = {
   matcher: [
-    {
-      source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
-      missing: [
-        { type: "header", key: "next-router-prefetch" },
-        { type: "header", key: "purpose", value: "prefetch" },
-      ],
-    },
+    // {
+    //   source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    //   missing: [
+    //     { type: "header", key: "next-router-prefetch" },
+    //     { type: "header", key: "purpose", value: "prefetch" },
+    //   ],
+    // },
     '/api/account',
     '/api/users',
     '/api/requests',

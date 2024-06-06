@@ -2,14 +2,16 @@ import type { DefaultSession, NextAuthConfig } from "next-auth";
 import azureAd from "next-auth/providers/azure-ad";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from 'bcryptjs';
-import GetUser from "./credentialsFunc";
+
 import { env } from "../env";
+import { db, schema, eq } from "@local/db";
+
 
 declare module "next-auth" {
   interface Session {
     user: {
       id: string;
-      roles: "SUP_ADMIN" | "WE_ADMIN" | "SO_ADMIN" | "LHS_ADMIN" | "LMS_ADMIN" |"GR_ADMIN" | "USER" | "CAL_ADMIN" | "ADMIN_ADMIN"
+      role: "SUP_ADMIN" | "WE_ADMIN" | "SO_ADMIN" | "LHS_ADMIN" | "LMS_ADMIN" |"GR_ADMIN" | "USER" | "CAL_ADMIN" | "ADMIN_ADMIN"
     } & DefaultSession["user"];
   }
   interface JWT {
@@ -18,12 +20,13 @@ declare module "next-auth" {
   }
   interface User {
     id?: string | undefined;
-    roles: "SUP_ADMIN" | "WE_ADMIN" | "SO_ADMIN" | "LHS_ADMIN" | "LMS_ADMIN" |"GR_ADMIN" | "USER" | "CAL_ADMIN" | "ADMIN_ADMIN"
+    role: "SUP_ADMIN" | "WE_ADMIN" | "SO_ADMIN" | "LHS_ADMIN" | "LMS_ADMIN" |"GR_ADMIN" | "USER" | "CAL_ADMIN" | "ADMIN_ADMIN"
   }
 }
 
 export default {
   providers: [
+    
     CredentialsProvider({
       name: 'Non LPS Staff Login',
       credentials: {
@@ -36,23 +39,30 @@ export default {
       },
       async authorize(credentials: any) {
         
-        const user = await GetUser(credentials.email);
-        
-        if (
-          user &&
-          (await bcrypt.compare(credentials.password, user.password!))
-        ) {
-          return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            roles: user.role,
-          };
-        } else {
-          return null;
-        }
+        const [user] = await db.select().from(schema.User).where(eq(schema.User.email, credentials.email));
+        console.log(user)
+        if (user)
+          {
+            const valid = await bcrypt.compare(credentials.password, user.password!);
+            console.log(valid)
+            if (valid) {
+              return {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+              };
+            } else {
+              console.log('bad password')
+              return null;
+            }
+          } else {
+            console.log('bad email')
+            return null;
+          }
       },
     }),
+    
     azureAd({
       clientId: env.AZURE_AD_CLIENT_ID,
       clientSecret: env.AZURE_AD_CLIENT_SECRET,
@@ -62,12 +72,17 @@ export default {
           id: profile.oid,
           name: profile.name,
           email: profile.email,
-          roles: profile.roles[0] || "USER",
+          role: profile.roles[0] || "USER",
         };
       },
       allowDangerousEmailAccountLinking: true,
     }),
   ],
+  session: {
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  secret: env.NEXTAUTH_SECRET,
 
   trustHost: true,
   pages: {
@@ -75,29 +90,32 @@ export default {
   },
   callbacks: {
     async redirect({ url, baseUrl }) {
+      console.log('baseurl: ',baseUrl)
+      console.log('url', url)
       if (url.startsWith("/")) return `${baseUrl}${url}`;
       else if (new URL(url).origin === baseUrl) return url;
       return baseUrl;
     },
+    async session({ session,  token }) {
+      
+      if (token?.data?.role && session.user){
+        session.user.role = token.data.role;
+      }
+      return session;
+    },
     jwt({ token, account, user}) {
       if (user) {
-        token.id = user.id as string;
-        token.email = user.email;
-        token.name = user.name;
-        token.roles = user.roles;
-        token.accessToken = account?.accessToken;
+        token.data = user
       }
       return token;
     },
-
-    async session({ session, token, user }) {
-      //@ts-expect-error - authjs types are wrong
-      session.user.roles = token.role ? token.role : 'USER';
-      //@ts-expect-error - authjs types are wrong
-      session.user.id = token.id;
-      //@ts-expect-error - authjs types are wrong
-      session.accessToken = token.accessToken;
-      return session;
+    async authorized({ request, auth}) {
+      if (auth) {
+        return true;
+      } else {
+        return false;
+      }
     },
+
   },
 } satisfies NextAuthConfig;
