@@ -4,30 +4,13 @@ import IsUserReserv from '@/components/contexts/isUserReserv';
 import { headers } from 'next/headers';
 import { Separator } from '@/components/ui/separator';
 import type {SideBarType} from '@/lib/types/constants';
+import type { ReservationClassType } from '@/lib/classes';
 import { ReservationClass } from '@/lib/classes';
 import AdminPanel from './adminButtons';
-import { getCurrentUser } from '@/functions/data/auth';
+import { IsAdmin } from '@/functions/other/helpers';
 import { Suspense } from 'react';
 
-async function getReservation(id: number) {
-  const headersInstance = headers();
-  const auth = headersInstance.get('Cookie')!;
 
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_HOST + `/api/reservation/${id}`,
-    {
-      headers: {
-        cookie: auth,
-      },
-      next: {
-        tags: ['reservations'],
-      },
-    }
-  );
-  const data = await res.json();
-  const reservation = new ReservationClass(data);
-  return reservation;
-}
 
 export default async function reservationLayout({
   children,
@@ -36,10 +19,10 @@ export default async function reservationLayout({
   children: React.ReactNode;
   params: { id: number };
 }) {
-  const session = await getCurrentUser();
-  const reservation = await getReservation(params.id);
+  const [data, isAdmin] = await getData(params.id);
+  const reservation = new ReservationClass(data);
   const { id, eventName, Facility } = reservation;
-
+  
   const reservationItems: SideBarType = [
     {
       title: 'Summary',
@@ -75,7 +58,7 @@ export default async function reservationLayout({
             </h2>
             <h3 className="text-muted-foreground">{reservation?.range()}</h3>
             <Suspense fallback={<></>}>
-              {session.isAdmin() && (
+              {isAdmin && (
                 <div className="p-4 sm:p-0 self-start sm:self-end sm:right-0 float-right relative">
                   <AdminPanel id={id} facility={reservation.Facility} />
                 </div>
@@ -93,4 +76,26 @@ export default async function reservationLayout({
       </div>
     </IsUserReserv>
   );
+}
+
+
+async function getData(id: number) {
+  const headersInstance = headers();
+  const auth = headersInstance.get('Cookie')!;
+
+  const res: ReservationClassType = await fetch(
+    process.env.NEXT_PUBLIC_HOST + `/api/reservation/${id}`,
+    {
+      headers: {
+        cookie: auth,
+      },
+      next: {
+        tags: ['reservations'],
+      },
+    }
+  ).then((res) => res.json())
+;
+  const isAdmin = IsAdmin()
+  
+  return Promise.all([res, isAdmin])
 }

@@ -12,7 +12,7 @@ export const columns: ColumnDef<TableFacility>[] = [
     accessorKey: 'imagePath',
     header: 'Image',
     cell: ({ row }) => {
-      const imagePath = row.getValue('imagePath');
+      const imagePath = row.getValue('imagePath') as string;
       return (
         <>
           {imagePath ? (
@@ -72,7 +72,7 @@ export const columns: ColumnDef<TableFacility>[] = [
     accessorKey: 'Category',
     header: 'Category Prices',
     cell: ({ row }) => {
-      const prices = row.getValue('Category');
+      const prices = row.getValue('Category') as number[];
       return (
         <>
           {prices?.map((price, index) => <div key={index}>${price}/hr</div>)}

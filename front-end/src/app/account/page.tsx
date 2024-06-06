@@ -2,28 +2,28 @@ import { DataTable } from '@/components/ui/tables';
 import { columns } from './columns';
 import React from 'react';
 import type { Reservation} from '@/lib/types';
-import { TableReservation } from '@/lib/types';
+
 import { userReservations } from '@/functions/calculations/tableData';
 
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { Separator } from '@/components/ui/separator';
-import { getServerSession } from 'next-auth/next';
+import {auth} from '@local/auth'
 
 import { Suspense } from 'react';
 import { GetUserById } from '@/lib/db/queries/users';
-import { authOptions } from '@/lib/auth';
+
 
 const baseUrl = process.env.NEXT_PUBLIC_HOST;
 
 async function getData() {
   try {
-    const userSession = await getServerSession(authOptions);
+    const userSession = await auth();
     if (!userSession) {
       return [];
     } else if (userSession) {
       const user = await GetUserById.execute({ id: userSession.user.id });
-      //@ts-expect-error
-      const reservations: Reservation[] = user?.Reservation;
+      //@ts-expect-error - bad typing #TODO fix
+      const reservations: Reservation[]  = user?.Reservation!;
       if (!reservations) {
         return [];
       }

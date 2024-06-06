@@ -69,7 +69,7 @@ export default function ReservationForm() {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const hideModal = () => setIsVisible(false);
   const { data: session } = useSession();
-  const email = session?.user?.email;
+  const email = session?.user?.email!;
   let selectedFacility = 0;
   const router = useRouter();
   const { toast } = useToast();
@@ -97,7 +97,7 @@ export default function ReservationForm() {
     rules: { required: true },
   });
 
-  //@ts-expect-error
+  //@ts-expect-error - no type in react-hook-form
   const handleAddDate = useHandleAddDate(append);
   const watchTechSupport = form.watch('techSupport', false);
   const watchDoorAccess = form.watch('doorAccess', false);

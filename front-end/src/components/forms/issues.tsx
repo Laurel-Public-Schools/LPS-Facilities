@@ -7,7 +7,7 @@ import { Button, SubmitButton } from '../ui/buttons';
 import { Textarea } from '../ui/textarea';
 import { Label } from '@/components/ui/label';
 import { submitIssue } from './actions';
-//@ts-expect-error
+//@ts-expect-error - no type in react
 import { useFormState } from 'react-dom';
 import {
   Dialog,
@@ -78,6 +78,7 @@ const initialState = {
 };
 
 function Form({ className }: React.ComponentProps<'form'>) {
+  //eslint-disable-next-line
   const [state, formAction] = useFormState(submitIssue, initialState);
   return (
     <form

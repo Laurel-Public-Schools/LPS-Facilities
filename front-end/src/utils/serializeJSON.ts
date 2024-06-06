@@ -1,9 +1,9 @@
-export const serializeJSON = (data) => {
+export function serializeJSON<T>(data:T) {
   const jsonString = JSON.stringify(data, (key, value) =>
     typeof value === 'bigint' ? Number(value) : value
   );
 
-  const jsonObject = JSON.parse(jsonString);
+  const jsonObject:T = JSON.parse(jsonString);
 
   return jsonObject;
 };

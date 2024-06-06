@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import React from 'react';
 import ResetForm from './form';
 
-async function decodeToken(token: string) {
+function decodeToken(token: string) {
   'use server';
 
   const publicKey: string = Buffer.from(
@@ -27,7 +27,8 @@ export default async function ResetPage({
   if (!data) {
     return <div>Invalid token</div>;
   } else {
-    // @ts-expect-error
+    // TODO: improve types
+    // @ts-ignore - expected error 
     const { id: userID } = data;
 
     return (

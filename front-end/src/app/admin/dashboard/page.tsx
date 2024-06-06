@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { Skeleton } from '@/components/ui/skeleton';
 
-export default async function DashboardPage() {
+export default function DashboardPage() {
   const Overview = dynamic(() => import('./tabs/overview'));
   return (
     <>

@@ -97,8 +97,9 @@ export default {
       return baseUrl;
     },
     async session({ session,  token }) {
-      
+      // @ts-ignore - authjs types are wrong
       if (token?.data?.role && session.user){
+        // @ts-ignore - authjs types are wrong
         session.user.role = token.data.role;
       }
       return session;

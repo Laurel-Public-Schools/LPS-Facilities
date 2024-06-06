@@ -1,6 +1,7 @@
 import React from 'react';
 import SmallCalendar from '@/components/calendar/smallCalendar';
 import { headers } from 'next/headers';
+import type { GoogleEvents } from '@/lib/types';
 
 async function getReservation(id: number) {
   const headersInstance = headers();
@@ -19,7 +20,7 @@ async function getReservation(id: number) {
 
 async function getEvents(id: number) {
   'use server';
-  const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/events/${id}`, {
+  const res: GoogleEvents[] = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/events/${id}`, {
     next: {
       tags: ['events'],
       revalidate: 3600,
@@ -33,7 +34,7 @@ export default async function calPage({ params }: { params: { id: number } }) {
   const reservation = await getReservation(params.id);
   const facilityId = reservation.Facility.id;
   const events = await getEvents(facilityId);
-  const startDate = events[0].start;
+  const startDate = events[0]?.start;
   return (
     <div className="space-y-7">
       <div>

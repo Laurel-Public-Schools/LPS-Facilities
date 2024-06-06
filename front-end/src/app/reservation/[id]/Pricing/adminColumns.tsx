@@ -47,7 +47,8 @@ export const adminColumns: ColumnDef<TableFees>[] = [
     accessorKey: 'options',
     header: 'options',
     cell: ({ row }) => {
-      const feeID = row.getValue('options');
+      //eslint-disable-next-line
+      const feeID = row.getValue('options') as number;
 
       return (
         <>

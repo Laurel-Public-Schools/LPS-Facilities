@@ -1,3 +1,5 @@
+// @ts-nocheck - This file is not intended to be type-checked
+
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';

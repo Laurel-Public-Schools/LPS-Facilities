@@ -1,14 +1,11 @@
 'use server';
-import { Category, SelectFacility } from '../../../../packages/db/src/schema/schema';
+
 import type {
   Reservation,
   TableReservation,
   FacilityWithCategory,
   TableFacility} from '@/lib/types';
-import {
-  ReservationDate,
-  DateType
-} from '@/lib/types';
+
 
 import moment from 'moment';
 
@@ -157,6 +154,7 @@ async function mapFacilityTable(facilities: FacilityWithCategory[]) {
         imagePath: facility.imagePath,
         capacity: facility.capacity,
         googleCalendarId: facility.googleCalendarId,
+        //eslint-disable-next-line
         Category: facility.Category?.map((category) => category.price),
       };
     })

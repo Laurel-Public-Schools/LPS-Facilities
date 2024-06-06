@@ -74,14 +74,14 @@ export const columns: ColumnDef<TableReservation>[] = [
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction
                 onClick={() => {
-                  approveReservation(id);
+                  void approveReservation(id);
                 }}
               >
                 Approve
               </AlertDialogAction>
               <AlertDialogAction
                 onClick={() => {
-                  denyReservation(id);
+                  void denyReservation(id);
                 }}
               >
                 Deny

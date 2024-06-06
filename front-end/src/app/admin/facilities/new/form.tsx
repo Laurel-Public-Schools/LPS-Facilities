@@ -3,7 +3,7 @@
 import { SubmitButton } from '@/components/ui/buttons/submitButton';
 import { buildingNames } from '@/lib/types/constants';
 import newFacility from './actions';
-//@ts-expect-error
+//@ts-expect-error - type not implemented
 import { useFormState } from 'react-dom';
 import { useState } from 'react';
 import Image from 'next/image';
@@ -16,6 +16,7 @@ const initialState = {
 };
 
 export default function NewFacilityForm() {
+  // @ts-expect-error - type not implemented
   const [state, formAction] = useFormState(newFacility, initialState);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const handeFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

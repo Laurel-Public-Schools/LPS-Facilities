@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/buttons';
 import { headers } from 'next/headers';
 export default async function insurancePage({
-  //@ts-ignore
   params,
 }: {
   params?: { id: number };

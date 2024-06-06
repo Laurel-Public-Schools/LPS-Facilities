@@ -9,7 +9,7 @@ export async function generateStaticParams() {
   const facilities = await fetch(
     process.env.NEXT_PUBLIC_HOST + `/api/facilities`
   ).then((res) => res.json());
-  return facilities.map((facility: any) => ({
+  return facilities.map((facility: FacilityWithCategory) => ({
     id: facility.id.toString(),
   }));
 }
@@ -77,7 +77,7 @@ export default async function facilityEditForm({
           <Forms
             id={id}
             name={name}
-            capacity={capacity!}
+            capacity={capacity ?? 30}
             CategoryIDs={FacilityCategories}
           />
         </Suspense>

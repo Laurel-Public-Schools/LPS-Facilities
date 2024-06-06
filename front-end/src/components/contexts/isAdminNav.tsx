@@ -1,21 +1,20 @@
-//@ts-nocheck
 
-import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+
+import {auth} from '@local/auth'
 import React from 'react';
 
-export default function IsAdminNav({
+export default async function IsAdminNav({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { data: session, status } = useSession();
+  const session = await auth()
 
   if (
     session?.user.role === 'ADMIN_ADMIN' ||
     session?.user.role === 'CAL_ADMIN' ||
     session?.user.role === 'GR_ADMIN' ||
-    session?.user.role === 'HS_ADMIN' ||
+    session?.user.role === 'LHS_ADMIN' ||
     session?.user.role === 'LMS_ADMIN' ||
     session?.user.role === 'WE_ADMIN' ||
     session?.user.role === 'SO_ADMIN' ||

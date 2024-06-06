@@ -4,7 +4,7 @@ import moment from 'moment';
 import { Suspense } from 'react';
 import TableSkeleton from './skeleton';
 import { getUser } from '@/functions/data/users';
-import type { Reservation} from '@/lib/types';
+import type { SelectReservation, SelectReservationDate, SelectFacility} from '@local/db';
 import { User } from '@/lib/types';
 import { DataTable } from '@/components/ui/tables';
 
@@ -13,16 +13,21 @@ interface TableUser {
 
   eventName: string;
   Facility: string;
-  ReservationDate?: any[];
+  ReservationDate?: string;
   approved: 'pending' | 'approved' | 'denied' | 'canceled' | 'N/A';
   Details: number;
+}
+
+interface Reservation extends SelectReservation {
+  ReservationDate: SelectReservationDate[];
+  Facility: SelectFacility;
 }
 
 const currentDate = moment().format('YYYY-MM-DD');
 
 async function getData(id: string) {
   const user = await getUser(id);
-  const reservation: Reservation[] = user.Reservation || [];
+  const reservation: Reservation[] = user?.Reservation || [];
   if (reservation.length === 0) {
     return [user];
   }
@@ -35,7 +40,7 @@ async function getData(id: string) {
       moment(date.startDate).isSameOrAfter(currentDate)
     );
     return {
-      Name: user.name,
+      Name: user?.name ?? 'N/A',
       eventName: reservation.eventName,
       Facility: reservation.Facility.name,
       ReservationDate: nextUpcomingDate ? nextUpcomingDate.startDate : 'N/A',

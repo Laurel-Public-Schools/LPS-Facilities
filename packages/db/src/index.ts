@@ -16,3 +16,17 @@ const pool = new Pool({connectionString})
 export const schema = { ...main };
 
 export const db = drizzle(pool, {schema});
+export type SelectCategory = typeof schema.Category.$inferSelect;
+export type SelectReservationFees = typeof schema.ReservationFees.$inferSelect;
+
+export type NewReservation = typeof schema.Reservation.$inferInsert;
+export type SelectReservation = typeof schema.Reservation.$inferSelect;
+export type InsertReservationDate = typeof schema.ReservationDate.$inferInsert;
+export type SelectReservationDate = typeof schema.ReservationDate.$inferSelect;
+export type SelectKey_User_role = typeof schema.User_role;
+export type SelectEvents = typeof schema.Events.$inferSelect;
+export type InsertEvents = typeof schema.Events.$inferInsert;
+export type InsertFacility = typeof schema.Facility.$inferInsert;
+export type SelectFacility = typeof schema.Facility.$inferSelect;
+export type InsertUser = typeof schema.User.$inferInsert;
+export type SelectUser = typeof schema.User.$inferSelect;

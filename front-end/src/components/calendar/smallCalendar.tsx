@@ -1,25 +1,29 @@
-//@ts-nocheck
+
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import type { Event} from 'react-big-calendar';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Modal from 'react-modal';
-import type { Schema$Event } from '@/functions/events/types';
+import type { GoogleEvents } from '@/lib/types';
 import { useTheme } from 'next-themes';
 
 const localizer = momentLocalizer(moment);
 
 interface Props {
-  events: any[];
+  events: GoogleEvents[];
   startDate: any;
 }
 
+interface MappedEvent extends Event {
+  building: string;
+};
+
 export default function SmallCalendar({ events }: Props) {
-  const mappedEvents = events.map((event: Schema$Event) => {
-    if (!event?.location) return null;
-    const facility = (event.location).split('-')[0] || 'Event';
+  const mappedEvents: MappedEvent[] = events.map((event: GoogleEvents) => {
+    const facility = (event.location ?? 'Event-Unknown').split('-')[0] || 'Event';
     return {
       title: event?.title || 'Event',
       start: new Date(event?.start as unknown as string),
@@ -41,7 +45,7 @@ export default function SmallCalendar({ events }: Props) {
     }),
   };
 
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState<MappedEvent | null>(null);
   const views = {
     month: true,
     week: false,
@@ -63,8 +67,9 @@ export default function SmallCalendar({ events }: Props) {
         <Calendar
           views={views}
           localizer={localizer}
+          
           events={mappedEvents}
-          onSelectEvent={(event) => setSelectedEvent(event)}
+          onSelectEvent={(event: MappedEvent) => setSelectedEvent(event)}
           popup
           startAccessor="start"
           endAccessor="end"
@@ -84,11 +89,11 @@ export default function SmallCalendar({ events }: Props) {
 
             <p className="mb-2">
               {' '}
-              Starts at {selectedEvent?.start.toLocaleString()}
+              Starts at {selectedEvent?.start?.toLocaleString()}
             </p>
             <p className="mb-4">
               {' '}
-              Ends at {selectedEvent?.end.toLocaleString()}
+              Ends at {selectedEvent?.end?.toLocaleString()}
             </p>
             <button
               className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"

@@ -1,7 +1,7 @@
 import { IFormInput } from '@/lib/types';
 
 export default function useCalculateNumberOfEvents() {
-  return (startDate: any, repeatUntil: any, dayOfWeek: any) => {
+  return (startDate: string | number | Date, repeatUntil: Date, dayOfWeek: string | number | Date) => {
     let count = 0;
     const current = new Date(startDate);
     while (current.getTime() <= repeatUntil.getTime()) {

@@ -81,7 +81,7 @@ export default function ShowPayment({
           <Button
             variant="outline"
             onClick={() => {
-              PayinPerson(id);
+              void PayinPerson(id);
             }}
           >
             Pay in Person
@@ -90,7 +90,7 @@ export default function ShowPayment({
           <Button
             variant="outline"
             onClick={() => {
-              PayOnline(id, fees, description, email);
+              void PayOnline(id, fees, description, email);
             }}
           >
             Pay Online

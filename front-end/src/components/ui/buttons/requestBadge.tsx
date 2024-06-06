@@ -12,7 +12,7 @@ export default function RequestBadge() {
       setRequestCount(count);
     };
 
-    fetchRequestCount();
+    void fetchRequestCount();
   }, []);
 
   if (requestCount === 0) {

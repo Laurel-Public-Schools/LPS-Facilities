@@ -34,12 +34,12 @@ async function AddDates(id: number, formData: FormData) {
         approved: 'approved',
       })
       .returning({ newID: ReservationDate.id });
-    dateID = data.newID;
+    dateID = data?.newID;
   } catch (err) {
     throw new Error('DB Error', { cause: err });
   } finally {
     if (dateID) {
-      CreateGoogleEvent(dateID);
+     await CreateGoogleEvent(dateID);
     }
   }
   revalidateTag('reservations');

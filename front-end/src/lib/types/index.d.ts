@@ -1,15 +1,15 @@
 import type { User as NextAuthUser } from 'next-auth';
 import NextAuth from 'next-auth';
 import type {
-  Category,
-  ReservationDate,
-  ReservationFees,
+  SelectCategory,
+  SelectReservationDate,
+  SelectReservationFees,
   SelectEvents,
   SelectFacility,
-} from '../../../../packages/db/src/schema/schema';
+} from '@local/db';
 import type { Path, UseFormRegister } from 'react-hook-form';
 import type { $Enums, Category } from '@prisma/client';
-
+import type { Schema$Event } from '@/functions/events/types';
 export interface Facility {
   map(
     arg0: (facility: Facility) => import('react').JSX.Element
@@ -169,7 +169,7 @@ export interface TableFacility {
   imagePath: string;
   capacity: number;
   googleCalendarId: string;
-  Category: Category[];
+  Category: Category[] ;
 }
 
 export interface DateType {
@@ -193,6 +193,16 @@ export interface Events {
   facilityId: bigint | number;
   Facility: Facility;
   placeholder: boolean;
+}
+
+export interface GoogleEvents {
+  gLink: string | null | undefined
+  description: string | null | undefined
+  location: string | null | undefined
+  start: string | null | undefined
+  end: string | null | undefined
+  title: string | null | undefined
+  meta: Schema$Event
 }
 
 export type SelectCategory = typeof Category.$inferSelect;

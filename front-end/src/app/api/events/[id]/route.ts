@@ -6,7 +6,7 @@ import { GetApprovedDates } from '@/lib/db/queries/reservations';
 import { serializeJSON } from '@/utils/serializeJSON';
 import { google } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
-
+import type { GoogleEvents } from '@/lib/types';
 import moment from 'moment-timezone';
 
 export async function GET(
@@ -40,7 +40,7 @@ export async function GET(
       orderBy: 'startTime',
     });
     if (response.data.items) {
-      const events = response.data.items.map((e) => {
+      const events: GoogleEvents[] = response.data.items.map((e) => {
         const start = e.start?.dateTime || e.start?.date;
         const end = e.end?.dateTime || e.end?.date;
         return {

@@ -35,7 +35,7 @@ type EventComponentProps = {
   title: string | undefined;
   start: Date;
   end: Date;
-  building: any | undefined;
+  building: any;
 } | null;
 
 export default function CalendarMain({
@@ -49,7 +49,7 @@ export default function CalendarMain({
   const [isOpen, setIsOpen] = useState(false);
 
   let selectedBuilding: string | null = 'All';
-  if (searchParams && searchParams.has('building')) {
+  if (searchParams?.has('building')) {
     selectedBuilding = searchParams.get('building');
   }
 
@@ -71,7 +71,7 @@ export default function CalendarMain({
     if (!event.location) event.location = 'unknown';
     const facility = (event.location).split('-')[0] || 'unknown';
     return {
-      //@ts-expect-error
+      //@ts-expect-error - fixing weird gcal typings
       title: event.summary || event.title || 'Event',
       start: new Date(event?.start as unknown as string),
       end: new Date(event?.end as unknown as string),

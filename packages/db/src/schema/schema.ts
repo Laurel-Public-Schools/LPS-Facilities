@@ -76,7 +76,7 @@ export const User_role = pgEnum('User_role', [
   'USER',
 ]);
 
-export type SelectKey_User_role = typeof User_role;
+
 
 export const facilities_db = pgSchema('facilities_db');
 export const pgTable = pgTableCreator(name => `facilities_db_${name}`)
@@ -211,8 +211,7 @@ export const Events = facilities_db.table(
   }
 );
 
-export type SelectEvents = typeof Events.$inferSelect;
-export type InsertEvents = typeof Events.$inferInsert;
+
 
 export const eventsRelations = relations(Events, ({ one, many }) => ({
   Facility: one(Facility, {
@@ -356,11 +355,7 @@ export const Reservation = facilities_db.table(
     };
   }
 );
-export type SelectCategory = typeof Category.$inferSelect;
-export type SelectReservationFees = typeof ReservationFees.$inferSelect;
 
-export type NewReservation = typeof Reservation.$inferInsert;
-export type SelectReservation = typeof Reservation.$inferSelect;
 
 export const reservationRelations = relations(Reservation, ({ one, many }) => ({
   Facility: one(Facility, {
@@ -407,8 +402,6 @@ export const ReservationDate = facilities_db.table(
     };
   }
 );
-export type InsertReservationDate = typeof ReservationDate.$inferInsert;
-export type SelectReservationDate = typeof ReservationDate.$inferSelect;
 
 export const reservationDateRelations = relations(
   ReservationDate,
@@ -453,8 +446,7 @@ export const Facility = facilities_db.table(
   }
 );
 
-export type InsertFacility = typeof Facility.$inferInsert;
-export type SelectFacility = typeof Facility.$inferSelect;
+
 
 export const facilityRelations = relations(Facility, ({ one, many }) => ({
   Category: many(Category),
@@ -498,8 +490,7 @@ export const User = facilities_db.table(
   }
 );
 
-export type InsertUser = typeof User.$inferInsert;
-export type SelectUser = typeof User.$inferSelect;
+
 export const UserRelations = relations(User, ({ one, many }) => ({
   Reservation: many(Reservation),
   Account: one(accounts, {
