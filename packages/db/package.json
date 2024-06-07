@@ -7,6 +7,14 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./src/index.ts"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "default": "./src/client.ts"
+    },
+    "./schema": {
+      "types": "./dist/schema.d.ts",
+      "default": "./src/schema.ts"
     }
   },
   "scripts": {
@@ -14,11 +22,11 @@
     "dev": "tsc --watch",
     "clean": "rm -rf .turbo node_modules dist",
     "clean:outs": "rm -rf dist",
-    "drizup": "drizzle-kit up --config src/drizzle.config.ts",
-    "push": "pnpm with-env drizzle-kit push --config src/drizzle.config.ts",
-    "studio": "pnpm with-env drizzle-kit studio    --config src/drizzle.config.ts",
-    "gen": "pnpm drizzle-kit generate --config src/drizzle.config.ts",
-    "introspect": "pnpm with-env drizzle-kit introspect:pg --config src/drizzle.config.ts",
+    "drizup": "drizzle-kit up --config ./drizzle.config.ts",
+    "push": "pnpm with-env drizzle-kit push --config ./drizzle.config.ts",
+    "studio": "pnpm with-env drizzle-kit studio    --config ./drizzle.config.ts",
+    "gen": "pnpm drizzle-kit generate --config ./drizzle.config.ts",
+    "introspect": "pnpm with-env drizzle-kit introspect --config ./drizzle.config.ts",
     "migrate": "pnpm with-env tsx src/migrate.ts",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
@@ -30,6 +38,7 @@
     "@neondatabase/serverless": "^0.9.3",
     "@t3-oss/env-nextjs": "^0.10.1",
     "drizzle-orm": "^0.31.0",
+    "drizzle-zod": "^0.5.1",
     "postgres": "^3.4.4",
     "zod": "^3.23.8"
   },

@@ -9,7 +9,7 @@ import { User } from '@/lib/types';
 import { DataTable } from '@/components/ui/tables';
 
 interface TableUser {
-  Name: string;
+  name: string;
 
   eventName: string;
   Facility: string;
@@ -58,9 +58,9 @@ export default async function accountPage({
 }) {
   const id = params.id;
 
-  const data = await getData(id);
+  const data: TableUser = await getData(id)
 
-  const name = data[0].Name || data[0].name;
+  const name = data[0]?.name!
   return (
     <div className="space-y-7 space-x-2 ">
       <h1 className="font-bold flex justify-center m-3 border-b p-3 drop-shadow-lg text-4xl">

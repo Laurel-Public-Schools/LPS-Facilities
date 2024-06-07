@@ -4,6 +4,6 @@
     "outDir": "dist",
     "tsBuildInfoFile": ".turbo/.cache/tsbuildinfo.json"
   },
-  "include": ["src", "drizzle.config.ts", "../../tmp/schema.ts"],
+  "include": ["src", ".ts"],
   "exclude": ["node_modules"]
 }

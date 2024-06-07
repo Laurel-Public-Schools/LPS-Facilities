@@ -1,12 +1,11 @@
 import { createEnv } from '@t3-oss/env-nextjs';
 import { z } from 'zod';
+import {vercel} from "@t3-oss/env-nextjs/presets"
+import {env as authEnv} from "@local/auth/env"
 
 export const env = createEnv({
+  extends: [vercel(), authEnv],
   server: {
-    AZURE_AD_CLIENT_ID: z.string(),
-    AZURE_AD_CLIENT_SECRET: z.string(),
-    AZURE_TENANT_ID: z.string(),
-    AZURE_AUTHORITY: z.string(),
     RESET_SECRET: z.string(),
     NEXTAUTH_URL: z.string(),
     CAL_API_KEY: z.string(),
@@ -51,7 +50,13 @@ export const env = createEnv({
     NEXT_PUBLIC_GA_TRACKING_ID: z.string(),
     NEXT_PUBLIC_GOOGLE_ANALYTICS: z.string(),
   },
+  shared: {
+    NODE_ENV: z
+      .enum(["development", "production", "test"])
+      .default("development"),
+  },
   experimental__runtimeEnv: {
+    NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_ENABLE_GOOGLE_AUTH: process.env.NEXT_PUBLIC_ENABLE_GOOGLE_AUTH,
     NEXT_PUBLIC_ENABLE_AZURE_AUTH: process.env.NEXT_PUBLIC_ENABLE_AZURE_AUTH,
     NEXT_PUBLIC_HOST: process.env.NEXT_PUBLIC_HOST,
@@ -59,4 +64,9 @@ export const env = createEnv({
     NEXT_PUBLIC_GA_TRACKING_ID: process.env.NEXT_PUBLIC_GA_TRACKING_ID,
     NEXT_PUBLIC_GOOGLE_ANALYTICS: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
   },
+  skipValidation:
+  !!process.env.CI ||
+  !!process.env.SKIP_ENV_VALIDATION ||
+  process.env.npm_lifecycle_event === "lint",
 });
+

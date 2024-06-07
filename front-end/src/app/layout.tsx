@@ -5,11 +5,13 @@ import { ThemeProviders } from '@/components/contexts/providers/ThemeProvider';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Footer from '@/components/ui/footer';
 import Navbar from '@/components/ui/navbar/Navbar';
-import { GeistSans } from 'geist/font';
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 import { Analytics } from '@vercel/analytics/react';
 export { meta as metadata } from './metadata';
-import { Toaster } from '@/components/ui/toaster';
-
+import { Toaster } from '@/components/ui/sonner';
+import {cn} from '@/lib/utils'
+import {TRPCReactProvider} from "@/trpc/react"
 import './globals.css';
 
 //layout.tsx
@@ -22,20 +24,27 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning={true}
-      className={GeistSans.className}
+      
     >
-      <body>
+      <body
+      className={cn(
+        "min-h-screen bg-background font-sans text-foreground antialiased",
+        GeistSans.variable,
+        GeistMono.variable
+      )}
+      >
         <AuthProvider>
           <ThemeProviders
             attribute="class"
             defaultTheme="system"
             enableSystem
-            disableTransitionOnChange
           >
+            <TRPCReactProvider>
             <Navbar />
 
             {children}
             <Footer />
+            </TRPCReactProvider>
             <Toaster />
           </ThemeProviders>
           <SpeedInsights />

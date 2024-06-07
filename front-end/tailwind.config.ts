@@ -1,4 +1,6 @@
 import type {Config} from 'tailwindcss';
+import { fontFamily } from "tailwindcss/defaultTheme";
+
 import animate from 'tailwindcss-animate';
 import forms from '@tailwindcss/forms';
 import scrollbar from 'tailwind-scrollbar';
@@ -27,6 +29,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-geist-sans)", ...fontFamily.sans],
+        mono: ["var(--font-geist-mono)", ...fontFamily.mono],
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

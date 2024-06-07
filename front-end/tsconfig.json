@@ -1,6 +1,7 @@
 {
   "extends": "@local/tsconfig/base.json",
   "compilerOptions": {
+    "lib": ["es2022", "dom", "dom.iterable"],
     "baseUrl": ".",
     "jsx": "preserve",
     "paths": {
@@ -14,13 +15,6 @@
     "tsBuildInfoFile": ".turbo/.cache/tsbuildinfo.json",
     "module": "esnext"
   },
-  "include": [
-    ".",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "src/app/template.tsx",
-    "../packages/db/src/schema/schema.ts"
-  ],
+  "include": [".", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
