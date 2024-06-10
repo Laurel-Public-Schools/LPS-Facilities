@@ -2,7 +2,7 @@ import type {TRPCRouterRecord} from "@trpc/server";
 import {z} from "zod";
 
 import {eq, and, gte, or, sql,} from "@local/db";
-import {User} from "@local/db/schema"
+import {User, ReservationDate} from "@local/db/schema"
 import { protectedProcedure, publicProcedure } from "../trpc";
 
 export const UserRouter = {
@@ -25,12 +25,23 @@ export const UserRouter = {
   ById: protectedProcedure
     .input(z.object({id: z.string()}))
     .query(({ctx, input}) => {
-      return ctx.db.select({
-        id: User.id,
-        name: User.name,
-        email: User.email,
-        role: User.role,
-        tos: User.tos,
-      }).from(User).where(eq(User.id, input.id))
+      return ctx.db.query.User.findFirst({
+        where: eq(User.id, input.id),
+        columns: {
+          password: false,
+        },
+        with: {
+          Reservation: {
+            with: {
+              ReservationDate: {
+                where: 
+                  gte(ReservationDate.startDate, sql`now()`)
+              },
+              Facility: true,
+              ReservationFees: true
+            }
+          },
+        }
+      })
     }),
 } satisfies TRPCRouterRecord;

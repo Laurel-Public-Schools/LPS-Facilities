@@ -2,13 +2,17 @@ import type {TRPCRouterRecord} from "@trpc/server";
 import {z} from "zod";
 
 import { GetReservations, GetRequests, GetReservationbyID, GetApprovedDates, GetDateByID,GetAllReservations } from "@local/db/queries";
-import {CreateReservationSchema,  Reservation, CreateReservationDateArray, ReservationDate} from "@local/db/schema"
+import {CreateReservationSchema,  Reservation, CreateReservationDateArray, ReservationDate, Facility} from "@local/db/schema"
+import { and, count, eq, gte } from "@local/db";
 import { protectedProcedure, publicProcedure } from "../trpc";
 
 
 export const ReservationRouter ={
   all: protectedProcedure.query(() => {
     return GetAllReservations.execute();
+  }),
+  requestCount: protectedProcedure.query(({ctx}) => {
+    return ctx.db.select({value: count(Reservation.approved)}).from(Reservation).where(eq(Reservation.approved, "pending"))
   }),
   allRequests: protectedProcedure.query(() => {
     return GetRequests.execute();
@@ -30,6 +34,18 @@ export const ReservationRouter ={
     const [newId] = await ctx.db.insert(Reservation).values(input).returning({id: Reservation.id});
     return newId;
   }),
+
+  usersReservations: protectedProcedure.input(z.object({userId: z.string()})).query(({input, ctx}) => {
+    return ctx.db.select({
+      eventName: Reservation.eventName,
+      Facility: Facility.name,
+      ReservationDate: ReservationDate.startDate,
+      approved: Reservation.approved,
+      id: Reservation.id,
+    }).from(Reservation).where(eq(Reservation.userId, input.userId)).innerJoin(Facility, eq(Reservation.facilityId, Facility.id)).innerJoin(ReservationDate, eq(Reservation.id, ReservationDate.reservationId))
+  }),
+    
+
   createReservationDates: protectedProcedure.input(CreateReservationDateArray).mutation(async ({ctx, input}) => {
     return ctx.db.insert(ReservationDate).values(input)
   })

@@ -56,3 +56,48 @@ export async function GetEvents(id: number | string) {
     throw new Error('Error getting events');
   }
 }
+
+
+export async function GetAllEvents() {
+  const oauth2Client = new OAuth2Client({
+    clientId: env.GOOGLE_CLIENT_ID,
+    clientSecret: env.GOOGLE_CLIENT_SECRET,
+    redirectUri: env.GOOGLE_REDIRECT_URI,
+  });
+  oauth2Client.setCredentials({
+    refresh_token: env.GOOGLE_REFRESH_TOKEN,
+  });
+  const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+  try {
+    const twoMonthsAgo = new Date();
+    twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
+
+    const response = await calendar.events.list({
+      calendarId:
+        'c_a55b94eb4dd05e5dd936dd548d434d6a25c2694efe67224e3eff10205d2fb82b@group.calendar.google.com',
+      maxResults: 1000,
+      singleEvents: true,
+      orderBy: 'startTime',
+    });
+    let events: GoogleEvents[] = [];
+    if (response.data.items) {
+      events = response.data.items.map((e) => {
+        const start = e.start?.dateTime || e.start?.date;
+        const end = e.end?.dateTime || e.end?.date;
+        return {
+          gLink: e.htmlLink,
+          description: e.description,
+          location: e.location,
+          start,
+          end,
+          title: e.summary,
+          meta: e,
+        };
+      });
+    }
+    return events
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error getting events');
+  }
+}

@@ -5,6 +5,9 @@ import type {
   TableReservation,
   FacilityWithCategory,
   TableFacility} from '@/lib/types';
+  import type {
+    ReservationType
+  } from "@local/db/schema"
 
 
 import moment from 'moment';
@@ -30,7 +33,7 @@ async function mapRequests(requests: Reservation[]) {
   return mappedRequests;
 }
 
-async function mapReservations(Reservations: Reservation[]) {
+async function mapReservations(Reservations: ReservationType[]) {
   const currentDate = moment();
 
   const mappedReservations: any[] = Reservations.map((reservation) => {

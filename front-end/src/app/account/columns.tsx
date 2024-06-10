@@ -8,9 +8,9 @@ import { ArrowUpDown } from 'lucide-react';
 interface TableReservations {
   eventName: string;
   Facility: string;
-  ReservationDate: any[];
+  ReservationDate: string;
   approved: 'pending' | 'approved' | 'denied' | 'canceled';
-  Details: number;
+  id: number;
 }
 
 export const columns: ColumnDef<TableReservations>[] = [

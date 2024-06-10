@@ -1,22 +1,19 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
 import { Badge } from '@/components/ui/badge';
-import RequestCount from '@/functions/calculations/requestCount';
+import {api} from '@/trpc/react'
+import type { RouterOutputs } from '@local/api';
 
-export default function RequestBadge() {
-  const [requestCount, setRequestCount] = useState<number>(0);
+export default function RequestBadge(props: {requestCount: Promise<RouterOutputs['reservation']['requestCount']>}) {
 
-  useEffect(() => {
-    const fetchRequestCount = async () => {
-      const count = await RequestCount();
-      setRequestCount(count);
-    };
-
-    void fetchRequestCount();
-  }, []);
-
-  if (requestCount === 0) {
-    return null;
+  const initialData = React.use(props.requestCount)
+  
+  const {data: requestCount} = api.reservation.requestCount.useQuery(undefined, {initialData} )
+  let count =0
+  if(requestCount.length > 0){
+    count = requestCount[0]?.value!
   }
-  return <Badge className="animate-pulse">{requestCount}</Badge>;
+
+
+  return <Badge className="animate-pulse">{count}</Badge>;
 }

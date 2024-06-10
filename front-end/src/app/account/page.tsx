@@ -1,7 +1,7 @@
 import { DataTable } from '@/components/ui/tables';
 import { columns } from './columns';
 import React from 'react';
-import type { Reservation} from '@/lib/types';
+
 
 import { userReservations } from '@/functions/calculations/tableData';
 
@@ -10,32 +10,15 @@ import { Separator } from '@/components/ui/separator';
 import {auth} from '@local/auth'
 
 import { Suspense } from 'react';
-import { GetUserById } from '@/lib/db/queries/users';
+import {api} from '@/trpc/server'
+import { notFound } from 'next/navigation';
 
 
-const baseUrl = process.env.NEXT_PUBLIC_HOST;
-
-async function getData() {
-  try {
-    const userSession = await auth();
-    if (!userSession) {
-      return [];
-    } else if (userSession) {
-      const user = await GetUserById.execute({ id: userSession.user.id });
-      //@ts-expect-error - bad typing #TODO fix
-      const reservations: Reservation[]  = user?.Reservation!;
-      if (!reservations) {
-        return [];
-      }
-      return userReservations(reservations);
-    }
-  } catch (error) {
-    return [];
-  }
-}
 
 export default async function Account() {
-  const data = await getData();
+  const session = await auth()
+  if(!session) return notFound();
+  const data = await api.reservation.usersReservations({userId: session.user.id})
   if (!data) {
     return <div>loading ...</div>;
   }

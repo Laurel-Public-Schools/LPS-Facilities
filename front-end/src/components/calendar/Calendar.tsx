@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import * as React from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -22,6 +22,7 @@ import {
 } from '@/lib/types/constants';
 import { AlertDialogAction } from '@radix-ui/react-alert-dialog';
 import type { Schema$Event } from '@/functions/events/types';
+import { GetAllEvents } from '@/functions/events/googleAPI';
 const localizer = momentLocalizer(moment);
 
 type Event = {
@@ -39,14 +40,14 @@ type EventComponentProps = {
 } | null;
 
 export default function CalendarMain({
-  fetchedEvents,
+  promise,
 }: {
-  fetchedEvents: Schema$Event[];
+  promise: ReturnType<typeof GetAllEvents>;
 }) {
   const searchParams = useSearchParams();
 
-  const [selectedEvent, setSelectedEvent] = useState<EventComponentProps>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = React.useState<EventComponentProps>(null);
+  const [isOpen, setIsOpen] = React.useState(false);
 
   let selectedBuilding: string | null = 'All';
   if (searchParams?.has('building')) {
@@ -66,7 +67,7 @@ export default function CalendarMain({
       WebkitTextStrokeColor: 'white',
     }),
   };
-
+  const fetchedEvents = React.use(promise)
   const mappedEvents = fetchedEvents.map((event) => {
     if (!event.location) event.location = 'unknown';
     const facility = (event.location).split('-')[0] || 'unknown';
