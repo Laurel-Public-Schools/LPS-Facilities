@@ -4,7 +4,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from 'bcryptjs';
 
 import { env } from "../env";
-import { db, schema, eq } from "@local/db";
+import {  eq } from "@local/db";
+import { db } from "@local/db/client";
+import {User} from "@local/db/schema";
 
 
 declare module "next-auth" {
@@ -39,7 +41,7 @@ export default {
       },
       async authorize(credentials: any) {
         
-        const [user] = await db.select().from(schema.User).where(eq(schema.User.email, credentials.email));
+        const [user] = await db.select().from(User).where(eq(User.email, credentials.email));
         console.log(user)
         if (user)
           {

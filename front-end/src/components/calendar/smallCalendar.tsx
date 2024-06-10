@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import * as React from 'react';
 import type { Event} from 'react-big-calendar';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
@@ -9,19 +9,20 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Modal from 'react-modal';
 import type { GoogleEvents } from '@/lib/types';
 import { useTheme } from 'next-themes';
-
+import { GetEvents } from '@/functions/events/googleAPI';
 const localizer = momentLocalizer(moment);
 
 interface Props {
-  events: GoogleEvents[];
-  startDate: any;
+  promise: ReturnType<typeof GetEvents>;
+  
 }
 
 interface MappedEvent extends Event {
   building: string;
 };
 
-export default function SmallCalendar({ events }: Props) {
+export default function SmallCalendar({ promise }: Props) {
+  const events = React.use(promise)
   const mappedEvents: MappedEvent[] = events.map((event: GoogleEvents) => {
     const facility = (event.location ?? 'Event-Unknown').split('-')[0] || 'Event';
     return {
@@ -45,7 +46,7 @@ export default function SmallCalendar({ events }: Props) {
     }),
   };
 
-  const [selectedEvent, setSelectedEvent] = useState<MappedEvent | null>(null);
+  const [selectedEvent, setSelectedEvent] = React.useState<MappedEvent | null>(null);
   const views = {
     month: true,
     week: false,
@@ -53,7 +54,7 @@ export default function SmallCalendar({ events }: Props) {
     agenda: false,
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (selectedEvent) {
       document.body.classList.add('modal-open');
     } else {

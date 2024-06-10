@@ -11,7 +11,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 
 import type { Session } from "@local/auth";
-import { db } from "@local/db";
+import { db } from "@local/db/client";
 
 /**
  * 1. CONTEXT

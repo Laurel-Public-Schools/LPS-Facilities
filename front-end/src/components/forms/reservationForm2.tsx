@@ -46,33 +46,35 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/components/ui/use-toast';
+
 import { categoryOptions, locations } from '@/lib/formOptions';
 import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Check, ChevronsUpDown, ScrollText, Loader2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import React from 'react';
+import * as React from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import type * as z from 'zod';
-import { ToastAction } from '../ui/toast';
-import { formSchema } from './schemas/reservationForm';
+import { toast } from 'sonner'
+import { formSchema } from '@local/validators';
 import submitReservation from '@/functions/reservations/createReservation';
 import { useRouter } from 'next/navigation';
 
 type formValues = z.infer<typeof formSchema>;
 
-export default function ReservationForm() {
+export default function ReservationForm(props:{userId: string, email: string}) {
   const [isVisible, setIsVisible] = React.useState(false);
-  const [selectedData, setSelectedData] = React.useState(null);
+  // const [selectedData, setSelectedData] = React.useState(null);
   const [open, setOpen] = React.useState(false);
+  const [isRequestPending, startRequestTransition] = React.useTransition()
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const hideModal = () => setIsVisible(false);
   const { data: session } = useSession();
-  const email = session?.user?.email!;
+  
+
   let selectedFacility = 0;
   const router = useRouter();
-  const { toast } = useToast();
+
   const searchParams = useSearchParams();
   if (searchParams.has('id')) {
     selectedFacility = Number(searchParams.get('id'));
@@ -80,7 +82,8 @@ export default function ReservationForm() {
   const form = useForm<formValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: email,
+      email: props.email,
+      userId: props.userId,
       facility: selectedFacility,
       techSupport: false,
       doorAccess: false,
@@ -96,30 +99,27 @@ export default function ReservationForm() {
     name: 'events',
     rules: { required: true },
   });
-
-  //@ts-expect-error - no type in react-hook-form
+  //@ts-expect-error - TS doesn't like the function signature
   const handleAddDate = useHandleAddDate(append);
   const watchTechSupport = form.watch('techSupport', false);
   const watchDoorAccess = form.watch('doorAccess', false);
 
   const onSubmit = async (data: formValues) => {
-    setIsSubmitting(true);
-    try {
-      const res = await submitReservation(data);
+    startRequestTransition(() => {
 
-      if (res === 'Success') {
-        setOpen(true);
-      }
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Something went wrong',
-        action: <ToastAction altText="retry">close</ToastAction>,
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+      toast.promise(submitReservation(data), {
+        position: "top-center",
+        loading: "Submitting...",
+        success: () => {
+          setOpen(true);
+          return "Request Submitted!";
+        },
+        error: (error) => {
+          return "something went wrong"
+        },
+      })
+  })
+}
   return (
     <div className="   w-screen  sm:w-[850px]  justify-center drop-shadow-md  flex flex-col ">
       <Form {...form}>

@@ -5,14 +5,18 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import NextAuth from "next-auth";
 import { decode, getToken } from "next-auth/jwt";
 
-import { db, InferSelectModel, pgTable, PgTableFn, schema } from "@local/db";
+import {   pgTable, PgTableFn, } from "@local/db";
+import type { UserType } from "@local/db/schema";
+import {User, accounts, Session, VerificationToken} from "@local/db/schema";
+import {db} from "@local/db/client"
+
 
 import { env } from "../env";
 import authConfig from "./auth.config";
 
 export type { Session } from "next-auth";
 
-const { User, accounts, Session, VerificationToken } = schema;
+
 declare module "next-auth" {
   interface Session {
     User: {
@@ -27,7 +31,7 @@ declare module "next-auth" {
 }
 
 declare module "@auth/core/adapters" {
-  export interface AdapterUser extends InferSelectModel<typeof User> {
+  export interface AdapterUser extends UserType {
     roles: "SUP_ADMIN" | "WE_ADMIN" | "SO_ADMIN" | "LHS_ADMIN" | "LMS_ADMIN" |"GR_ADMIN" | "USER" | "CAL_ADMIN" | "ADMIN_ADMIN"
   }
 }

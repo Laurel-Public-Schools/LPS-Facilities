@@ -4,18 +4,10 @@ import type { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/buttons';
 import React from 'react';
 import { ArrowUpDown } from 'lucide-react';
+import type  {ReservationDateType} from '@local/db/schema'
 
-interface TableDates {
-  Options: any;
-  startDate: string;
-  endDate: string;
-  startTime: string;
-  endTime: string;
-  approved: 'pending' | 'approved' | 'denied' | 'canceled';
-  ReservationID: any;
-}
 
-export const columns: ColumnDef<TableDates>[] = [
+export const columns: ColumnDef<ReservationDateType>[] = [
   {
     accessorKey: 'startDate',
     header: ({ column }) => {

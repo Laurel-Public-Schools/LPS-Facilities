@@ -1,32 +1,14 @@
-import { headers } from 'next/headers';
-import { mapDates } from '@/functions/calculations/tableData';
+import {api} from "@/trpc/server"
+import { notFound } from "next/navigation";
 
-async function getReservation(id: number) {
-  const headersInstance = headers();
-  const auth = headersInstance.get('Cookie')!;
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_HOST + `/api/reservation/${id}`,
-    {
-      headers: {
-        cookie: auth,
-      },
-      next: {
-        tags: ['reservations'],
-      },
-    }
-  );
-  const reservation = await res.json();
-  const mappedDates = await mapDates(reservation.ReservationDate);
-  return { reservation, mappedDates };
-}
 
 export default async function reservationPage({
   params,
 }: {
   params: { id: number };
 }) {
-  const { reservation, mappedDates } = await getReservation(params.id);
-
+  const reservation = await api.reservation.byId({ id: params.id });
+  if (!reservation) return notFound();
   const {
     name,
     Facility,
@@ -34,10 +16,8 @@ export default async function reservationPage({
     phone,
     details,
     Category,
-    ReservationDate,
   } = reservation;
 
-  const facility = Facility.id;
 
   return (
     <div className="space-y-7 ">

@@ -1,10 +1,11 @@
 import dns from "dns";
-
-
+import createJiti from "jiti";
+import { fileURLToPath } from "url";
 /** @type {import('next').NextConfig} */
 
 
 dns.setDefaultResultOrder('ipv4first');
+createJiti(fileURLToPath(import.meta.url))("./src/env");
 
 const nextConfig = {
   reactStrictMode: true,
@@ -16,7 +17,7 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['bcryptjs', 'googleapis'],
   },
-  transpilePackages: [ "@local/auth"],
+  transpilePackages: [ "@local/auth", "@local/api"],
   serverExternalPackages: [ "@local/db"],
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 };

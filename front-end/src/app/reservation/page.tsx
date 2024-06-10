@@ -1,7 +1,7 @@
 import ReservationForm from '@/components/forms/reservationForm2';
 import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
-
+import {auth} from "@local/auth"
 const Loading = () => {
   return (
     <div>
@@ -12,11 +12,13 @@ const Loading = () => {
   );
 };
 
-export default function reservationPage() {
+export default async function reservationPage() {
+  const session = await auth();
+
   return (
     <section className="justify-center flex flex-col sm:flex-row my-4">
       <Suspense fallback={<Loading />}>
-        <ReservationForm />
+        <ReservationForm email={session?.user.email!} userId={session?.user.id!} />
       </Suspense>
     </section>
   );

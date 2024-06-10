@@ -1,4 +1,6 @@
 import React from 'react';
+import {unstable_cache as cache} from 'next/cache'
+import {api} from "@/trpc/server"
 import { SidebarNav } from '@/components/ui/sidebar-nav';
 import IsUserReserv from '@/components/contexts/isUserReserv';
 import { headers } from 'next/headers';
@@ -19,7 +21,7 @@ export default async function reservationLayout({
   children: React.ReactNode;
   params: { id: number };
 }) {
-  const [data, isAdmin] = await getData(params.id);
+  const [data, isAdmin] = await cachedData(params.id);
   const reservation = new ReservationClass(data);
   const { id, eventName, Facility } = reservation;
   
@@ -80,22 +82,14 @@ export default async function reservationLayout({
 
 
 async function getData(id: number) {
-  const headersInstance = headers();
-  const auth = headersInstance.get('Cookie')!;
+  const res = api.reservation.byId({ id:id })
 
-  const res: ReservationClassType = await fetch(
-    process.env.NEXT_PUBLIC_HOST + `/api/reservation/${id}`,
-    {
-      headers: {
-        cookie: auth,
-      },
-      next: {
-        tags: ['reservations'],
-      },
-    }
-  ).then((res) => res.json())
-;
   const isAdmin = IsAdmin()
   
   return Promise.all([res, isAdmin])
 }
+
+const cachedData = cache(
+  async (id: number) => getData(id),
+  ['reservations']
+)

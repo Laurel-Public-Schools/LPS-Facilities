@@ -494,6 +494,7 @@ export const CreateReservationDateSchema = createInsertSchema(ReservationDate, {
   approved: true,
   gcal_eventid: true,
 });
+export const CreateReservationDateArray = z.array(CreateReservationDateSchema)
 
 export const reservationDateRelations = relations(
   ReservationDate,

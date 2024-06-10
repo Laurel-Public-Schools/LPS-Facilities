@@ -1,34 +1,20 @@
 import { UploadFile } from '@/components/forms/uploadFile';
 import Link from 'next/link';
 import { Button } from '@/components/ui/buttons';
-import { headers } from 'next/headers';
+
+import {api} from '@/trpc/server';
+import { notFound } from 'next/navigation';
+
 export default async function insurancePage({
   params,
 }: {
-  params?: { id: number };
+  params: { id: number };
 }) {
-  if (!params) {
-    return <div>Loading...</div>;
-  }
-  const headersInstance = headers();
-  const auth = headersInstance.get('Cookie')!;
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_HOST + `/api/reservation/${params.id}`,
 
-    {
-      cache: 'no-store',
-      headers: {
-        Cookie: auth,
-      },
-      next: {
-        tags: ['reservations'],
-      },
-    }
-  );
 
-  const reservation = await res.json();
-
-  let link;
+  const reservation = await api.reservation.byId({ id: params.id });
+  if (!reservation) return notFound();
+  let link = undefined;
   if (reservation.insuranceLink) {
     link = reservation.insuranceLink;
   }

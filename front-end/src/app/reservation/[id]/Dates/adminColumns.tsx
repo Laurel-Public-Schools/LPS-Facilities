@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/buttons/button';
 import HandleDelete from '@/functions/reservations/deleteDates';
 import UpdateStatus from '@/functions/reservations/updateStatus';
 import { ArrowUpDown } from 'lucide-react';
-import type { DateType } from '@/lib/types';
+import type  {ReservationDateType} from '@local/db/schema'
 import { Checkbox } from '@/components/ui/checkbox';
 import React from 'react';
 import {
@@ -18,7 +18,7 @@ import {
 import EditDates from '@/components/forms/EditDates';
 import EditMultipleDates from '@/components/forms/EditMultipleDays';
 
-export const adminColumns: ColumnDef<DateType>[] = [
+export const adminColumns: ColumnDef<ReservationDateType>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -82,14 +82,13 @@ export const adminColumns: ColumnDef<DateType>[] = [
   },
 
   {
-    accessorKey: 'Options',
+    accessorKey: 'id',
     header: 'Options',
     cell: ({ row }) => {
-      const dateID = row.getValue('Options');
-      const ReservationID = row.getValue('Edit');
-      const isApproved = row.getValue('approved') === 'approved';
-      const isDenied = row.getValue('approved') === 'denied';
-
+      const dateID = row.original.id
+      const ReservationID = row.original.reservationId
+      const isApproved = row.original.approved 
+      
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -111,7 +110,7 @@ export const adminColumns: ColumnDef<DateType>[] = [
                 </DropdownMenuItem>
               </>
             )}
-            {!isDenied && (
+            {isApproved && (
               <>
                 <DropdownMenuItem
                   onClick={() =>
@@ -139,11 +138,11 @@ export const adminColumns: ColumnDef<DateType>[] = [
   },
 
   {
-    accessorKey: 'Edit',
+    accessorKey: 'reservationId',
     header: ({ table }) => {
       const selectedRows = table.getSelectedRowModel();
       const selectedData = selectedRows.flatRows.map((row) => row.original);
-      const SelectedRowIds = selectedData.map((row) => row.Options!);
+      const SelectedRowIds = selectedData.map((row) => row.id!);
       return (
         <>
           <EditMultipleDates ids={SelectedRowIds} />
@@ -151,12 +150,12 @@ export const adminColumns: ColumnDef<DateType>[] = [
       );
     },
     cell: ({ row }) => {
-      const id = row.getValue('Options');
-      const startDate = row.getValue('startDate');
-      const endDate = row.getValue('endDate');
-      const startTime = row.getValue('startTime');
-      const endTime = row.getValue('endTime');
-      const reservationID = row.getValue('Edit');
+      const id = row.original.id;
+      const startDate = row.original.startDate
+      const endDate = row.original.endDate
+      const startTime = row.original.startTime
+      const endTime = row.original.endTime
+      const reservationID = row.original.reservationId
 
       return (
         <EditDates

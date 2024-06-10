@@ -1,92 +1,58 @@
-'use server';
+'use server'
 
-import type { Schema$Event } from './types';
-import {
-  handleDaily,
-  handleDateOfMonth,
-  handleDayOfMonth,
-  handleWeekly,
-} from './algorithms';
+import { FacilityQuery,GetApprovedDates } from '@local/db/queries';
 
-import {
-  filterByOneProperty,
-  filterIncludesString,
-  oneTime,
-  recurring,
-  recurringByProperty,
-  removeCancelled,
-  removeRecurrenceProperty,
-} from './functions';
+import { google } from 'googleapis';
+import { OAuth2Client } from 'google-auth-library';
+import type { GoogleEvents } from '@/lib/types';
 
-import { calendarConfig } from '@/lib/types/constants';
+import {env} from '@/env'
 
-Object.defineProperty(Array.prototype, 'flat', {
-  value: function (depth = 1) {
-    return this.reduce(function (flat: string, toFlatten: any) {
-      return flat.concat(
-        Array.isArray(toFlatten) && depth > 1
-          ? toFlatten.flat(depth - 1)
-          : toFlatten
-      );
-    }, []);
-  },
-});
 
-export default async function getAllCalendars(items: any[]) {
-  /**
-   * Get events from all calendars specified and created specified number of recurring events
-   */
+export async function GetEvents(id: number | string) {
+  
+  const res = await FacilityQuery.execute({ id: id });
 
-  const config = calendarConfig;
-  const calendar = calendarConfig.calendars[0];
-  const events = removeCancelled(items);
-  const oneTimeEvents = oneTime(calendar, events) as Schema$Event[];
-  const recurringEvents = recurring(events);
+  const calID = res?.googleCalendarId;
 
-  const daily = filterByOneProperty('RRULE:FREQ=DAILY', recurringEvents);
-  const recurringDaily = recurringByProperty(
-    removeRecurrenceProperty(daily),
-    handleDaily,
-    calendar,
-    config.dailyRecurrence
-  ).flat();
+  const oauth2Client = new OAuth2Client({
+    clientId: env.GOOGLE_CLIENT_ID,
+    clientSecret: env.GOOGLE_CLIENT_SECRET,
+    redirectUri: env.GOOGLE_REDIRECT_URI,
+  });
+  oauth2Client.setCredentials({
+    refresh_token: env.GOOGLE_REFRESH_TOKEN,
+  });
+  const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+  try {
+    const twoMonthsAgo = new Date();
+    twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
 
-  const weekly = filterByOneProperty('RRULE:FREQ=WEEKLY', recurringEvents);
-  const recurringWeekly = recurringByProperty(
-    removeRecurrenceProperty(weekly),
-    handleWeekly,
-    calendar,
-    config.weeklyRecurrence
-  ).flat();
+    const response = await calendar.events.list({
+      calendarId: calID,
+      maxResults: 1000,
+      singleEvents: true,
 
-  const monthly = filterByOneProperty('RRULE:FREQ=MONTHLY', recurringEvents);
-  const dateOfMonth = monthly.filter((item) =>
-    filterIncludesString(item.r, 'TH')
-  );
-  const dayOfMonth = monthly.filter(
-    (item) => !filterIncludesString(item.r, 'TH')
-  );
-
-  const recurringDateOfMonth = recurringByProperty(
-    removeRecurrenceProperty(dateOfMonth),
-    handleDateOfMonth,
-    calendar,
-    config.monthlyRecurrence
-  ).flat();
-
-  const recurringDayOfMonth = recurringByProperty(
-    removeRecurrenceProperty(dayOfMonth),
-    handleDayOfMonth,
-    calendar,
-    config.monthlyRecurrence
-  ).flat();
-
-  const allEvents = ([] as Schema$Event[]).concat(
-    oneTimeEvents,
-    recurringDaily,
-    recurringWeekly,
-    recurringDateOfMonth,
-    recurringDayOfMonth
-  );
-  return allEvents.flat();
+      orderBy: 'startTime',
+    });
+    let events: GoogleEvents[] = [];
+    if (response.data.items) {
+      events = response.data.items.map((e) => {
+        const start = e.start?.dateTime || e.start?.date;
+        const end = e.end?.dateTime || e.end?.date;
+        return {
+          gLink: e.htmlLink,
+          description: e.description,
+          location: e.location,
+          start,
+          end,
+          title: e.summary,
+          meta: e,
+        };
+      });
+    }
+    return events;
+  } catch (error) {
+    throw new Error('Error getting events');
+  }
 }

@@ -1,10 +1,51 @@
-import { db } from '@local/db/client';
-import { Reservation, ReservationDate, Facility, Category } from '@local/db';
-import { eq, sql, and, gte, or, lte, like } from 'drizzle-orm';
+import { db } from './client';
+import { Reservation, ReservationDate, Facility, Category, User, Events } from './schema';
+import { eq, sql, and, gte, or, lte, like, asc, lt } from 'drizzle-orm';
 import moment from 'moment';
 
 const currentDate = moment();
 const sevenDaysFromNow = moment().add(7, 'days');
+const today = new Date().toISOString();
+
+/**
+ * Users
+ */
+
+export const UserByEmail = db.query.User.findFirst({
+  where: eq(User.email, sql.placeholder('email')),
+  columns: {
+    password: false,
+  },
+}).prepare('user_by_email');
+
+export const GetUsers = db.query.User.findMany({
+  columns: {
+    password: false,
+  },
+}).prepare('get_users');
+
+export const GetUserById = db.query.User.findFirst({
+  where: eq(User.id, sql.placeholder('id')),
+  columns: {
+    password: false,
+  },
+  with: {
+    Reservation: {
+      with: {
+        Facility: true,
+        ReservationDate: true,
+        ReservationFees: true,
+        Category: true,
+      },
+    },
+  },
+}).prepare('get_user_by_id');
+
+
+/**
+ * Reservations
+ */
+
 
 export const GetRequests = db.query.Reservation.findMany({
   where: eq(Reservation.approved, 'pending'),
@@ -130,3 +171,81 @@ export const UnPaidReservations = db.query.Reservation.findMany({
     },
   },
 }).prepare('unPaidReservations');
+
+
+/**
+ * Facilities
+ */
+
+export const FacilityQuery = db.query.Facility.findFirst({
+  where: eq(Facility.id, sql.placeholder('id')),
+  with: {
+    Category: true,
+    Reservation: true,
+    Events: {
+      where: and(gte(Events.start, today), or(gte(Events.end, today))),
+    },
+  },
+}).prepare('single_Facility');
+
+export const FacilitiesQuery = db.select().from(Facility).leftJoin(Category, eq(Category.facilityId, Facility.id)).prepare('facilities');
+
+export const BuildingQuery = db.query.Facility.findMany({
+  where: eq(Facility.building, sql.placeholder('building')),
+}).prepare('building_Facility');
+
+export const BuildingnameQuery = db.query.Facility.findFirst({
+  where: like(Facility.building, sql.placeholder('building')),
+}).prepare('buildingname_Facility');
+
+
+/**
+ * Events
+ */
+
+export const EventsQuery = db.query.Events.findMany({
+  where: eq(Events.placeholder, false),
+  with: {
+    Facility: true,
+  },
+}).prepare('events');
+
+export const AllEventsQuery = db.query.Events.findMany({
+  with: {
+    Facility: true,
+  },
+}).prepare('allEvents');
+
+export const EventsByFacilityIdQuery = db.query.Events.findMany({
+  where: and(
+    eq(Events.facilityId, sql.placeholder('facilityId')),
+    eq(Events.placeholder, false)
+  ),
+  with: {
+    Facility: true,
+  },
+}).prepare('eventsByFacilityId');
+
+export const SortedEventsQuery = db.query.Events.findMany({
+  where: and(
+    eq(Events.placeholder, false),
+    eq(Events.facilityId, sql.placeholder('facilityId')),
+    gte(Events.start, sql.placeholder('start')),
+    lt(Events.start, sql.placeholder('end'))
+  ),
+  with: {
+    Facility: true,
+  },
+  orderBy: [asc(Events.start)],
+}).prepare('sortedEvents');
+
+/**
+ * Categories
+ */
+
+export const CategoryByFacility = db.query.Category.findFirst({
+  where: and(
+    eq(Category.facilityId, sql.placeholder('facilityId')),
+    like(Category.name, sql.placeholder('name'))
+  ),
+}).prepare('category_by_facility');

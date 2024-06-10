@@ -5,35 +5,16 @@ import { adminColumns } from './adminColumns';
 import { columns } from './columns';
 import { DataTable } from '@/components/ui/tables/reservations/data-table';
 import Options from './options';
-import { headers } from 'next/headers';
+import { CostReducer } from '@/functions/other/helpers';
 import { ReservationClass } from '@/lib/classes';
-
+import {api} from "@/trpc/server"
 import EditPricing from '@/components/forms/paymentModal';
 import { Paid } from '@/functions/mutations';
 import { SubmitButton } from '@/components/ui/buttons/submitButton';
 import { Skeleton } from '@/components/ui/skeleton';
 import { IsAdmin } from '@/functions/other/helpers';
+import { notFound } from 'next/navigation';
 
-async function getReservation(id: number) {
-  const headersInstance = headers();
-  const auth = headersInstance.get('Cookie')!;
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_HOST}/api/reservation/${id}`,
-    {
-      headers: {
-        Cookie: auth,
-      },
-      next: {
-        tags: ['reservations'],
-        revalidate: 60,
-      },
-    }
-  );
-
-  const response = await res.json();
-  const data = new ReservationClass(response);
-  return data;
-}
 
 export default async function paymentPage({
   params,
@@ -42,25 +23,16 @@ export default async function paymentPage({
 }) {
   const id = params.id;
 
-  const reservation = await getReservation(id);
+  const reservation =  await api.reservation.byId({ id: id });
+  if (!reservation) return notFound();
 
-  const {
-    eventName,
-    paid,
-    Category,
-    User,
-    Facility,
-    ReservationFees,
-    costOverride,
-  } = reservation;
+  const description = `${reservation.eventName} at ${reservation.Facility?.building} ${reservation.Facility?.name} by ${reservation.User?.name}`;
+  const email = reservation.User?.email || '';
 
-  const description = `${eventName} at ${Facility?.building} ${Facility?.name} by ${User?.name}`;
-  const email = User?.email || '';
-
-  const CategoryPrice = Category?.price;
-  const mappedFees = ReservationFees
+  const CategoryPrice = reservation.Category?.price;
+  const mappedFees = reservation.ReservationFees
     ? 
-      ReservationFees.map((fee) => {
+      reservation.ReservationFees.map((fee) => {
         return {
           additionalFees: fee.additionalFees ?? 0,
           feesType: fee.feesType ?? "",
@@ -69,7 +41,14 @@ export default async function paymentPage({
       })
     : [];
 
-  const totalCost = reservation.CostReducer();
+  const totalCost = CostReducer({
+    ReservationFees: reservation.ReservationFees,
+    ReservationDate: reservation.ReservationDate,
+    categoryId: reservation.categoryId,
+    Category: reservation.Category,
+    CategoryPrice: CategoryPrice,
+  });
+
 
   const isAdmin = await IsAdmin();
 
@@ -108,7 +87,7 @@ export default async function paymentPage({
           </Suspense>
           <div className="flex  my-2 p-2  justify-end text-xl border-b text-justify ">
             <div>
-              {!paid && !costOverride && (
+              {!reservation.paid && !reservation.costOverride && (
                 <>
                   <div className="text-sm font-thin text-muted-foreground">
                     Cost Per Hour: ${CategoryPrice} * Total Hours + any
@@ -117,13 +96,13 @@ export default async function paymentPage({
                   <div className="float-right">Total: ${totalCost}</div>
                 </>
               )}{' '}
-              {!paid && costOverride && <>Total: ${costOverride}</>}
-              {paid && <>Total: Paid!</>}
+              {!reservation.paid && reservation.costOverride && <>Total: ${reservation.costOverride}</>}
+              {reservation.paid && <>Total: reservation.Paid!</>}
             </div>
           </div>
 
           <div className="flex   justify-end text-xl    text-justify ">
-            {!paid && (totalCost > 0 || (costOverride && costOverride > 0)) && (
+            {!reservation.paid && (totalCost > 0 || (reservation.costOverride && reservation.costOverride > 0)) && (
               <>
                 {isAdmin ? (
                   <div className="flex  my-2 p-2  justify-end text-xl border-b-2 border-b-gray-700 dark:border-b-white text-justify ">
@@ -136,7 +115,7 @@ export default async function paymentPage({
                 ) : (
                   <ShowPayment
                     id={id}
-                    fees={costOverride ? costOverride : totalCost}
+                    fees={reservation.costOverride ? reservation.costOverride : totalCost}
                     description={description}
                     email={email}
                   />

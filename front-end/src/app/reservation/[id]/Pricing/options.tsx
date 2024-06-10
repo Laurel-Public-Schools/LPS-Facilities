@@ -1,6 +1,6 @@
 "use client"
 
-import { formSchema } from '@/components/forms/schemas/reservationForm';
+import { formSchema } from '@local/validators';
 import { Button } from '@/components/ui/buttons/button';
 import {
 	Card
