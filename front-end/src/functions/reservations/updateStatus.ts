@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidateTag } from 'next/cache';
-import { db } from '@/lib/db';
+import { db } from '@local/db/client';
 import { eq } from 'drizzle-orm';
 import { Reservation, ReservationDate } from '../../../../packages/db/src/schema/schema';
 import { GetReservationbyID } from '@/lib/db/queries/reservations';

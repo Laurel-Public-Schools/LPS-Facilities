@@ -20,7 +20,8 @@ import {
   
   
 } from 'drizzle-orm';
-import type {InferSelectModel, InferInsertModel} from 'drizzle-orm';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import { z } from 'zod';
 import type { AdapterAccount } from 'next-auth/adapters';
 import { sql } from 'drizzle-orm';
 export const key_status = pgEnum('key_status', [
@@ -76,7 +77,7 @@ export const User_role = pgEnum('User_role', [
   'USER',
 ]);
 
-
+export type UserRole = 'CAL_ADMIN' | 'ADMIN_ADMIN' | 'GR_ADMIN' | 'LHS_ADMIN' | 'LMS_ADMIN' | 'WE_ADMIN' | 'SO_ADMIN' | 'SUP_ADMIN' | 'USER';
 
 export const facilities_db = pgSchema('facilities_db');
 export const pgTable = pgTableCreator(name => `facilities_db_${name}`)
@@ -102,6 +103,17 @@ export const ReservationFees = facilities_db.table(
     };
   }
 );
+
+export const ReservationFeesSchema = createSelectSchema(ReservationFees);
+export const ReserVationFeesArray = z.array(ReservationFeesSchema)
+export type ReservationFeesType = z.infer<typeof ReservationFeesSchema>
+export const CreateReservationFeesSchema = createInsertSchema(ReservationFees, {
+  additionalFees: z.number(),
+  feesType: z.string().max(191),
+  reservationId: z.number(),
+}).omit({
+  id: true,
+});
 
 export const ReservationFeesRelations = relations(
   ReservationFees,
@@ -170,6 +182,10 @@ export const Category = facilities_db.table(
   }
 );
 
+export const CategorySchema = createSelectSchema(Category);
+export const CategoryArray = z.array(CategorySchema)
+export type CategoryType = z.infer<typeof CategorySchema>
+
 export const categoryRelations = relations(Category, ({ one, many }) => ({
   Facility: one(Facility, {
     fields: [Category.facilityId],
@@ -211,6 +227,21 @@ export const Events = facilities_db.table(
   }
 );
 
+export const EventsSchema = createSelectSchema(Events);
+export const EventsArray = z.array(EventsSchema)
+export type EventsType = z.infer<typeof EventsSchema>
+export const CreateEventsSchema = createInsertSchema(Events, {
+  calendarId: z.string().max(191),
+  title: z.string().max(191),
+  start: z.string(),
+  end: z.string(),
+  location: z.string().max(191),
+  recurringEventId: z.string().max(191),
+  facilityId: z.number(),
+  placeholder: z.boolean(),
+}).omit({
+  id: true,
+});
 
 
 export const eventsRelations = relations(Events, ({ one, many }) => ({
@@ -243,6 +274,18 @@ export const InsuranceFiles = facilities_db.table(
     };
   }
 );
+
+export const InsuranceFilesSchema = createSelectSchema(InsuranceFiles);
+export const InsuranceFilesArray = z.array(InsuranceFilesSchema)
+export type InsuranceFilesType = z.infer<typeof InsuranceFilesSchema>
+export const CreateInsuranceFilesSchema = createInsertSchema(InsuranceFiles, {
+  path: z.string().max(191),
+  fileName: z.string().max(191),
+  reservationId: z.number(),
+  varified: z.boolean(),
+}).omit({
+  id: true,
+});
 
 export const accounts = facilities_db.table(
   'Account',
@@ -356,6 +399,40 @@ export const Reservation = facilities_db.table(
   }
 );
 
+export const ReservationSchema = createSelectSchema(Reservation);
+export const ReservationArray = z.array(ReservationSchema)
+export type ReservationType = z.infer<typeof ReservationSchema>
+export const CreateReservationSchema = createInsertSchema(Reservation, {
+  userId: z.string().max(191),
+  eventName: z.string().max(191),
+  facilityId: z.number(),
+  details: z.string().max(2000),
+  fees: z.number(),
+  insurance: z.boolean(),
+  doorAccess: z.boolean(),
+  doorsDetails: z.string().max(191),
+  name: z.string().max(191),
+  techDetails: z.string().max(191),
+  techSupport: z.boolean(),
+  phone: z.string().max(191),
+  categoryId: z.number(),
+}).omit({
+  id: true,
+  createdAt: true,
+  approved: true,
+  primaryContact: true,
+  people: true,
+  totalHours: true,
+  inPerson: true,
+  paid: true,
+  paymentUrl: true,
+  paymentLinkID: true,
+  ticketMade: true,
+  conflicts: true,
+  insuranceLink: true,
+  costOverride: true,
+});
+
 
 export const reservationRelations = relations(Reservation, ({ one, many }) => ({
   Facility: one(Facility, {
@@ -403,6 +480,21 @@ export const ReservationDate = facilities_db.table(
   }
 );
 
+export const ReservationDateSchema = createSelectSchema(ReservationDate);
+export const ReservationDateArray = z.array(ReservationDateSchema)
+export type ReservationDateType = z.infer<typeof ReservationDateSchema>
+export const CreateReservationDateSchema = createInsertSchema(ReservationDate, {
+  startDate: z.string().max(191),
+  endDate: z.string().max(191),
+  startTime: z.string().max(191),
+  endTime: z.string().max(191),
+  reservationId: z.number(),
+}).omit({
+  id: true,
+  approved: true,
+  gcal_eventid: true,
+});
+
 export const reservationDateRelations = relations(
   ReservationDate,
   ({ one, many }) => ({
@@ -446,7 +538,9 @@ export const Facility = facilities_db.table(
   }
 );
 
-
+export const FacilitySchema = createSelectSchema(Facility);
+export const FacilityArray = z.array(FacilitySchema)
+export type FacilityType = z.infer<typeof FacilitySchema>
 
 export const facilityRelations = relations(Facility, ({ one, many }) => ({
   Category: many(Category),
@@ -490,6 +584,9 @@ export const User = facilities_db.table(
   }
 );
 
+export const UserSchema = createSelectSchema(User);
+export const UserArray = z.array(UserSchema)
+export type UserType = z.infer<typeof UserSchema>
 
 export const UserRelations = relations(User, ({ one, many }) => ({
   Reservation: many(Reservation),

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { serializeJSON } from '@/utils/serializeJSON';
 import { BuildingQuery } from '@/lib/db/queries/facility';
-import { db } from '@/lib/db';
+import { db } from '@local/db/client';
 import { like } from 'drizzle-orm';
 import { Facility } from '../../../../../../packages/db/src/schema/schema';
 

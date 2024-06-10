@@ -2,7 +2,7 @@
 import path from 'path';
 import fs from 'fs';
 import { revalidateTag } from 'next/cache';
-import { db } from '@/lib/db';
+import { db } from '@local/db/client';
 import { eq } from 'drizzle-orm';
 import { Facility, Category } from '../../../../../../packages/db/src/schema/schema';
 

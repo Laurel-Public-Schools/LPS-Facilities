@@ -1,6 +1,6 @@
 import { DataTable } from '@/components/ui/tables/users/data-table';
 import { GetUsers } from '@/lib/db/queries/users';
-import type { SelectUser } from '../../../../../packages/db/src/schema/schema';
+import type { SelectUser } from '@local/db';
 import { columns } from './columns';
 import { headers } from 'next/headers';
 

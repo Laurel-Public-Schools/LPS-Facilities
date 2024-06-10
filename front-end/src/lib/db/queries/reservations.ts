@@ -1,5 +1,5 @@
-import { db } from '@/lib/db';
-import { Reservation, ReservationDate, Facility, Category } from '../../../../../packages/db/src/schema/schema';
+import { db } from '@local/db/client';
+import { Reservation, ReservationDate, Facility, Category } from '@local/db';
 import { eq, sql, and, gte, or, lte, like } from 'drizzle-orm';
 import moment from 'moment';
 

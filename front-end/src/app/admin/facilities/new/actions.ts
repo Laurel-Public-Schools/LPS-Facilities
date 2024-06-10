@@ -1,7 +1,7 @@
 'use server';
 import path from 'path';
 import fs from 'fs';
-import { db } from '@/lib/db';
+import { db } from '@local/db/client';
 import { Facility, Category } from '../../../../../../packages/db/src/schema/schema';
 import { CategoryDescriptions } from '@/lib/types/constants';
 import { revalidateTag } from 'next/cache';

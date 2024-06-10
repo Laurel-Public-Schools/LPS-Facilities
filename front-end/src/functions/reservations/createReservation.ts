@@ -16,7 +16,7 @@ import {
   Reservation,
   ReservationDate,
 } from '../../../../packages/db/src/schema/schema';
-import { db } from '@/lib/db';
+import { db } from '@local/db/client';
 import { revalidateTag } from 'next/cache';
 import { newReservationEmail } from '../emails/reservationEmail';
 

@@ -10,8 +10,8 @@ import {
 } from '@/components/ui/dialog';
 import { CreateGoogleEvent } from '@/functions/google/singleDate';
 import { Button } from '@/components/ui/buttons/button';
-import { db } from '@/lib/db';
-import { ReservationDate } from '../../../../../packages/db/src/schema/schema';
+import { db } from '@local/db/client';
+import { ReservationDate } from '@local/db';
 import { revalidateTag } from 'next/cache';
 
 // form action to add dates to reservation

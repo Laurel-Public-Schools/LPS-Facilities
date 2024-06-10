@@ -1,5 +1,5 @@
-import { db } from '@/lib/db';
-import { Category } from '../../../../../packages/db/src/schema/schema';
+import { db } from '@local/db/client';
+import { Category } from '@local/db';
 import { and, eq, sql, like } from 'drizzle-orm';
 
 export const CategoryByFacility = db.query.Category.findFirst({

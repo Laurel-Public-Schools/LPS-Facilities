@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { db } from '@local/db/client';
 import { serializeJSON } from '@/utils/serializeJSON';
 
 export async function GET(request: Request) {

@@ -4,7 +4,7 @@ import { revalidatePath, revalidateTag } from 'next/cache';
 
 import reservationEmail from '@/functions/emails/reservationEmail';
 import CreateGoogleEvents from '../google/multipleDates';
-import { db } from '@/lib/db';
+import { db } from '@local/db/client';
 import { eq, sql, and } from 'drizzle-orm';
 import { Reservation, ReservationDate, User } from '../../../../packages/db/src/schema/schema';
 

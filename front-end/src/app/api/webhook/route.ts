@@ -1,9 +1,9 @@
 import type { NextRequest} from 'next/server';
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { db } from '@local/db/client';
 import { eq, and, gte, or, sql } from 'drizzle-orm';
 import { revalidateTag } from 'next/cache';
-import { Reservation } from '../../../../../packages/db/src/schema/schema';
+import { Reservation } from '@local/db';
 
 export async function POST(req: NextRequest) {
   try {

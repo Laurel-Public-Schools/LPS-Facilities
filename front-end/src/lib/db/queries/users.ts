@@ -1,5 +1,5 @@
-import { db } from '@/lib/db';
-import { User } from '../../../../../packages/db/src/schema/schema';
+import { db } from '@local/db/client';
+import { User } from '@local/db';
 import { eq, and, gte, or, sql } from 'drizzle-orm';
 
 export const UserByEmail = db.query.User.findFirst({

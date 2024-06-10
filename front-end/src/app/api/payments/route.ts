@@ -2,9 +2,9 @@ import type { NextRequest} from 'next/server';
 import { NextResponse } from 'next/server';
 import { Client } from 'square';
 import generateId from '@/functions/calculations/generate-id';
-import { db } from '@/lib/db';
+import { db } from '@local/db/client';
 import { eq } from 'drizzle-orm';
-import { Reservation } from '../../../../../packages/db/src/schema/schema';
+import { Reservation } from '@local/db';
 import { revalidateTag } from 'next/cache';
 
 const { checkoutApi } = new Client({

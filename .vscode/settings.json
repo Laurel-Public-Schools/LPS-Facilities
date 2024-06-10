@@ -16,8 +16,9 @@
   "editor.formatOnSave": true,
   "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
   "eslint.workingDirectories": [
-    { "pattern": "apps/*/" },
+    { "pattern": "front-end/*" },
     { "pattern": "packages/*/" }
+    { "pattern": "tooling/*/"}
   ],
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.acceptSuggestionOnCommitCharacter": false,
