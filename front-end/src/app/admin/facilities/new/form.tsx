@@ -1,15 +1,16 @@
-'use client';
+"use client";
 
-import { SubmitButton } from '@/components/ui/buttons/submitButton';
-import { buildingNames } from '@/lib/types/constants';
-import newFacility from './actions';
+import { useState } from "react";
+import Image from "next/image";
 //@ts-expect-error - type not implemented
-import { useFormState } from 'react-dom';
-import { useState } from 'react';
-import Image from 'next/image';
+import { useFormState } from "react-dom";
+
+import { SubmitButton } from "@/components/ui/buttons/submitButton";
+import { buildingNames } from "@/lib/types/constants";
+import newFacility from "./actions";
 
 const inputStyle =
-  ' mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 ';
+  " mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 ";
 
 const initialState = {
   message: null,
@@ -21,11 +22,11 @@ export default function NewFacilityForm() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const handeFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
-    if (file?.type.match('image.*')) {
+    if (file?.type.match("image.*")) {
       const reader = new FileReader();
       reader.onload = (e: ProgressEvent<FileReader>) => {
         const result = e.target?.result;
-        if (typeof result === 'string') {
+        if (typeof result === "string") {
           setImagePreview(result);
         }
       };
@@ -77,12 +78,7 @@ export default function NewFacilityForm() {
             id="image"
             accept=".jpg, .png"
             onChange={handeFileChange}
-            className=" w-full text-sm text-slate-500
-					file:mr-4 file:py-2 file:px-4
-					file:rounded-full file:border-0
-					file:text-sm file:font-semibold
-					file:bg-violet-50 file:text-violet-700
-					hover:file:bg-violet-100"
+            className="w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100"
           />
           {imagePreview && (
             <Image

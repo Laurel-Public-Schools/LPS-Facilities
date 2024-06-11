@@ -1,7 +1,10 @@
-'use server';
-import { db } from '@local/db/client';
-import { Reservation } from '../../../../packages/db/src/schema/schema';
-import { eq, sql } from 'drizzle-orm';
+"use server";
+
+import { eq, sql } from "drizzle-orm";
+
+import { db } from "@local/db/client";
+
+import { Reservation } from "../../../../packages/db/src/schema/schema";
 
 export default async function PiP(id: any) {
   try {
@@ -14,5 +17,5 @@ export default async function PiP(id: any) {
   } catch (error) {
     throw new Error();
   }
-  return Response.json(({ response: 200, body: 'success' }.response = 200));
+  return Response.json(({ response: 200, body: "success" }.response = 200));
 }

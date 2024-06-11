@@ -1,5 +1,6 @@
-import moment from 'moment-timezone';
-import type { EventProps } from '../types';
+import moment from "moment-timezone";
+
+import type { EventProps } from "../types";
 
 /**
  * Handles Events that occure the same date of every month
@@ -31,11 +32,11 @@ const handleDateOfMonth = ({ calendar, recurrence, e }: EventProps) => {
     const reoccuringEvent = {
       eventType: calendar.name,
       creator: e.creator,
-      end: end.clone().add(add, 'months').toDate(),
+      end: end.clone().add(add, "months").toDate(),
       gLink: e.htmlLink,
       description: e.description,
       location: e.location,
-      start: start.clone().add(add, 'months').toDate(),
+      start: start.clone().add(add, "months").toDate(),
       title: e.summary,
       meta: e,
     };

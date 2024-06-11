@@ -1,21 +1,22 @@
-'use client';
-import { Button } from '@/components/ui/buttons/button';
-import { Label } from '@/components/ui/label';
-import { useRouter } from 'next/navigation';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { addFee, removeFee } from '@/functions/mutations';
+"use client";
 
+import React from "react";
+import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import { Button } from "@/components/ui/buttons/button";
+import { Label } from "@/components/ui/label";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-  SheetFooter,
-  SheetClose,
-} from '@/components/ui/sheet';
-import React from 'react';
+} from "@/components/ui/sheet";
+import { addFee, removeFee } from "@/functions/mutations";
 
 interface IForminput {
   additionalFees: number;
@@ -31,7 +32,7 @@ export default function EditPricing(id: any) {
     try {
       await addFee(data, reservationID);
     } catch (error) {
-      throw new Error('Something went wrong', { cause: error });
+      throw new Error("Something went wrong", { cause: error });
     } finally {
       router.refresh();
     }
@@ -53,14 +54,14 @@ export default function EditPricing(id: any) {
             <div className="flex flex-col space-y-2">
               <Label htmlFor="start-date">Fee Amount</Label>
               <input
-                {...register('additionalFees')}
+                {...register("additionalFees")}
                 id="additionalFees"
                 type="number"
               />
             </div>
             <div className="flex flex-col space-y-2">
               <Label htmlFor="feesType">Type of Fee</Label>
-              <input {...register('feesType')} id="feesType" />
+              <input {...register("feesType")} id="feesType" />
             </div>
           </div>
           <SheetFooter>

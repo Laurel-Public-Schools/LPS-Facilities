@@ -1,9 +1,8 @@
-import {cache} from "react";
-import {headers} from "next/headers";
+import { cache } from "react";
+import { headers } from "next/headers";
 
-import {createCaller, createTRPCContext} from "@local/api"
-import {auth} from "@local/auth"
-
+import { createCaller, createTRPCContext } from "@local/api";
+import { auth } from "@local/auth";
 
 const createContext = cache(async () => {
   const heads = new Headers(headers());
@@ -12,7 +11,7 @@ const createContext = cache(async () => {
   return createTRPCContext({
     session: await auth(),
     headers: heads,
-  })
-})
+  });
+});
 
 export const api = createCaller(createContext);

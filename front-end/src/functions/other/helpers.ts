@@ -1,18 +1,22 @@
-import {auth} from '@local/auth'
-import { CategoryType, ReservationDateType, ReservationFeesType } from '@local/db/schema';
+import { auth } from "@local/auth";
+import {
+  CategoryType,
+  ReservationDateType,
+  ReservationFeesType,
+} from "@local/db/schema";
 
 export async function IsAdmin() {
-  const session = await auth()
-  if (!session) return false
+  const session = await auth();
+  if (!session) return false;
   if (
-    session?.user.role === 'ADMIN_ADMIN' ||
-    session?.user.role === 'CAL_ADMIN' ||
-    session?.user.role === 'GR_ADMIN' ||
-    session?.user.role === 'LHS_ADMIN' ||
-    session?.user.role === 'LMS_ADMIN' ||
-    session?.user.role === 'WE_ADMIN' ||
-    session?.user.role === 'SO_ADMIN' ||
-    session?.user.role === 'SUP_ADMIN'
+    session?.user.role === "ADMIN_ADMIN" ||
+    session?.user.role === "CAL_ADMIN" ||
+    session?.user.role === "GR_ADMIN" ||
+    session?.user.role === "LHS_ADMIN" ||
+    session?.user.role === "LMS_ADMIN" ||
+    session?.user.role === "WE_ADMIN" ||
+    session?.user.role === "SO_ADMIN" ||
+    session?.user.role === "SUP_ADMIN"
   ) {
     return true;
   } else {
@@ -20,14 +24,12 @@ export async function IsAdmin() {
   }
 }
 
-
-
 interface CR {
   ReservationFees: ReservationFeesType[] | [];
   ReservationDate: ReservationDateType[] | [];
   categoryId: number;
   Category: CategoryType | null;
-  CategoryPrice: number
+  CategoryPrice: number;
 }
 
 export function CostReducer(props: CR) {
@@ -41,14 +43,14 @@ export function CostReducer(props: CR) {
   if (ReservationFees.length > 0) {
     for (let i = 0; i < ReservationFees.length; i++) {
       if (i === null) continue;
-      
+
       additionalFeesTotal += ReservationFees[i]?.additionalFees!;
     }
   }
   const approvedReservationDates = ReservationDate.filter(
     (reservationDate: any) => {
-      return reservationDate.approved === 'approved';
-    }
+      return reservationDate.approved === "approved";
+    },
   );
   if (categoryId === 105 || categoryId === 106 || categoryId === 107) {
     totalCost = CategoryPrice + additionalFeesTotal;
@@ -56,15 +58,13 @@ export function CostReducer(props: CR) {
     const totalHours = approvedReservationDates.reduce(
       (acc: any, reservationDate: any) => {
         const startTime: any = new Date(
-          `1970-01-01T${reservationDate.startTime}Z`
+          `1970-01-01T${reservationDate.startTime}Z`,
         );
-        const endTime: any = new Date(
-          `1970-01-01T${reservationDate.endTime}Z`
-        );
+        const endTime: any = new Date(`1970-01-01T${reservationDate.endTime}Z`);
         const hours = Math.abs(endTime - startTime) / 36e5;
         return acc + hours;
       },
-      0
+      0,
     );
     totalCost = totalHours * CategoryPrice + additionalFeesTotal;
   }

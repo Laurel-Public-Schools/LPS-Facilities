@@ -1,28 +1,29 @@
-'use client';
-import * as React from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
+"use client";
+
+import * as React from "react";
+import moment from "moment";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+
+import "react-big-calendar/lib/css/react-big-calendar.css";
+
+import type { Schema$Event } from "@/functions/events/types";
+import type { BuildingAll } from "@/lib/types/constants";
+import { useSearchParams } from "next/navigation";
+import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
+import { useTheme } from "next-themes";
+
+import { GetAllEvents } from "@/functions/events/googleAPI";
+import { buildingCalendars, buildingColors } from "@/lib/types/constants";
+import { CalendarInfo } from "../ui";
 import {
   AlertDialog,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-} from '../ui/alert-dialog';
-import { CalendarInfo } from '../ui';
-import { useTheme } from 'next-themes';
-import { Button } from '../ui/buttons';
-import { useSearchParams } from 'next/navigation';
-import type {
-  BuildingAll} from '@/lib/types/constants';
-import {
-  buildingCalendars,
-  buildingColors,
-} from '@/lib/types/constants';
-import { AlertDialogAction } from '@radix-ui/react-alert-dialog';
-import type { Schema$Event } from '@/functions/events/types';
-import { GetAllEvents } from '@/functions/events/googleAPI';
+} from "../ui/alert-dialog";
+import { Button } from "../ui/buttons";
+
 const localizer = momentLocalizer(moment);
 
 type Event = {
@@ -46,34 +47,35 @@ export default function CalendarMain({
 }) {
   const searchParams = useSearchParams();
 
-  const [selectedEvent, setSelectedEvent] = React.useState<EventComponentProps>(null);
+  const [selectedEvent, setSelectedEvent] =
+    React.useState<EventComponentProps>(null);
   const [isOpen, setIsOpen] = React.useState(false);
 
-  let selectedBuilding: string | null = 'All';
-  if (searchParams?.has('building')) {
-    selectedBuilding = searchParams.get('building');
+  let selectedBuilding: string | null = "All";
+  if (searchParams?.has("building")) {
+    selectedBuilding = searchParams.get("building");
   }
 
   const { theme } = useTheme();
 
-  const isDarkMode = theme === 'dark';
+  const isDarkMode = theme === "dark";
   const calendarStyle = {
     height: 600,
     width: 1000,
-    justifyContent: '',
+    justifyContent: "",
     border: 5,
     ...(isDarkMode && {
-      WebkitTextFillColor: 'white',
-      WebkitTextStrokeColor: 'white',
+      WebkitTextFillColor: "white",
+      WebkitTextStrokeColor: "white",
     }),
   };
-  const fetchedEvents = React.use(promise)
+  const fetchedEvents = React.use(promise);
   const mappedEvents = fetchedEvents.map((event) => {
-    if (!event.location) event.location = 'unknown';
-    const facility = (event.location).split('-')[0] || 'unknown';
+    if (!event.location) event.location = "unknown";
+    const facility = event.location.split("-")[0] || "unknown";
     return {
       //@ts-expect-error - fixing weird gcal typings
-      title: event.summary || event.title || 'Event',
+      title: event.summary || event.title || "Event",
       start: new Date(event?.start as unknown as string),
       end: new Date(event?.end as unknown as string),
       building: facility,
@@ -81,18 +83,18 @@ export default function CalendarMain({
   });
 
   const filteredEvents =
-    selectedBuilding === 'All'
+    selectedBuilding === "All"
       ? mappedEvents
       : mappedEvents.filter(
-          (event: Event) => event?.building === selectedBuilding
+          (event: Event) => event?.building === selectedBuilding,
         );
 
   const url = buildingCalendars[selectedBuilding as BuildingAll];
 
   return (
-    <div className=" p-[10px]  ">
-      <div className="drop-shadow-md ">
-        <div className="  inline-flex ">
+    <div className="p-[10px]">
+      <div className="drop-shadow-md">
+        <div className="inline-flex">
           <a href={url} target="_blank" rel="noopener noreferrer">
             <Button>Open {selectedBuilding} Google Calendar</Button>
           </a>
@@ -110,7 +112,7 @@ export default function CalendarMain({
           eventPropGetter={(event) => ({
             style: {
               backgroundColor:
-                buildingColors[event.building || 'Administration Building'],
+                buildingColors[event.building || "Administration Building"],
             },
           })}
           startAccessor="start"
@@ -120,17 +122,17 @@ export default function CalendarMain({
       </div>
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
         <AlertDialogContent>
-          <AlertDialogHeader className="text-xl font-bold mb-4">
+          <AlertDialogHeader className="mb-4 text-xl font-bold">
             {selectedEvent?.title} <br />
             {selectedEvent?.building}
           </AlertDialogHeader>
           <AlertDialogDescription>
             <p className="mb-2">
-              {' '}
+              {" "}
               Starts at {selectedEvent?.start.toLocaleString()}
             </p>
             <p className="mb-4">
-              {' '}
+              {" "}
               Ends at {selectedEvent?.end.toLocaleString()}
             </p>
           </AlertDialogDescription>

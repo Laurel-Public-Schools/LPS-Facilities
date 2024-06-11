@@ -1,7 +1,7 @@
-import {fetchRequestHandler} from "@trpc/server/adapters/fetch"
+import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
-import {appRouter, createTRPCContext} from "@local/api"
-import {auth} from "@local/auth"
+import { appRouter, createTRPCContext } from "@local/api";
+import { auth } from "@local/auth";
 
 export const runtime = "edge";
 
@@ -10,7 +10,7 @@ const setCorsHeaders = (res: Response) => {
   res.headers.set("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
   res.headers.set("Access-Control-Request-Method", "*");
   res.headers.set("Access-Control-Allow-Headers", "*");
-}
+};
 
 export const OPTIONS = () => {
   const response = new Response(null, {
@@ -18,25 +18,25 @@ export const OPTIONS = () => {
   });
   setCorsHeaders(response);
   return response;
-}
+};
 
 const handler = auth(async (req) => {
   const response = await fetchRequestHandler({
     endpoint: "/api/trpc",
     router: appRouter,
     req,
-    createContext: () => 
+    createContext: () =>
       createTRPCContext({
         session: req.auth,
         headers: req.headers,
       }),
-      onError({error, path}) {
-        console.error(`>>> tRPC Error on '${path}`, error)
-      }
+    onError({ error, path }) {
+      console.error(`>>> tRPC Error on '${path}`, error);
+    },
   });
 
   setCorsHeaders(response);
   return response;
-})
+});
 
-export {handler as GET, handler as POST}
+export { handler as GET, handler as POST };

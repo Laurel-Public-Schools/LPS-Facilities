@@ -1,8 +1,11 @@
-'use server';
-import { db } from '@local/db/client';
-import { eq } from 'drizzle-orm';
-import { ReservationDate } from '../../../../packages/db/src/schema/schema';
-import { revalidateTag } from 'next/cache';
+"use server";
+
+import { revalidateTag } from "next/cache";
+import { eq } from "drizzle-orm";
+
+import { db } from "@local/db/client";
+
+import { ReservationDate } from "../../../../packages/db/src/schema/schema";
 
 export default async function HandleDelete(id: number, reservationID: number) {
   try {
@@ -12,5 +15,5 @@ export default async function HandleDelete(id: number, reservationID: number) {
   } catch (error) {
     throw new Error();
   }
-  return revalidateTag('reservations');
+  return revalidateTag("reservations");
 }

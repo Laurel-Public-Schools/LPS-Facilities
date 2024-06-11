@@ -1,7 +1,8 @@
-import { createEnv } from '@t3-oss/env-nextjs';
-import { z } from 'zod';
-import {vercel} from "@t3-oss/env-nextjs/presets"
-import {env as authEnv} from "@local/auth/env"
+import { createEnv } from "@t3-oss/env-nextjs";
+import { vercel } from "@t3-oss/env-nextjs/presets";
+import { z } from "zod";
+
+import { env as authEnv } from "@local/auth/env";
 
 export const env = createEnv({
   extends: [vercel(), authEnv],
@@ -65,8 +66,7 @@ export const env = createEnv({
     NEXT_PUBLIC_GOOGLE_ANALYTICS: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
   },
   skipValidation:
-  !!process.env.CI ||
-  !!process.env.SKIP_ENV_VALIDATION ||
-  process.env.npm_lifecycle_event === "lint",
+    !!process.env.CI ||
+    !!process.env.SKIP_ENV_VALIDATION ||
+    process.env.npm_lifecycle_event === "lint",
 });
-

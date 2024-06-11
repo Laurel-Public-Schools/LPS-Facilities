@@ -1,14 +1,9 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Input } from '../ui/input';
-import { Checkbox } from '../ui/checkbox';
-import { Button, SubmitButton } from '../ui/buttons';
-import { Textarea } from '../ui/textarea';
-import { Label } from '@/components/ui/label';
-import { submitIssue } from './actions';
+import * as React from "react";
 //@ts-expect-error - no type in react
-import { useFormState } from 'react-dom';
+import { useFormState } from "react-dom";
+
 import {
   Dialog,
   DialogContent,
@@ -16,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   Drawer,
   DrawerClose,
@@ -26,13 +21,19 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from '@/components/ui/drawer';
-import { cn } from '@/lib/utils';
-import { useMediaQuery } from '../hooks';
+} from "@/components/ui/drawer";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
+import { useMediaQuery } from "../hooks";
+import { Button, SubmitButton } from "../ui/buttons";
+import { Checkbox } from "../ui/checkbox";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
+import { submitIssue } from "./actions";
 
 export function IssuesForm() {
   const [open, setOpen] = React.useState(false);
-  const isDesktop = useMediaQuery('(min-width: 768px)');
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
     return (
@@ -52,7 +53,7 @@ export function IssuesForm() {
   }
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger className="font-bold text-center tx-sm">
+      <DrawerTrigger className="tx-sm text-center font-bold">
         Report a website bug
       </DrawerTrigger>
       <DrawerContent>
@@ -74,16 +75,16 @@ export function IssuesForm() {
 }
 
 const initialState = {
-  message: '',
+  message: "",
 };
 
-function Form({ className }: React.ComponentProps<'form'>) {
+function Form({ className }: React.ComponentProps<"form">) {
   //eslint-disable-next-line
   const [state, formAction] = useFormState(submitIssue, initialState);
   return (
     <form
       action={formAction}
-      className={cn('grid items-start gap-4', className)}
+      className={cn("grid items-start gap-4", className)}
     >
       <div className="grid gap-2">
         <Label htmlFor="email">Your Email</Label>

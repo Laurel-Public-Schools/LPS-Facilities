@@ -1,13 +1,14 @@
-'use server';
-import { NextResponse } from 'next/server';
+"use server";
 
-import { google } from 'googleapis';
-import { OAuth2Client } from 'google-auth-library';
-import { GetDateByID } from '@/lib/db/queries/reservations';
-import moment from 'moment-timezone';
+import { NextResponse } from "next/server";
+import { OAuth2Client } from "google-auth-library";
+import { google } from "googleapis";
+import moment from "moment-timezone";
+
+import { GetDateByID } from "@/lib/db/queries/reservations";
 
 export async function CreateGoogleEvent(id: number | bigint) {
-  const scopes = ['https://www.googleapis.com/auth/calendar'];
+  const scopes = ["https://www.googleapis.com/auth/calendar"];
   const oauth2Client = new OAuth2Client({
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -22,17 +23,17 @@ export async function CreateGoogleEvent(id: number | bigint) {
     id: id as number,
   });
 
-  const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+  const calendar = google.calendar({ version: "v3", auth: oauth2Client });
 
   const startDateTime = moment
     .tz(
       `${approvedDate?.startDate} ${approvedDate?.startTime}`,
-      'America/Denver'
+      "America/Denver",
     )
     .toISOString();
 
   const endDateTime = moment
-    .tz(`${approvedDate?.endDate} ${approvedDate?.endTime}`, 'America/Denver')
+    .tz(`${approvedDate?.endDate} ${approvedDate?.endTime}`, "America/Denver")
     .toISOString();
 
   const event = {
@@ -41,11 +42,11 @@ export async function CreateGoogleEvent(id: number | bigint) {
     description: approvedDate?.Reservation.details,
     start: {
       dateTime: startDateTime,
-      timeZone: 'America/Denver',
+      timeZone: "America/Denver",
     },
     end: {
       dateTime: endDateTime,
-      timeZone: 'America/Denver',
+      timeZone: "America/Denver",
     },
   };
   try {
@@ -54,10 +55,10 @@ export async function CreateGoogleEvent(id: number | bigint) {
       requestBody: event,
     });
   } catch (error) {
-    return NextResponse.json({ message: 'error' }, { status: 500 });
+    return NextResponse.json({ message: "error" }, { status: 500 });
   }
   return NextResponse.json({
     status: 200,
-    message: 'google cal events created',
+    message: "google cal events created",
   });
 }

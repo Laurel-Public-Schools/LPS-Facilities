@@ -1,12 +1,11 @@
-import { Suspense } from 'react';
-import dynamic from 'next/dynamic';
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-import { Skeleton } from '@/components/ui/skeleton';
+import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function DashboardPage() {
-  const Overview = dynamic(() => import('./tabs/overview'));
+  const Overview = dynamic(() => import("./tabs/overview"));
   return (
     <>
       <div className="flex flex-col">
@@ -17,7 +16,7 @@ export default function DashboardPage() {
               <TabsTrigger value="payments">Payments</TabsTrigger>
             </TabsList>
 
-            <Suspense fallback={<Skeleton className="w-auto h-auto" />}>
+            <Suspense fallback={<Skeleton className="h-auto w-auto" />}>
               <Overview />
             </Suspense>
           </Tabs>

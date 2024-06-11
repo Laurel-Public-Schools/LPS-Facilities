@@ -1,15 +1,22 @@
-import React from 'react';
-import AccountForm from './account-form';
-import { Separator } from '@/components/ui/separator';
+import React from "react";
+import { notFound } from "next/navigation";
 
-import { getProfile } from '@/functions/data/users';
+import { auth } from "@local/auth";
+
+import { Separator } from "@/components/ui/separator";
+import AccountForm from "./account-form";
 
 export default async function DetailsPage() {
-  const data = await getProfile();
+  const session = await auth();
+  if (!session) {
+    return notFound();
+  }
+
+  const data = session.user;
   const updateUserValues = {
     id: data.id,
-    name: data.name,
-    email: data.email,
+    name: data.name!,
+    email: data.email!,
   };
   return (
     <div className="space-y-6">

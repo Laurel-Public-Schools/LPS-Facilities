@@ -1,9 +1,9 @@
-import {authRouter} from "./router/auth";
-import { UserRouter } from "./router/users";
+import { authRouter } from "./router/auth";
 import { CategoryRouter } from "./router/categories";
-import { ReservationRouter } from "./router/reservations";
 import { FacilityRouter } from "./router/facilities";
-import {createTRPCRouter} from "./trpc"
+import { ReservationRouter } from "./router/reservations";
+import { UserRouter } from "./router/users";
+import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
   auth: authRouter,

@@ -1,4 +1,11 @@
-import type {SelectReservation, SelectReservationDate, SelectReservationFees, SelectFacility, SelectCategory, SelectUser} from '../../../../packages/db/src/schema/schema';
+import type {
+  SelectCategory,
+  SelectFacility,
+  SelectReservation,
+  SelectReservationDate,
+  SelectReservationFees,
+  SelectUser,
+} from "../../../../packages/db/src/schema/schema";
 
 export type ReservationClassType = SelectReservation & {
   Facility?: SelectFacility;
@@ -23,7 +30,7 @@ class ReservationClass {
   categoryId: number | bigint;
   facilityId: number | bigint;
   details?: string | null;
-  approved: 'pending' | 'approved' | 'denied' | 'canceled';
+  approved: "pending" | "approved" | "denied" | "canceled";
   inPerson: boolean;
   ReservationDate?: SelectReservationDate[];
   ReservationFees?: SelectReservationFees[];
@@ -71,7 +78,7 @@ class ReservationClass {
    */
   range(): string {
     const ReservationDate = this.ReservationDate || [];
-    let dateRange = '';
+    let dateRange = "";
     if (ReservationDate.length > 1) {
       dateRange = `${ReservationDate[0].startDate} - ${
         ReservationDate[ReservationDate.length - 1].endDate
@@ -79,7 +86,7 @@ class ReservationClass {
     } else if (ReservationDate.length === 1) {
       dateRange = `${ReservationDate[0].startDate}`;
     } else {
-      dateRange = 'No Upcoming Dates';
+      dateRange = "No Upcoming Dates";
     }
 
     return dateRange;
@@ -112,8 +119,8 @@ class ReservationClass {
     }
     const approvedReservationDates = ReservationDate.filter(
       (reservationDate: any) => {
-        return reservationDate.approved === 'approved';
-      }
+        return reservationDate.approved === "approved";
+      },
     );
     if (categoryId === 105 || categoryId === 106 || categoryId === 107) {
       totalCost = CategoryPrice + additionalFeesTotal;
@@ -121,15 +128,15 @@ class ReservationClass {
       const totalHours = approvedReservationDates.reduce(
         (acc: any, reservationDate: any) => {
           const startTime: any = new Date(
-            `1970-01-01T${reservationDate.startTime}Z`
+            `1970-01-01T${reservationDate.startTime}Z`,
           );
           const endTime: any = new Date(
-            `1970-01-01T${reservationDate.endTime}Z`
+            `1970-01-01T${reservationDate.endTime}Z`,
           );
           const hours = Math.abs(endTime - startTime) / 36e5;
           return acc + hours;
         },
-        0
+        0,
       );
       totalCost = totalHours * CategoryPrice + additionalFeesTotal;
     }

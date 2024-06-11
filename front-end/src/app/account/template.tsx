@@ -1,9 +1,10 @@
-import React from 'react';
-import { userSideBar } from '@/lib/types/constants';
-import { SidebarNav } from '@/components/ui/sidebar-nav';
-import { Separator } from '@/components/ui/separator';
+import React from "react";
 
-export const dynamic = 'force-dynamic';
+import { Separator } from "@/components/ui/separator";
+import { SidebarNav } from "@/components/ui/sidebar-nav";
+import { userSideBar } from "@/lib/types/constants";
+
+export const dynamic = "force-dynamic";
 
 export default function accountLayout({
   children,
@@ -13,7 +14,7 @@ export default function accountLayout({
   return (
     <div className="container relative">
       <div className="sm:hidden">{children}</div>
-      <div className="hidden sm:block space-y-6 p-10 pb-16">
+      <div className="hidden space-y-6 p-10 pb-16 sm:block">
         <div className="space-y-0.5">
           <h2 className="text-2xl font-bold tracking-tight">Account</h2>
           <p className="text-muted-foreground">

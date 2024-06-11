@@ -1,16 +1,15 @@
-import Link from 'next/link';
-
-import React from 'react';
+import React from "react";
+import Link from "next/link";
 
 export function ReservationButton() {
   return (
-    <div className=" bg-secondary text-white text-center hover:bg-secondaryDark transition ease-in-out hover:scale-110 font-bold py-2 px-4 border-b-4 shadow-sm drop-shadow-lg w-[220px] border-secondaryDark rounded ">
+    <div className="hover:bg-secondaryDark border-secondaryDark w-[220px] rounded border-b-4 bg-secondary px-4 py-2 text-center font-bold text-white shadow-sm drop-shadow-lg transition ease-in-out hover:scale-110">
       <Link
         href="/reservation"
-        className="font-bold text-xl drop-shadow-lg hover:animate-bounce"
+        className="hover:animate-bounce text-xl font-bold drop-shadow-lg"
       >
-        {' '}
-        Request a rental{' '}
+        {" "}
+        Request a rental{" "}
       </Link>
     </div>
   );

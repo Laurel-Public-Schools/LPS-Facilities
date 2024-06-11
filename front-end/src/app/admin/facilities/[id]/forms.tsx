@@ -1,18 +1,19 @@
-import React from 'react';
-import { SubmitButton } from '@/components/ui/buttons/submitButton';
-import {
-  uploadImage,
-  updateFacilityName,
-  deleteFacility,
-  updateCategoryPrices,
-  updateCapaciaty,
-} from './actions';
+import React from "react";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
+} from "@/components/ui/accordion";
+import { SubmitButton } from "@/components/ui/buttons/submitButton";
+import {
+  deleteFacility,
+  updateCapaciaty,
+  updateCategoryPrices,
+  updateFacilityName,
+  uploadImage,
+} from "./actions";
 
 interface FormProps {
   id: number;
@@ -26,7 +27,7 @@ interface FormProps {
 }
 
 const inputStyle =
-  ' mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 ';
+  " mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 ";
 
 const ImageUploadForm = ({ id }: FormProps) => {
   const uploadWithParam = uploadImage.bind(null, id);
@@ -39,12 +40,7 @@ const ImageUploadForm = ({ id }: FormProps) => {
           name="file"
           id="file"
           accept=".jpg, .png"
-          className=" w-full text-sm text-slate-500
-					file:mr-4 file:py-2 file:px-4
-					file:rounded-full file:border-0
-					file:text-sm file:font-semibold
-					file:bg-violet-50 file:text-violet-700
-					hover:file:bg-violet-100"
+          className="w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100"
         />
         <SubmitButton variant="outline">Upload</SubmitButton>
       </form>
@@ -54,7 +50,7 @@ const ImageUploadForm = ({ id }: FormProps) => {
 
 const FacilityNameForm = ({ id, name }: FormProps) => {
   const updateWithParam = updateFacilityName.bind(null, id);
-  console.log('name: ', name);
+  console.log("name: ", name);
   return (
     <>
       <form action={updateWithParam}>
@@ -78,8 +74,8 @@ const UpdatePricesForm = ({ CategoryIDs }: FormProps) => {
     <>
       {CategoryIDs?.map((category, index) => (
         <div key={index}>
-          <form action={updateCategoryPrices} className="gap-y-4 my-4">
-            <label htmlFor="Category" className="text-ellipsis overflow-hidden">
+          <form action={updateCategoryPrices} className="my-4 gap-y-4">
+            <label htmlFor="Category" className="overflow-hidden text-ellipsis">
               {category.name}
             </label>
             <input type="hidden" name="id" id="id" value={category.id} />
@@ -120,7 +116,7 @@ const UpdateCapacityForm = ({ id, capacity }: FormProps) => {
 
 export default function Forms({ id, name, capacity, CategoryIDs }: FormProps) {
   return (
-    <div className="flex flex-col my-2 gap-8">
+    <div className="my-2 flex flex-col gap-8">
       <div className="flex flex-row">
         <ImageUploadForm id={id} />
       </div>

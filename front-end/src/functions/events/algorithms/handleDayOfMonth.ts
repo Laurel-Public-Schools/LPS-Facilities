@@ -1,5 +1,6 @@
-import moment from 'moment-timezone';
-import type { EventProps } from '../types';
+import moment from "moment-timezone";
+
+import type { EventProps } from "../types";
 
 /**
  * Handles events that occur the same day of the month
@@ -48,14 +49,14 @@ const handleDayOfMonth = ({ calendar, recurrence, e }: EventProps) => {
       start.month() + recurrence,
       tempCounter,
       start.hour(),
-      start.minutes()
+      start.minutes(),
     );
     let nextEnd = new Date(
       end.year(),
       end.month() + recurrence,
       tempCounter,
       end.hour(),
-      end.minutes()
+      end.minutes(),
     );
 
     while (tempCounter < 31) {
@@ -83,14 +84,14 @@ const handleDayOfMonth = ({ calendar, recurrence, e }: EventProps) => {
         start.month() + recurrence,
         tempCounter,
         start.hour(),
-        start.minutes()
+        start.minutes(),
       );
       nextEnd = new Date(
         end.year(),
         end.month() + recurrence,
         tempCounter,
         end.hour(),
-        end.minutes()
+        end.minutes(),
       );
     }
     recurrence--;

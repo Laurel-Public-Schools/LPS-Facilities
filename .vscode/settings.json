@@ -17,8 +17,8 @@
   "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
   "eslint.workingDirectories": [
     { "pattern": "front-end/*" },
-    { "pattern": "packages/*/" }
-    { "pattern": "tooling/*/"}
+    { "pattern": "packages/*/" },
+    { "pattern": "tooling/*/" }
   ],
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.acceptSuggestionOnCommitCharacter": false,
@@ -30,7 +30,7 @@
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
-  "tailwindCSS.experimental.configFile": "./tooling/tailwind/web.ts",
+  "tailwindCSS.experimental.configFile": "./front-end/tailwind.config.ts",
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.linkedEditing": true,
   "editor.mouseWheelZoom": true,
@@ -73,5 +73,6 @@
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
-  "editor.insertSpaces": true
+  "editor.insertSpaces": true,
+  "vim.useSystemClipboard": true
 }

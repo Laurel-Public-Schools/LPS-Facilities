@@ -1,3 +1,6 @@
+import React from "react";
+
+import { Button } from "../buttons/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,9 +11,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from './alert-dialog';
-import { Button } from '../buttons/button';
-import React from 'react';
+} from "./alert-dialog";
 
 export default function Contact() {
   return (
@@ -20,21 +21,21 @@ export default function Contact() {
         Contact Us
         {/* </Button> */}
       </AlertDialogTrigger>
-      <AlertDialogContent className=" bg-opacity-100 bg-gray-300">
+      <AlertDialogContent className="bg-gray-300 bg-opacity-100">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-center">
             Have questions regarding a reservation or the reservation process?
           </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogDescription>
-          <p className="text-black font-medium text-lg text-center">
+          <p className="text-center text-lg font-medium text-black">
             Contact the Activities Director at: <br />
             <a
               className="hover:text-blue-500"
               href="mailto:lpsactivities@laurel.k12.mt.us"
             >
               lpsactivities@laurel.k12.mt.us
-            </a>{' '}
+            </a>{" "}
             <br />
             or call the Laurel High School Office:
             <br />

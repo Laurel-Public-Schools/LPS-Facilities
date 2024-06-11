@@ -1,20 +1,18 @@
-import { ShowPayment } from '@/components/forms';
+import React, { Suspense } from "react";
+import { notFound } from "next/navigation";
 
-import React, { Suspense } from 'react';
-import { adminColumns } from './adminColumns';
-import { columns } from './columns';
-import { DataTable } from '@/components/ui/tables/reservations/data-table';
-import Options from './options';
-import { CostReducer } from '@/functions/other/helpers';
-import { ReservationClass } from '@/lib/classes';
-import {api} from "@/trpc/server"
-import EditPricing from '@/components/forms/paymentModal';
-import { Paid } from '@/functions/mutations';
-import { SubmitButton } from '@/components/ui/buttons/submitButton';
-import { Skeleton } from '@/components/ui/skeleton';
-import { IsAdmin } from '@/functions/other/helpers';
-import { notFound } from 'next/navigation';
-
+import { ShowPayment } from "@/components/forms";
+import EditPricing from "@/components/forms/paymentModal";
+import { SubmitButton } from "@/components/ui/buttons/submitButton";
+import { Skeleton } from "@/components/ui/skeleton";
+import { DataTable } from "@/components/ui/tables/reservations/data-table";
+import { Paid } from "@/functions/mutations";
+import { CostReducer, IsAdmin } from "@/functions/other/helpers";
+import { ReservationClass } from "@/lib/classes";
+import { api } from "@/trpc/server";
+import { adminColumns } from "./adminColumns";
+import { columns } from "./columns";
+import Options from "./options";
 
 export default async function paymentPage({
   params,
@@ -23,16 +21,15 @@ export default async function paymentPage({
 }) {
   const id = params.id;
 
-  const reservation =  await api.reservation.byId({ id: id });
+  const reservation = await api.reservation.byId({ id: id });
   if (!reservation) return notFound();
 
   const description = `${reservation.eventName} at ${reservation.Facility?.building} ${reservation.Facility?.name} by ${reservation.User?.name}`;
-  const email = reservation.User?.email || '';
+  const email = reservation.User?.email || "";
 
   const CategoryPrice = reservation.Category?.price;
   const mappedFees = reservation.ReservationFees
-    ? 
-      reservation.ReservationFees.map((fee) => {
+    ? reservation.ReservationFees.map((fee) => {
         return {
           additionalFees: fee.additionalFees ?? 0,
           feesType: fee.feesType ?? "",
@@ -49,26 +46,24 @@ export default async function paymentPage({
     CategoryPrice: CategoryPrice,
   });
 
-
   const isAdmin = await IsAdmin();
 
-
   return (
-    <div className="flex flex-col sm:flex-row  justify-center gap-y-4 my-3 w-auto lg:w-[1000px] h-full pb-3 mb-2 ">
-      <div className=" gap-y-4  drop-shadow-md  m-3 p-4 ">
-        <h2 className="font-bold gap-y-4 text-xl text-gray-600 dark:text-gray-300">
+    <div className="my-3 mb-2 flex h-full w-auto flex-col justify-center gap-y-4 pb-3 sm:flex-row lg:w-[1000px]">
+      <div className="m-3 gap-y-4 p-4 drop-shadow-md">
+        <h2 className="gap-y-4 text-xl font-bold text-gray-600 dark:text-gray-300">
           Pricing and Payments
         </h2>
-        <h3 className="mt-1 font-bold text-gray-600 dark:text-gray-300 ">
+        <h3 className="mt-1 font-bold text-gray-600 dark:text-gray-300">
           Added Fees:
         </h3>
-        <div className="sm:container sm:w-[600px]  ">
+        <div className="sm:container sm:w-[600px]">
           <Suspense
-            fallback={<Skeleton className="w-[600px] h-[600px]"></Skeleton>}
+            fallback={<Skeleton className="h-[600px] w-[600px]"></Skeleton>}
           >
             {isAdmin ? (
               <>
-                <div className=" border-b mb-2 py-2">
+                <div className="mb-2 border-b py-2">
                   <DataTable columns={adminColumns} data={mappedFees} />
                   <EditPricing id={id} />
                 </div>
@@ -80,12 +75,12 @@ export default async function paymentPage({
                 </div>
               </>
             ) : (
-              <div className=" border-b">
+              <div className="border-b">
                 <DataTable columns={columns} data={mappedFees} />
               </div>
             )}
           </Suspense>
-          <div className="flex  my-2 p-2  justify-end text-xl border-b text-justify ">
+          <div className="my-2 flex justify-end border-b p-2 text-justify text-xl">
             <div>
               {!reservation.paid && !reservation.costOverride && (
                 <>
@@ -95,33 +90,41 @@ export default async function paymentPage({
                   </div>
                   <div className="float-right">Total: ${totalCost}</div>
                 </>
-              )}{' '}
-              {!reservation.paid && reservation.costOverride && <>Total: ${reservation.costOverride}</>}
+              )}{" "}
+              {!reservation.paid && reservation.costOverride && (
+                <>Total: ${reservation.costOverride}</>
+              )}
               {reservation.paid && <>Total: reservation.Paid!</>}
             </div>
           </div>
 
-          <div className="flex   justify-end text-xl    text-justify ">
-            {!reservation.paid && (totalCost > 0 || (reservation.costOverride && reservation.costOverride > 0)) && (
-              <>
-                {isAdmin ? (
-                  <div className="flex  my-2 p-2  justify-end text-xl border-b-2 border-b-gray-700 dark:border-b-white text-justify ">
-                    <span className="text-red-500">Not Paid</span>
-                    <form action={Paid}>
-                      <input type="hidden" name="id" value={id} />
-                      <SubmitButton>Mark as Paid</SubmitButton>
-                    </form>
-                  </div>
-                ) : (
-                  <ShowPayment
-                    id={id}
-                    fees={reservation.costOverride ? reservation.costOverride : totalCost}
-                    description={description}
-                    email={email}
-                  />
-                )}
-              </>
-            )}
+          <div className="flex justify-end text-justify text-xl">
+            {!reservation.paid &&
+              (totalCost > 0 ||
+                (reservation.costOverride && reservation.costOverride > 0)) && (
+                <>
+                  {isAdmin ? (
+                    <div className="my-2 flex justify-end border-b-2 border-b-gray-700 p-2 text-justify text-xl dark:border-b-white">
+                      <span className="text-red-500">Not Paid</span>
+                      <form action={Paid}>
+                        <input type="hidden" name="id" value={id} />
+                        <SubmitButton>Mark as Paid</SubmitButton>
+                      </form>
+                    </div>
+                  ) : (
+                    <ShowPayment
+                      id={id}
+                      fees={
+                        reservation.costOverride
+                          ? reservation.costOverride
+                          : totalCost
+                      }
+                      description={description}
+                      email={email}
+                    />
+                  )}
+                </>
+              )}
           </div>
         </div>
       </div>

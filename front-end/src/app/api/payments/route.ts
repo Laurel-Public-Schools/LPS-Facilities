@@ -1,16 +1,18 @@
-import type { NextRequest} from 'next/server';
-import { NextResponse } from 'next/server';
-import { Client } from 'square';
-import generateId from '@/functions/calculations/generate-id';
-import { db } from '@local/db/client';
-import { eq } from 'drizzle-orm';
-import { Reservation } from '@local/db';
-import { revalidateTag } from 'next/cache';
+import type { NextRequest } from "next/server";
+import { revalidateTag } from "next/cache";
+import { NextResponse } from "next/server";
+import { eq } from "drizzle-orm";
+import { Client } from "square";
+
+import { Reservation } from "@local/db";
+import { db } from "@local/db/client";
+
+import generateId from "@/functions/calculations/generate-id";
 
 const { checkoutApi } = new Client({
   accessToken: process.env.SQUARE_TOKEN,
   //@ts-expect-error
-  environment: 'production',
+  environment: "production",
 });
 //@ts-expect-error
 BigInt.prototype.toJSON = function () {
@@ -24,12 +26,12 @@ export async function POST(req: NextRequest) {
   try {
     const res = await checkoutApi.createPaymentLink({
       idempotencyKey: uuid,
-      description: 'Facility Rental',
+      description: "Facility Rental",
       quickPay: {
         name: body.description,
         priceMoney: {
           amount: BigInt(Math.round(body.fees * 100)),
-          currency: 'USD',
+          currency: "USD",
         },
         locationId: process.env.SQUARE_LOCATION_ID!,
       },
@@ -56,19 +58,19 @@ export async function POST(req: NextRequest) {
 
     try {
       await fetch(`${process.env.NEXT_PUBLIC_EMAIL_API}`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           key: process.env.EMAIL_API_KEY,
           to: body.email,
-          from: 'Facility Rental',
-          subject: 'Facility Rental Payment Link',
+          from: "Facility Rental",
+          subject: "Facility Rental Payment Link",
           html:
-            'Click the link below to pay for your reservation: \n \n ' +
+            "Click the link below to pay for your reservation: \n \n " +
             paymentUrl +
-            '\n \n If you have any questions, please contact the Activities Director at lpsactivites@laurel.k12.mt.us',
+            "\n \n If you have any questions, please contact the Activities Director at lpsactivites@laurel.k12.mt.us",
         }),
       });
     } catch (error) {
@@ -77,10 +79,10 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     return NextResponse.json({ ok: false, body: error }, { status: 500 });
   }
-  revalidateTag('reservations');
+  revalidateTag("reservations");
   return NextResponse.json(
-    { ok: true, body: 'Payment Link Created' },
-    { status: 200 }
+    { ok: true, body: "Payment Link Created" },
+    { status: 200 },
   );
 }
 

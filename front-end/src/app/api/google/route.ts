@@ -1,19 +1,21 @@
-import type { NextRequest} from 'next/server';
-import { NextResponse } from 'next/server';
-import { AllEventsQuery } from '@/lib/db/queries/events';
-import { db } from '@local/db/client';
-import { Events  } from '@local/db';
-import type {InsertEvents} from '@local/db';
-import { revalidateTag } from 'next/cache';
-import { eq } from 'drizzle-orm';
+import type { NextRequest } from "next/server";
+import { revalidateTag } from "next/cache";
+import { NextResponse } from "next/server";
+import { eq } from "drizzle-orm";
+
+import type { InsertEvents } from "@local/db";
+import { Events } from "@local/db";
+import { db } from "@local/db/client";
+
+import { AllEventsQuery } from "@/lib/db/queries/events";
 
 export async function POST(request: NextRequest) {
   const { events } = await request.json();
   const headers = request.headers;
-  if (headers.get('x-api-key') !== process.env.EMAIL_API_KEY) {
+  if (headers.get("x-api-key") !== process.env.EMAIL_API_KEY) {
     return NextResponse.json(
-      { ok: false, message: 'unauthorized' },
-      { status: 401 }
+      { ok: false, message: "unauthorized" },
+      { status: 401 },
     );
   }
   const oneMonthAgo = new Date();
@@ -25,9 +27,9 @@ export async function POST(request: NextRequest) {
   let created = 0;
   let updated = 0;
   let failed = 0;
-  let messageDetails = '';
+  let messageDetails = "";
   const eventsToDelete = databaseEvents
-    .filter((event) => new Date(event.start || '') < oneMonthAgo)
+    .filter((event) => new Date(event.start || "") < oneMonthAgo)
     .map((event) => event.id);
   if (eventsToDelete.length > 0) {
     try {
@@ -45,7 +47,7 @@ export async function POST(request: NextRequest) {
       for (const eventData of events) {
         const existingEvent = databaseEvents.find((e) => e.id === eventData.id);
         if (
-          (existingEvent?.placeholder) ||
+          existingEvent?.placeholder ||
           (existingEvent && existingEvent.start === null)
         ) {
           await db
@@ -76,12 +78,12 @@ export async function POST(request: NextRequest) {
       messageDetails += `Failed to create ${error} events. `;
     }
   }
-  revalidateTag('events');
+  revalidateTag("events");
   return NextResponse.json(
     {
       ok: true,
       message: `Deleted ${deleted} events, created ${created} events, and updated ${updated} events. Failed on ${failed} events. ${messageDetails}`,
     },
-    { status: 200 }
+    { status: 200 },
   );
 }

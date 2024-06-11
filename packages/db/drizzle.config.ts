@@ -4,7 +4,7 @@ export default {
   schema: "./src/schema.ts",
   out: "./drizzle",
   dialect: "postgresql",
-  schemaFilter: [ "facilities_db"],
+  schemaFilter: ["facilities_db"],
   dbCredentials: {
     url: process.env.DIRECT_URL!,
   },

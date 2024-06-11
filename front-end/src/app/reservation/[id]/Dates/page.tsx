@@ -1,27 +1,24 @@
-import { Suspense } from 'react';
-import { DataTable } from '@/components/ui/tables/reservations/reservation/data-table';
-import { columns } from './columns';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
+import { notFound } from "next/navigation";
 
-import { adminColumns } from './adminColumns';
-import {api} from "@/trpc/server"
-
-import dynamic from 'next/dynamic';
-
-import { IsAdmin } from '@/functions/other/helpers';
-import { notFound } from 'next/navigation';
-
+import { Skeleton } from "@/components/ui/skeleton";
+import { DataTable } from "@/components/ui/tables/reservations/reservation/data-table";
+import { IsAdmin } from "@/functions/other/helpers";
+import { api } from "@/trpc/server";
+import { adminColumns } from "./adminColumns";
+import { columns } from "./columns";
 
 export default async function reservationDatesPage({
   params,
 }: {
   params: { id: number };
 }) {
-  const isAdmin = await IsAdmin()
-  const AddDates = dynamic(() => import('@/components/ui/alerts/addDates'));
-  const reservation = await api.reservation.byId({ id:params.id });
+  const isAdmin = await IsAdmin();
+  const AddDates = dynamic(() => import("@/components/ui/alerts/addDates"));
+  const reservation = await api.reservation.byId({ id: params.id });
   if (!reservation) return notFound();
-  const mappedDates = reservation.ReservationDate!
+  const mappedDates = reservation.ReservationDate!;
   return (
     <div className="space-y-7" suppressHydrationWarning>
       <Suspense fallback={<Skeleton className="h-auto w-auto" />}>

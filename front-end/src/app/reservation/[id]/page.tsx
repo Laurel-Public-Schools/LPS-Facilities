@@ -1,6 +1,6 @@
-import {api} from "@/trpc/server"
 import { notFound } from "next/navigation";
 
+import { api } from "@/trpc/server";
 
 export default async function reservationPage({
   params,
@@ -9,41 +9,34 @@ export default async function reservationPage({
 }) {
   const reservation = await api.reservation.byId({ id: params.id });
   if (!reservation) return notFound();
-  const {
-    name,
-    Facility,
-    primaryContact,
-    phone,
-    details,
-    Category,
-  } = reservation;
-
+  const { name, Facility, primaryContact, phone, details, Category } =
+    reservation;
 
   return (
-    <div className="space-y-7 ">
+    <div className="space-y-7">
       <div>
         <h2 className="text-2xl text-muted-foreground"> Summary </h2>
       </div>
-      <div className="hidden sm:flex flex-col justify-between flex-wrap">
-        <div className="flex flex-row  justify-between text-lg border-b-2   text-justify ">
+      <div className="hidden flex-col flex-wrap justify-between sm:flex">
+        <div className="flex flex-row justify-between border-b-2 text-justify text-lg">
           Primary Contact: {primaryContact} <div> {name}</div>
         </div>
-        <div className="flex flex-row  justify-between text-lg border-b-2   text-justify ">
+        <div className="flex flex-row justify-between border-b-2 text-justify text-lg">
           Contact Number: <div>{phone}</div>
         </div>
-        <div className="flex flex-row  justify-between text-lg border-b-2   text-justify ">
+        <div className="flex flex-row justify-between border-b-2 text-justify text-lg">
           Contact Email: <div>{reservation.User.email}</div>
         </div>
-        <div className="flex flex-row  sm:justify-between text-lg border-b-2   text-justify ">
-          Requested Category:{' '}
-          <div className="truncate overflow-ellipsis text max-w-sm">
+        <div className="flex flex-row border-b-2 text-justify text-lg sm:justify-between">
+          Requested Category:{" "}
+          <div className="text max-w-sm truncate overflow-ellipsis">
             {Category.name}
           </div>
         </div>
-        <div className="flex flex-row my-10 text-ellipsis flex-wrap gap-10 justify-between text-xl border-b-2  text-justify">
-          Description:{' '}
-          <div className="text-left ml-10 flex text-md text-ellipsis">
-            {details}{' '}
+        <div className="my-10 flex flex-row flex-wrap justify-between gap-10 text-ellipsis border-b-2 text-justify text-xl">
+          Description:{" "}
+          <div className="text-md ml-10 flex text-ellipsis text-left">
+            {details}{" "}
           </div>
         </div>
       </div>

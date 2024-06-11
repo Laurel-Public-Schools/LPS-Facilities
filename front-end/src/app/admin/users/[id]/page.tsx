@@ -1,12 +1,17 @@
-import React from 'react';
-import { columns } from './columns';
-import moment from 'moment';
-import { Suspense } from 'react';
-import TableSkeleton from './skeleton';
-import { getUser } from '@/functions/data/users';
-import type { SelectReservation, SelectReservationDate, SelectFacility} from '@local/db';
-import { User } from '@/lib/types';
-import { DataTable } from '@/components/ui/tables';
+import React, { Suspense } from "react";
+import moment from "moment";
+
+import type {
+  SelectFacility,
+  SelectReservation,
+  SelectReservationDate,
+} from "@local/db";
+
+import { DataTable } from "@/components/ui/tables";
+import { getUser } from "@/functions/data/users";
+import { User } from "@/lib/types";
+import { columns } from "./columns";
+import TableSkeleton from "./skeleton";
 
 interface TableUser {
   name: string;
@@ -14,7 +19,7 @@ interface TableUser {
   eventName: string;
   Facility: string;
   ReservationDate?: string;
-  approved: 'pending' | 'approved' | 'denied' | 'canceled' | 'N/A';
+  approved: "pending" | "approved" | "denied" | "canceled" | "N/A";
   Details: number;
 }
 
@@ -23,7 +28,7 @@ interface Reservation extends SelectReservation {
   Facility: SelectFacility;
 }
 
-const currentDate = moment().format('YYYY-MM-DD');
+const currentDate = moment().format("YYYY-MM-DD");
 
 async function getData(id: string) {
   const user = await getUser(id);
@@ -34,16 +39,16 @@ async function getData(id: string) {
 
   const mappedReservations: TableUser[] = reservation.map((reservation) => {
     const sortedDates = reservation.ReservationDate.sort((a, b) =>
-      moment(a.startDate).diff(moment(b.startDate))
+      moment(a.startDate).diff(moment(b.startDate)),
     );
     const nextUpcomingDate = sortedDates.find((date) =>
-      moment(date.startDate).isSameOrAfter(currentDate)
+      moment(date.startDate).isSameOrAfter(currentDate),
     );
     return {
-      Name: user?.name ?? 'N/A',
+      Name: user?.name ?? "N/A",
       eventName: reservation.eventName,
       Facility: reservation.Facility.name,
-      ReservationDate: nextUpcomingDate ? nextUpcomingDate.startDate : 'N/A',
+      ReservationDate: nextUpcomingDate ? nextUpcomingDate.startDate : "N/A",
       approved: reservation.approved,
       Details: reservation.id,
     };
@@ -58,15 +63,15 @@ export default async function accountPage({
 }) {
   const id = params.id;
 
-  const data: TableUser = await getData(id)
+  const data: TableUser = await getData(id);
 
-  const name = data[0]?.name!
+  const name = data[0]?.name!;
   return (
-    <div className="space-y-7 space-x-2 ">
-      <h1 className="font-bold flex justify-center m-3 border-b p-3 drop-shadow-lg text-4xl">
+    <div className="space-x-2 space-y-7">
+      <h1 className="m-3 flex justify-center border-b p-3 text-4xl font-bold drop-shadow-lg">
         {name}
       </h1>
-      <h2 className="font-bold text-3xl text-primary dark:text-secondary shadow-secondary drop-shadow">
+      <h2 className="text-3xl font-bold text-primary shadow-secondary drop-shadow dark:text-secondary">
         Reservations
       </h2>
       {data.length === 0 ? (

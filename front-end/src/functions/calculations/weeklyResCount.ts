@@ -1,6 +1,6 @@
-'use server';
+"use server";
 
-import { ReservationCountThisWeek } from '@/lib/db/queries/reservations';
+import { api } from "@/trpc/server";
 
 export default async function WeeklyCount() {
   let reservationCount = 0;

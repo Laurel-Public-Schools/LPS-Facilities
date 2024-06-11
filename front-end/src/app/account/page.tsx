@@ -1,24 +1,28 @@
-import { DataTable } from '@/components/ui/tables';
-import { columns } from './columns';
-import React from 'react';
+import React, { Suspense } from "react";
+import { notFound } from "next/navigation";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
+import { auth } from "@local/auth";
 
-import { userReservations } from '@/functions/calculations/tableData';
+import { Separator } from "@/components/ui/separator";
+import { DataTable } from "@/components/ui/tables";
+import { userReservations } from "@/functions/calculations/tableData";
+import { api } from "@/trpc/server";
+import { columns } from "./columns";
 
-import { ReloadIcon } from '@radix-ui/react-icons';
-import { Separator } from '@/components/ui/separator';
-import {auth} from '@local/auth'
-
-import { Suspense } from 'react';
-import {api} from '@/trpc/server'
-import { notFound } from 'next/navigation';
-
-
+async function getData(id: string) {
+  const user = await api.user.ById({ id: id });
+  const reservations = user?.Reservation;
+  if (!reservations) {
+    return [];
+  }
+  return userReservations(reservations);
+}
 
 export default async function Account() {
-  const session = await auth()
-  if(!session) return notFound();
-  const data = await api.reservation.usersReservations({userId: session.user.id})
+  const session = await auth();
+  if (!session) return notFound();
+  const data = await getData(session.user.id);
   if (!data) {
     return <div>loading ...</div>;
   }
@@ -40,7 +44,7 @@ export default async function Account() {
 const LoadingComponent = () => {
   return (
     <div>
-      Loading <ReloadIcon className="w-4 h-4 animate-spin" />
+      Loading <ReloadIcon className="animate-spin h-4 w-4" />
     </div>
   );
 };

@@ -1,13 +1,15 @@
-import { NextResponse } from 'next/server';
-import { serializeJSON } from '@/utils/serializeJSON';
-import { BuildingQuery } from '@/lib/db/queries/facility';
-import { db } from '@local/db/client';
-import { like } from 'drizzle-orm';
-import { Facility } from '../../../../../../packages/db/src/schema/schema';
+import { NextResponse } from "next/server";
+import { like } from "drizzle-orm";
+
+import { db } from "@local/db/client";
+
+import { BuildingQuery } from "@/lib/db/queries/facility";
+import { serializeJSON } from "@/utils/serializeJSON";
+import { Facility } from "../../../../../../packages/db/src/schema/schema";
 
 export async function GET(
   request: Request,
-  { params }: { params: { building: string } }
+  { params }: { params: { building: string } },
 ) {
   const facilityBuilding = params.building;
 

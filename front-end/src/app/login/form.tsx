@@ -1,50 +1,45 @@
-
 import { isRedirectError } from "next/dist/client/components/redirect";
-import { signIn } from '@local/auth';
-import Link from 'next/link';
-import { AuthError } from 'next-auth';
-import { Button } from '@/components/ui/buttons';
-import { Input } from '@/components/ui/input';
+import Link from "next/link";
+import { AuthError } from "next-auth";
+
+import { signIn } from "@local/auth";
+
+import { Button } from "@/components/ui/buttons";
+import { Input } from "@/components/ui/input";
 
 async function Login(formData: FormData) {
-  "use server"
+  "use server";
 
-   await signIn('credentials', {
-      email: formData.get('email') as string,
-      password: formData.get('password') as string,
-      redirectTo: '/',
-    });
-
+  await signIn("credentials", {
+    email: formData.get("email") as string,
+    password: formData.get("password") as string,
+    redirectTo: "/",
+  });
 }
 
 export default function LoginForm() {
-
   return (
-    <div className="drop-shadow-md shadow-lg p-4 bg-gray-100">
-      <form action={async () => {
-        "use server"
-        await signIn('azure-ad', {
-          redirect: true,
-          
-        })
-      }}
+    <div className="bg-gray-100 p-4 shadow-lg drop-shadow-md">
+      <form
+        action={async () => {
+          "use server";
+          await signIn("azure-ad", {
+            redirect: true,
+          });
+        }}
       >
-      <Button
-        type = "submit"
-        size="lg"
-        className="w-full shadow"
-      >
-        Use District Staff Account
-      </Button>
+        <Button type="submit" size="lg" className="w-full shadow">
+          Use District Staff Account
+        </Button>
       </form>
       <form action={Login}>
         <div className="mb-6">
-          <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
-            <p className="text-center drop-shadow-md font-semibold text-black dark:text-black mx-4 mb-0">
+          <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-gray-300 after:mt-0.5 after:flex-1 after:border-t after:border-gray-300">
+            <p className="mx-4 mb-0 text-center font-semibold text-black drop-shadow-md dark:text-black">
               OR
             </p>
           </div>
-          <h1 className="text-center font-bold text-black mx4- mb-0 drop-shadow-md">
+          <h1 className="mx4- mb-0 text-center font-bold text-black drop-shadow-md">
             Public User Sign In
           </h1>
           <Input
@@ -64,20 +59,20 @@ export default function LoginForm() {
             placeholder="Password"
           />
           <Link
-            className="text-blue-500 hover:underline hover:cursor-pointer italic text-sm"
+            className="text-sm italic text-blue-500 hover:cursor-pointer hover:underline"
             href="/login/reset"
           >
             Forgot my password
           </Link>
         </div>
-        <Button type="submit" variant="outline" className="  w-full">
+        <Button type="submit" variant="outline" className="w-full">
           "Sign In"
         </Button>
 
         <Button
           asChild
           variant="outline"
-          className="mt-2 justify-center self-center align-middle sm:font-medium font-light w-auto"
+          className="mt-2 w-auto justify-center self-center align-middle font-light sm:font-medium"
         >
           <Link href="/login/register" className="w-2/3">
             Don't have an account? Register here!

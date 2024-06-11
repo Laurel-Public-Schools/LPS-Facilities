@@ -1,16 +1,14 @@
-'use server'
+"use server";
 
-import { FacilityQuery,GetApprovedDates } from '@local/db/queries';
+import type { GoogleEvents } from "@/lib/types";
+import { OAuth2Client } from "google-auth-library";
+import { google } from "googleapis";
 
-import { google } from 'googleapis';
-import { OAuth2Client } from 'google-auth-library';
-import type { GoogleEvents } from '@/lib/types';
+import { FacilityQuery, GetApprovedDates } from "@local/db/queries";
 
-import {env} from '@/env'
-
+import { env } from "@/env";
 
 export async function GetEvents(id: number | string) {
-  
   const res = await FacilityQuery.execute({ id: id });
 
   const calID = res?.googleCalendarId;
@@ -23,7 +21,7 @@ export async function GetEvents(id: number | string) {
   oauth2Client.setCredentials({
     refresh_token: env.GOOGLE_REFRESH_TOKEN,
   });
-  const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+  const calendar = google.calendar({ version: "v3", auth: oauth2Client });
   try {
     const twoMonthsAgo = new Date();
     twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
@@ -33,7 +31,7 @@ export async function GetEvents(id: number | string) {
       maxResults: 1000,
       singleEvents: true,
 
-      orderBy: 'startTime',
+      orderBy: "startTime",
     });
     let events: GoogleEvents[] = [];
     if (response.data.items) {
@@ -53,10 +51,9 @@ export async function GetEvents(id: number | string) {
     }
     return events;
   } catch (error) {
-    throw new Error('Error getting events');
+    throw new Error("Error getting events");
   }
 }
-
 
 export async function GetAllEvents() {
   const oauth2Client = new OAuth2Client({
@@ -67,17 +64,17 @@ export async function GetAllEvents() {
   oauth2Client.setCredentials({
     refresh_token: env.GOOGLE_REFRESH_TOKEN,
   });
-  const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+  const calendar = google.calendar({ version: "v3", auth: oauth2Client });
   try {
     const twoMonthsAgo = new Date();
     twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
 
     const response = await calendar.events.list({
       calendarId:
-        'c_a55b94eb4dd05e5dd936dd548d434d6a25c2694efe67224e3eff10205d2fb82b@group.calendar.google.com',
+        "c_a55b94eb4dd05e5dd936dd548d434d6a25c2694efe67224e3eff10205d2fb82b@group.calendar.google.com",
       maxResults: 1000,
       singleEvents: true,
-      orderBy: 'startTime',
+      orderBy: "startTime",
     });
     let events: GoogleEvents[] = [];
     if (response.data.items) {
@@ -95,9 +92,9 @@ export async function GetAllEvents() {
         };
       });
     }
-    return events
+    return events;
   } catch (error) {
     console.log(error);
-    throw new Error('Error getting events');
+    throw new Error("Error getting events");
   }
 }

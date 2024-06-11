@@ -1,10 +1,10 @@
-import React from 'react';
-import { api } from '@/trpc/server';
-import CardLayout from './cardLayout';
-import { mappedFacilities } from '@/functions/calculations/tableData';
-import type {FacilityWithCategory} from '@/lib/types';
-import { Suspense } from 'react';
-import LoadingScreen from '@/components/ui/loadingScreen';
+import type { FacilityWithCategory } from "@/lib/types";
+import React, { Suspense } from "react";
+
+import LoadingScreen from "@/components/ui/loadingScreen";
+import { mappedFacilities } from "@/functions/calculations/tableData";
+import { api } from "@/trpc/server";
+import CardLayout from "./cardLayout";
 
 // #TODO: delete this
 
@@ -25,7 +25,7 @@ export default async function FacilitiesPage() {
   const facilities = api.facility.all();
 
   return (
-    <div className=" space-y-7 ">
+    <div className="space-y-7">
       <Suspense fallback={<LoadingScreen />}>
         <CardLayout facilities={facilities} />
       </Suspense>

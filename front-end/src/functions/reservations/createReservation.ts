@@ -1,16 +1,17 @@
-'use server';
+"use server";
+
 /**
  * Serverless function for creating a new reservation from form data
  */
+import type { z } from "zod";
+import { revalidateTag } from "next/cache";
 
-import { formSchema } from '@local/validators';
+import { db } from "@local/db/client";
+import { CreateReservationSchema } from "@local/db/schema";
+import { formSchema } from "@local/validators";
 
-import type { z } from 'zod';
-import {api} from "@/trpc/server"
-import { db } from '@local/db/client';
-import { revalidateTag } from 'next/cache';
-import { newReservationEmail } from '../emails/reservationEmail';
-import { CreateReservationSchema } from '@local/db/schema';
+import { api } from "@/trpc/server";
+import { newReservationEmail } from "../emails/reservationEmail";
 
 // Validate form data values against the form schema
 type formValues = z.infer<typeof formSchema>;
@@ -22,7 +23,6 @@ export default async function submitReservation(data: formValues) {
       facilityId: data.facility,
       name: `%${data.category}%`,
     });
-
 
     // Helper database function to find a facility by id
     const Facility = await api.facility.byId({ id: data.facility });
@@ -46,7 +46,7 @@ export default async function submitReservation(data: formValues) {
     };
 
     // Create the new reservation in the database and return the id
-    const NewId = await api.reservation.createReservation(NReservation)
+    const NewId = await api.reservation.createReservation(NReservation);
 
     // Extract the id from the returned object
     const reservationId = NewId?.id!;
@@ -69,7 +69,7 @@ export default async function submitReservation(data: formValues) {
     // Insert the events and reservation dates into the database
     await api.reservation.createReservationDates(reservationDatesToInsert);
     // Send an email to building admins, prevents action while testing
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === "production") {
       newReservationEmail({
         building: Building,
         name: data.name,
@@ -79,9 +79,9 @@ export default async function submitReservation(data: formValues) {
     }
 
     // Revalidate the admin page to update the cache
-    revalidateTag('reservations');
-    return 'Success';
+    revalidateTag("reservations");
+    return "Success";
   } catch (error) {
-    throw new Error('Error creating reservation');
+    throw new Error("Error creating reservation");
   }
 }

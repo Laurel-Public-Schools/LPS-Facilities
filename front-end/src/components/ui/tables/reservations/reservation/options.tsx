@@ -1,16 +1,10 @@
-'use client';
-import React, { useState } from 'react';
-import type { SelectFacility as Facility } from '@local/db';
-import { Button } from '@/components/ui/buttons';
-import { useToast } from '@/components/ui/use-toast';
-import { updateEmail } from '@/functions/emails';
-import { useRouter } from 'next/navigation';
-import {
-  approveReservation,
-  denyReservation,
-  HandleDelete,
-} from '@/functions/reservations';
-import { Loader2 } from 'lucide-react';
+"use client";
+
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
+
+import type { SelectFacility as Facility } from "@local/db";
 
 import {
   AlertDialog,
@@ -22,14 +16,22 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/buttons";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
+import { useToast } from "@/components/ui/use-toast";
+import { updateEmail } from "@/functions/emails";
+import {
+  approveReservation,
+  denyReservation,
+  HandleDelete,
+} from "@/functions/reservations";
 
 interface ResNavProps {
   id: number | bigint;
@@ -46,9 +48,9 @@ export default function ReservationOptions({ id, facility }: ResNavProps) {
   const sendEmail = async () => {
     try {
       await updateEmail(id as number);
-      alert('Email sent');
+      alert("Email sent");
     } catch (error) {
-      alert('Email failed to send');
+      alert("Email failed to send");
     }
   };
 
@@ -57,13 +59,13 @@ export default function ReservationOptions({ id, facility }: ResNavProps) {
     try {
       await approveReservation(id as number);
       toast({
-        title: 'Reservation Approved',
-        description: 'Reservation has been approved',
+        title: "Reservation Approved",
+        description: "Reservation has been approved",
       });
     } catch (error) {
       toast({
-        title: 'Something went wrong',
-        description: 'Reservation failed to approve',
+        title: "Something went wrong",
+        description: "Reservation failed to approve",
       });
     } finally {
       setIsSubmitting(false);
@@ -76,13 +78,13 @@ export default function ReservationOptions({ id, facility }: ResNavProps) {
     try {
       await denyReservation(id as number);
       toast({
-        title: 'Reservation Denied',
-        description: 'Reservation has been denied',
+        title: "Reservation Denied",
+        description: "Reservation has been denied",
       });
     } catch (error) {
       toast({
-        title: 'Something went wrong',
-        description: 'Reservation failed to deny',
+        title: "Something went wrong",
+        description: "Reservation failed to deny",
       });
     } finally {
       setIsSubmitting(false);
@@ -104,7 +106,7 @@ export default function ReservationOptions({ id, facility }: ResNavProps) {
               </AlertDialogTrigger>
             ) : (
               <Button disabled>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="animate-spin mr-2 h-4 w-4" />
                 Please Wait
               </Button>
             )}
@@ -121,7 +123,7 @@ export default function ReservationOptions({ id, facility }: ResNavProps) {
           <DropdownMenuItem
             onClick={() => {
               HandleDelete(id as number);
-              router.push('/admin/reservations');
+              router.push("/admin/reservations");
             }}
           >
             Delete Reservation

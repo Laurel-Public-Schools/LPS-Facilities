@@ -1,6 +1,6 @@
-import { Separator } from '@/components/ui/separator';
-import { SubmitButton } from '@/components/ui/buttons/submitButton';
-import { Update } from './actions';
+import { SubmitButton } from "@/components/ui/buttons/submitButton";
+import { Separator } from "@/components/ui/separator";
+import { Update } from "./actions";
 
 interface UserName {
   id: string;
@@ -11,14 +11,14 @@ interface UserName {
 export default function AccountForm({ data }: { data: UserName }) {
   const updateUserID = Update.bind(null, data.id);
   let disabled = false;
-  if (data.email.includes('@laurel.k12.mt.us')) {
+  if (data.email.includes("@laurel.k12.mt.us")) {
     disabled = true;
   }
   return (
     <form action={updateUserID} className="space-y-8">
-      <label className="block font-bold text-lg">Name: {data.name} </label>
+      <label className="block text-lg font-bold">Name: {data.name} </label>
       <input
-        className="form-input ring-transparent text-black rounded-sm border-forground"
+        className="border-forground form-input rounded-sm text-black ring-transparent"
         name="name"
         type="text"
         id="name"
@@ -30,9 +30,9 @@ export default function AccountForm({ data }: { data: UserName }) {
         accounts can not update their names.
       </p>
       <Separator />
-      <label className="block font-bold text-lg">Email: {data.email} </label>
+      <label className="block text-lg font-bold">Email: {data.email} </label>
       <input
-        className="form-input ring-transparent text-black rounded-sm border-forground"
+        className="border-forground form-input rounded-sm text-black ring-transparent"
         name="email"
         type="email"
         id="email"

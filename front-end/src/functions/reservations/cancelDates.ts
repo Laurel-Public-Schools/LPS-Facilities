@@ -1,6 +1,6 @@
 //@ts-nocheck
 
-import prisma from '@/lib/prisma';
+import prisma from "@/lib/prisma";
 
 export async function cancelDate(id: number) {
   const canceledDate = await prisma.reservationDate.update({
@@ -8,7 +8,7 @@ export async function cancelDate(id: number) {
       id: BigInt(id),
     },
     data: {
-      approved: 'canceled',
+      approved: "canceled",
     },
   });
   const reservation = await prisma.reservation.findUnique({
@@ -17,7 +17,7 @@ export async function cancelDate(id: number) {
   });
 
   const approvedDates = reservation.ReservationDate.filter(
-    (date) => date.approved === 'approved'
+    (date) => date.approved === "approved",
   );
 
   const totalHours = approvedDates.reduce((acc, date) => {
@@ -31,7 +31,7 @@ export async function cancelDate(id: number) {
 
   let fees = 0;
 
-  if (reservation.Facility.building === 'Laurel Stadium') {
+  if (reservation.Facility.building === "Laurel Stadium") {
     fees = reservation.Category.price;
   } else {
     fees = reservation.Category.price * roundedTotalHours;
@@ -40,19 +40,19 @@ export async function cancelDate(id: number) {
 
   await prisma.reservationDate.deleteMany({
     where: {
-      approved: 'canceled',
+      approved: "canceled",
     },
   });
 
   const allDatesCanceled = reservation.ReservationDate.every(
-    (date) => date.approved === 'canceled'
+    (date) => date.approved === "canceled",
   );
 
   if (allDatesCanceled) {
     await prisma.reservation.update({
       where: { id: reservation.id },
       data: {
-        approved: 'canceled',
+        approved: "canceled",
         totalHours: roundedTotalHours,
         fees: roundedFees,
       },

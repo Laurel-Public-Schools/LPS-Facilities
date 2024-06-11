@@ -1,10 +1,10 @@
 import dns from "dns";
-import createJiti from "jiti";
 import { fileURLToPath } from "url";
+import createJiti from "jiti";
+
 /** @type {import('next').NextConfig} */
 
-
-dns.setDefaultResultOrder('ipv4first');
+dns.setDefaultResultOrder("ipv4first");
 createJiti(fileURLToPath(import.meta.url))("./src/env");
 
 const nextConfig = {
@@ -15,11 +15,11 @@ const nextConfig = {
   },
   eslint: { ignoreDuringBuilds: true },
   experimental: {
-    optimizePackageImports: ['bcryptjs', 'googleapis'],
+    optimizePackageImports: ["bcryptjs", "googleapis"],
   },
-  transpilePackages: [ "@local/auth", "@local/api"],
-  serverExternalPackages: [ "@local/db"],
-  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+  transpilePackages: ["@local/auth", "@local/api"],
+  serverExternalPackages: ["@local/db"],
+  pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
 };
 
 export default nextConfig;

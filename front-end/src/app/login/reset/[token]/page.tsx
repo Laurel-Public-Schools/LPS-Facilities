@@ -1,17 +1,18 @@
-import jwt from 'jsonwebtoken';
-import React from 'react';
-import ResetForm from './form';
+import React from "react";
+import jwt from "jsonwebtoken";
+
+import ResetForm from "./form";
 
 function decodeToken(token: string) {
-  'use server';
+  "use server";
 
   const publicKey: string = Buffer.from(
     process.env.RSA_PUBLIC_KEY!,
-    'base64'
-  ).toString('utf-8');
-  const decoded = jwt.verify(token, publicKey, { algorithms: ['RS256'] });
+    "base64",
+  ).toString("utf-8");
+  const decoded = jwt.verify(token, publicKey, { algorithms: ["RS256"] });
   if (!decoded) {
-    throw new Error('Invalid token');
+    throw new Error("Invalid token");
   }
 
   return decoded;
@@ -28,11 +29,11 @@ export default async function ResetPage({
     return <div>Invalid token</div>;
   } else {
     // TODO: improve types
-    // @ts-ignore - expected error 
+    // @ts-ignore - expected error
     const { id: userID } = data;
 
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen py-12 sm:px-6 lg:px-8">
+      <div className="flex min-h-screen flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
         <ResetForm id={userID} />
       </div>
     );

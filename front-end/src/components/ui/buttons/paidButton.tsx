@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Button } from './index';
-import { Paid } from '@/functions/mutations';
+import React from "react";
+
+import { Paid } from "@/functions/mutations";
+import { Button } from "./index";
 
 export default function PaidButton({ id }: any) {
   return (

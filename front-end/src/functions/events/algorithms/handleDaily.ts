@@ -1,5 +1,6 @@
-import moment from 'moment-timezone';
-import type { EventProps } from '../types';
+import moment from "moment-timezone";
+
+import type { EventProps } from "../types";
 
 /**
  * Handles events that occur evern 'n' number of days
@@ -15,9 +16,9 @@ const handleDaily = ({ calendar, recurrence, e }: EventProps) => {
   // reformat response to get how many days between each recurrence
   const wtfGoogle =
     // @ts-expect-error
-    e.recurrence[0].split(';').pop().split('=').pop() != 'DAILY'
+    e.recurrence[0].split(";").pop().split("=").pop() != "DAILY"
       ? // @ts-expect-error
-        parseInt(e.recurrence[0].split(';').pop().split('=').pop())
+        parseInt(e.recurrence[0].split(";").pop().split("=").pop())
       : 1;
 
   const n = wtfGoogle;
@@ -40,11 +41,11 @@ const handleDaily = ({ calendar, recurrence, e }: EventProps) => {
     const reoccuringEvent = {
       eventType: calendar.name,
       creator: e.creator,
-      end: end.clone().add(add, 'days').toDate(),
+      end: end.clone().add(add, "days").toDate(),
       gLink: e.htmlLink,
       description: e.description,
       location: e.location,
-      start: start.clone().add(add, 'days').toDate(),
+      start: start.clone().add(add, "days").toDate(),
       title: e.summary,
       meta: e,
     };

@@ -1,19 +1,17 @@
-import type { NextRequest} from 'next/server';
-import { NextResponse } from 'next/server';
+import type { GoogleEvents } from "@/lib/types";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { OAuth2Client } from "google-auth-library";
+import { google } from "googleapis";
+import moment from "moment-timezone";
 
-import { FacilityQuery,GetApprovedDates } from '@local/db/queries';
-
-import { google } from 'googleapis';
-import { OAuth2Client } from 'google-auth-library';
-import type { GoogleEvents } from '@/lib/types';
-import moment from 'moment-timezone';
-
+import { FacilityQuery, GetApprovedDates } from "@local/db/queries";
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: any } }
+  { params }: { params: { id: any } },
 ) {
-  const scopes = ['https://www.googleapis.com/auth/calendar'];
+  const scopes = ["https://www.googleapis.com/auth/calendar"];
   let datecount = 0;
   const oauth2Client = new OAuth2Client({
     clientId: process.env.GOOGLE_CLIENT_ID,
@@ -26,18 +24,18 @@ export async function POST(
   const id = params.id;
   const approvedDates = await GetApprovedDates.execute({ reservationId: id });
 
-  const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+  const calendar = google.calendar({ version: "v3", auth: oauth2Client });
 
   for (const approvedDate of approvedDates) {
     const startDateTime = moment
       .tz(
         `${approvedDate.startDate} ${approvedDate.startTime}`,
-        'America/Denver'
+        "America/Denver",
       )
       .toISOString();
 
     const endDateTime = moment
-      .tz(`${approvedDate.endDate} ${approvedDate.endTime}`, 'America/Denver')
+      .tz(`${approvedDate.endDate} ${approvedDate.endTime}`, "America/Denver")
       .toISOString();
 
     const event = {
@@ -46,11 +44,11 @@ export async function POST(
       description: approvedDate.Reservation.details,
       start: {
         dateTime: startDateTime,
-        timeZone: 'America/Denver',
+        timeZone: "America/Denver",
       },
       end: {
         dateTime: endDateTime,
-        timeZone: 'America/Denver',
+        timeZone: "America/Denver",
       },
     };
     try {
@@ -60,12 +58,12 @@ export async function POST(
       });
       datecount++;
     } catch (error) {
-      return NextResponse.json({ message: 'error' });
-      console.error('Failed to create event: ', error);
+      return NextResponse.json({ message: "error" });
+      console.error("Failed to create event: ", error);
     }
   }
   return NextResponse.json({
     status: 200,
-    message: datecount + 'google cal events created',
+    message: datecount + "google cal events created",
   });
 }

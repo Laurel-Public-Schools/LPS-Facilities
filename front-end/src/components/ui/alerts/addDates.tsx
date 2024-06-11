@@ -1,26 +1,28 @@
+import { revalidateTag } from "next/cache";
+
+import { ReservationDate } from "@local/db";
+import { db } from "@local/db/client";
+
+import { Button } from "@/components/ui/buttons/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
-  DialogFooter,
-} from '@/components/ui/dialog';
-import { CreateGoogleEvent } from '@/functions/google/singleDate';
-import { Button } from '@/components/ui/buttons/button';
-import { db } from '@local/db/client';
-import { ReservationDate } from '@local/db';
-import { revalidateTag } from 'next/cache';
+} from "@/components/ui/dialog";
+import { CreateGoogleEvent } from "@/functions/google/singleDate";
 
 // form action to add dates to reservation
 async function AddDates(id: number, formData: FormData) {
-  'use server';
-  const startDate = formData.get('startDate') as string;
+  "use server";
+  const startDate = formData.get("startDate") as string;
   const endDate = startDate;
-  const startTime = formData.get('startTime') as string;
-  const endTime = formData.get('endTime') as string;
+  const startTime = formData.get("startTime") as string;
+  const endTime = formData.get("endTime") as string;
   let dateID = null;
   try {
     const [data] = await db
@@ -31,18 +33,18 @@ async function AddDates(id: number, formData: FormData) {
         startTime: startTime,
         endTime: endTime,
         reservationId: id,
-        approved: 'approved',
+        approved: "approved",
       })
       .returning({ newID: ReservationDate.id });
     dateID = data?.newID;
   } catch (err) {
-    throw new Error('DB Error', { cause: err });
+    throw new Error("DB Error", { cause: err });
   } finally {
     if (dateID) {
-     await CreateGoogleEvent(dateID);
+      await CreateGoogleEvent(dateID);
     }
   }
-  revalidateTag('reservations');
+  revalidateTag("reservations");
 }
 
 const AddDateDialog = ({ id }: { id: number }) => {

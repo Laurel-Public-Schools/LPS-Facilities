@@ -32,6 +32,13 @@
     "clean:outs": {
       "cache": false
     },
+    "build:libs":{
+      "dependsOn": ["^topo"],
+      "outputs": [
+        "dist/**",
+        ".vercel/output/**"
+      ]
+    },
     "db": {
       "cache": false
     },

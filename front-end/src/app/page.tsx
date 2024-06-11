@@ -1,16 +1,16 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function Home() {
   return (
     <>
-      <main className=" flex mt-10  bg-transparent  justify-center align-middle  text-center gap-10 p-10  z-0  ">
-        <div className="  ">
-          <h1 className=" flex font-bold  text-3xl sm:text-5xl text-black drop-shadow-md border-b dark:text-gold mb-10 justify-center  ">
+      <main className="z-0 mt-10 flex justify-center gap-10 bg-transparent p-10 text-center align-middle">
+        <div className=" ">
+          <h1 className="mb-10 flex justify-center border-b text-3xl font-bold text-black drop-shadow-md dark:text-gold sm:text-5xl">
             Laurel Public Schools Facility Rentals
           </h1>
           <div className="block flex-1"> </div>
-          <div className=" mb-10 hidden sm:flex justify-center max-w-7xl  align-middle">
-            <p className=" bg-transparent text-xl sm:text-3xl drop-shadow-md mt-4 mb-10 dark:text-white p-3 text-black ">
+          <div className="mb-10 hidden max-w-7xl justify-center align-middle sm:flex">
+            <p className="mb-10 mt-4 bg-transparent p-3 text-xl text-black drop-shadow-md dark:text-white sm:text-3xl">
               Welcome! The facilities at Laurel Public Schools are available to
               the community for educational, civic, cultural, and other
               noncommercial uses consistent with the public interest, when such
@@ -18,24 +18,24 @@ export default function Home() {
               activities.
             </p>
           </div>
-          <div className=" flex flex-col sm:flex-row  sm:visible justify-center sm:justify-between gap-y-4 items-center my-10">
-            <div className=" border hover:scale-105 border-gray-200 bg-opacity-60 bg-clip-padding backdrop-blur-md animate-enterFromLeftOne ease-in-out  w-60 h-20 bg-white dark:bg-slate-700  rounded-full font-bold shadow-lg shadow-primary  dark:bg-opacity-20 text-2xl hidden sm:flex justify-center items-center">
+          <div className="my-10 flex flex-col items-center justify-center gap-y-4 sm:visible sm:flex-row sm:justify-between">
+            <div className="hidden h-20 w-60 animate-enterFromLeftOne items-center justify-center rounded-full border border-gray-200 bg-white bg-opacity-60 bg-clip-padding text-2xl font-bold shadow-lg shadow-primary backdrop-blur-md ease-in-out hover:scale-105 dark:bg-slate-700 dark:bg-opacity-20 sm:flex">
               <Link href="/calendar" className="drop-shadow-sm">
-                {' '}
-                View the Calendar{' '}
+                {" "}
+                View the Calendar{" "}
               </Link>
             </div>
 
-            <div className=" border hover:scale-105 border-gray-200 bg-opacity-60 bg-clip-padding backdrop-blur-md animate-enterFromLeftTwo ease-in-out  w-60 h-20 bg-white dark:bg-slate-700  rounded-full font-bold shadow-lg shadow-primary  dark:bg-opacity-20 text-2xl  flex justify-center items-center">
+            <div className="flex h-20 w-60 animate-enterFromLeftTwo items-center justify-center rounded-full border border-gray-200 bg-white bg-opacity-60 bg-clip-padding text-2xl font-bold shadow-lg shadow-primary backdrop-blur-md ease-in-out hover:scale-105 dark:bg-slate-700 dark:bg-opacity-20">
               <Link href="/reservation" className="drop-shadow-sm">
-                {' '}
-                Reserve now!{' '}
+                {" "}
+                Reserve now!{" "}
               </Link>
             </div>
-            <div className=" border hover:scale-105 border-gray-200 bg-opacity-60 bg-clip-padding backdrop-blur-md animate-enterFromLeftThree ease-in-out  w-60 h-20 bg-white dark:bg-slate-700  rounded-full font-bold shadow-lg shadow-primary  dark:bg-opacity-20 text-2xl  flex justify-center items-center">
+            <div className="flex h-20 w-60 animate-enterFromLeftThree items-center justify-center rounded-full border border-gray-200 bg-white bg-opacity-60 bg-clip-padding text-2xl font-bold shadow-lg shadow-primary backdrop-blur-md ease-in-out hover:scale-105 dark:bg-slate-700 dark:bg-opacity-20">
               <Link href="/facilities" className="drop-shadow-sm">
-                {' '}
-                View our Facilities{' '}
+                {" "}
+                View our Facilities{" "}
               </Link>
             </div>
           </div>

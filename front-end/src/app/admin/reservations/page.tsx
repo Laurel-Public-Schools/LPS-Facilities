@@ -1,18 +1,18 @@
-import { DataTable } from '@/components/ui/tables';
-import { columns } from './columns';
-import React from 'react';
+import React, { Suspense } from "react";
+import { headers } from "next/headers";
+
+import { DataTable } from "@/components/ui/tables";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  mapReservations,
   mapPastReservations,
-} from '@/functions/calculations/tableData';
-import { headers } from 'next/headers';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import TableSkeleton from '../requests/skeleton';
-import { Suspense } from 'react';
+  mapReservations,
+} from "@/functions/calculations/tableData";
+import TableSkeleton from "../requests/skeleton";
+import { columns } from "./columns";
 
 async function getReservations() {
   const headersInstance = headers();
-  const auth = headersInstance.get('Cookie')!;
+  const auth = headersInstance.get("Cookie")!;
 
   const res = await fetch(process.env.NEXT_PUBLIC_HOST + `/api/reservation`, {
     headers: {
@@ -20,7 +20,7 @@ async function getReservations() {
     },
     next: {
       revalidate: 60,
-      tags: ['reservations'],
+      tags: ["reservations"],
     },
   });
   const data = await res.json();

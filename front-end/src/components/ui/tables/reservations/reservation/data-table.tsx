@@ -1,19 +1,26 @@
-'use client';
-import { Button } from '@/components/ui/buttons';
-import * as React from 'react';
+"use client";
 
 import type {
-  SortingState,
   ColumnDef,
-  VisibilityState} from '@tanstack/react-table';
+  SortingState,
+  VisibilityState,
+} from "@tanstack/react-table";
+import * as React from "react";
 import {
-  getSortedRowModel,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
-} from '@tanstack/react-table';
+} from "@tanstack/react-table";
 
+import { Button } from "@/components/ui/buttons";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -21,13 +28,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/table";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -39,7 +40,7 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([
-    { id: 'startDate', desc: false },
+    { id: "startDate", desc: false },
   ]);
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -74,7 +75,7 @@ export function DataTable<TData, TValue>({
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -87,13 +88,13 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
+                  data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
@@ -113,7 +114,7 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex justify-between">
-        <div className=" hidden  justify-start items-center py-4">
+        <div className="hidden items-center justify-start py-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">

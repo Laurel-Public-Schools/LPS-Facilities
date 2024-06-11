@@ -1,19 +1,21 @@
-import type { User as NextAuthUser } from 'next-auth';
-import NextAuth from 'next-auth';
+import type { Schema$Event } from "@/functions/events/types";
+import type { $Enums, Category } from "@prisma/client";
+import type { User as NextAuthUser } from "next-auth";
+import type { Path, UseFormRegister } from "react-hook-form";
+import NextAuth from "next-auth";
+
 import type {
   SelectCategory,
-  SelectReservationDate,
-  SelectReservationFees,
   SelectEvents,
   SelectFacility,
-} from '@local/db';
-import type { Path, UseFormRegister } from 'react-hook-form';
-import type { $Enums, Category } from '@prisma/client';
-import type { Schema$Event } from '@/functions/events/types';
+  SelectReservationDate,
+  SelectReservationFees,
+} from "@local/db";
+
 export interface Facility {
   map(
-    arg0: (facility: Facility) => import('react').JSX.Element
-  ): import('react').ReactNode;
+    arg0: (facility: Facility) => import("react").JSX.Element,
+  ): import("react").ReactNode;
   id: number;
   image_path: string;
   name: string;
@@ -26,7 +28,7 @@ export interface Facility {
       name: string;
       description: string;
       price: string;
-    }
+    },
   ];
 }
 
@@ -117,7 +119,7 @@ export interface Reservation {
   fees?: string;
   facilityId: number;
   recurrence?: string;
-  approved: 'pending' | 'approved' | 'denied' | 'canceled';
+  approved: "pending" | "approved" | "denied" | "canceled";
   createdAt: Date;
   updatedAt: Date;
   additionalFees: [];
@@ -156,7 +158,7 @@ export interface TableReservation {
   eventName: string;
   Facility: string;
   ReservationDate: any[];
-  approved: 'pending' | 'approved' | 'denied' | 'canceled';
+  approved: "pending" | "approved" | "denied" | "canceled";
   User?: string;
   Details: number;
 }
@@ -169,7 +171,7 @@ export interface TableFacility {
   imagePath: string;
   capacity: number;
   googleCalendarId: string;
-  Category: Category[] ;
+  Category: Category[];
 }
 
 export interface DateType {
@@ -178,7 +180,7 @@ export interface DateType {
   endDate: string;
   startTime: string;
   endTime: string;
-  approved: 'pending' | 'approved' | 'denied' | 'canceled';
+  approved: "pending" | "approved" | "denied" | "canceled";
   ReservationID: any;
 }
 
@@ -196,13 +198,13 @@ export interface Events {
 }
 
 export interface GoogleEvents {
-  gLink: string | null | undefined
-  description: string | null | undefined
-  location: string | null | undefined
-  start: string | null | undefined
-  end: string | null | undefined
-  title: string | null | undefined
-  meta: Schema$Event
+  gLink: string | null | undefined;
+  description: string | null | undefined;
+  location: string | null | undefined;
+  start: string | null | undefined;
+  end: string | null | undefined;
+  title: string | null | undefined;
+  meta: Schema$Event;
 }
 
 export type SelectCategory = typeof Category.$inferSelect;

@@ -1,8 +1,7 @@
-'use client';
+"use client";
 
-import type { ColumnDef } from '@tanstack/react-table';
-
-import React from 'react';
+import type { ColumnDef } from "@tanstack/react-table";
+import React from "react";
 
 interface TableFees {
   additionalFees: number;
@@ -12,20 +11,20 @@ interface TableFees {
 
 export const columns: ColumnDef<TableFees>[] = [
   {
-    accessorKey: 'additionalFees',
+    accessorKey: "additionalFees",
 
-    header: 'Cost',
+    header: "Cost",
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue('additionalFees'));
-      const formatted = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
+      const amount = parseFloat(row.getValue("additionalFees"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
       }).format(amount);
       return <div className="text-left font-medium">{formatted}</div>;
     },
   },
   {
-    accessorKey: 'feesType',
-    header: 'Fee Type',
+    accessorKey: "feesType",
+    header: "Fee Type",
   },
 ];

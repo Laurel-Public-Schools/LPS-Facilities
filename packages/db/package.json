@@ -23,6 +23,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "build:libs": "tsc",
     "dev": "tsc --watch",
     "clean": "rm -rf .turbo node_modules dist",
     "clean:outs": "rm -rf dist",

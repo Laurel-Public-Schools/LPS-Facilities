@@ -1,10 +1,11 @@
-'use client';
+"use client";
 
-import React, { useCallback } from 'react';
-import { useSearchParams, usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import { buttonVariants } from '@/components/ui/button';
-import Link from 'next/link';
+import React, { useCallback } from "react";
+import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
+
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface SidebarNavProps extends React.HTMLAttributes<HTMLElement> {
   items: {
@@ -19,9 +20,9 @@ export function SidebarSearchParamsNav({
 }: SidebarNavProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  let selectedBuilding: string | null = 'All';
-  if (searchParams && searchParams.has('building')) {
-    selectedBuilding = searchParams.get('building');
+  let selectedBuilding: string | null = "All";
+  if (searchParams && searchParams.has("building")) {
+    selectedBuilding = searchParams.get("building");
   }
 
   const handleSetSelectedBuilding = useCallback(
@@ -31,14 +32,14 @@ export function SidebarSearchParamsNav({
 
       return params.toString();
     },
-    [searchParams]
+    [searchParams],
   );
 
   return (
     <nav
       className={cn(
-        'flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1',
-        className
+        "flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1",
+        className,
       )}
       {...props}
     >
@@ -47,14 +48,14 @@ export function SidebarSearchParamsNav({
           key={item.title}
           prefetch={false}
           href={
-            pathname + '?' + handleSetSelectedBuilding('building', item.title)
+            pathname + "?" + handleSetSelectedBuilding("building", item.title)
           }
           className={cn(
-            buttonVariants({ variant: 'ghost' }),
+            buttonVariants({ variant: "ghost" }),
             selectedBuilding === item.title
-              ? 'bg-muted hover:bg-muted'
-              : 'hover:bg-transparent hover:underline',
-            'justify-start'
+              ? "bg-muted hover:bg-muted"
+              : "hover:bg-transparent hover:underline",
+            "justify-start",
           )}
         >
           {item.title}
