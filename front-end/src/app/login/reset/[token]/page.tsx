@@ -4,8 +4,6 @@ import jwt from "jsonwebtoken";
 import ResetForm from "./form";
 
 function decodeToken(token: string) {
-  "use server";
-
   const publicKey: string = Buffer.from(
     process.env.RSA_PUBLIC_KEY!,
     "base64",

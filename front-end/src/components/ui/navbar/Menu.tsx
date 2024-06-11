@@ -19,13 +19,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import { api } from "@/trpc/server";
-
-async function requestCount() {
-  "use server";
-  const count = await api.reservation.requestCount();
-  return count;
-}
+import { requestCount } from "./requestCount";
 
 export function AuthenticatedMenu() {
   const { data: session, status } = useSession();
