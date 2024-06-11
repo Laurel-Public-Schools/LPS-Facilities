@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { Button } from "@/components/ui/buttons/button";
+import { Button } from "@/components/ui/buttons";
 import {
   Form,
   FormControl,

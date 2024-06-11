@@ -5,8 +5,7 @@ import { put } from "@vercel/blob";
 import { eq } from "drizzle-orm";
 
 import { db } from "@local/db/client";
-
-import { Reservation } from "../../../../packages/db/src/schema/schema";
+import { Reservation } from "@local/db/schema";
 
 export async function upload(id: number, formData: FormData) {
   const file = formData.get("file") as File;

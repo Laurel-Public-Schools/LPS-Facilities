@@ -7,9 +7,8 @@ import { eq } from "drizzle-orm";
 import jwt, { Secret } from "jsonwebtoken";
 
 import { db } from "@local/db/client";
-
-import { UserByEmail } from "@/lib/db/queries/users";
-import { User } from "../../../../packages/db/src/schema/schema";
+import { UserByEmail } from "@local/db/queries";
+import { User } from "@local/db/schema";
 
 export default async function Reset(id: any, password: string) {
   const hashedPassword = await bcrypt.hash(password, 10);

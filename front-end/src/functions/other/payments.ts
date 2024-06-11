@@ -1,39 +1,46 @@
-import type { NextRequest } from "next/server";
+"use serveer";
+
 import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
-import { Client } from "square";
+import { Client, Environment } from "square";
 
-import { Reservation } from "@local/db";
 import { db } from "@local/db/client";
+import { Reservation } from "@local/db/schema";
 
+import { env } from "@/env";
 import generateId from "@/functions/calculations/generate-id";
 
 const { checkoutApi } = new Client({
-  accessToken: process.env.SQUARE_TOKEN,
-  //@ts-expect-error
-  environment: "production",
+  accessToken: env.SQUARE_TOKEN,
+  environment: Environment.Production,
 });
-//@ts-expect-error
-BigInt.prototype.toJSON = function () {
-  return this.toString();
+
+type PaymentProps = {
+  id: number;
+  fees: number;
+  description: string;
+  email: string;
 };
 
-export async function POST(req: NextRequest) {
-  const body = await req.json();
-
+export async function GeneratePaymentLink(
+  id: number,
+  fees: number,
+  description: string,
+  email: string,
+) {
   const uuid = generateId();
   try {
     const res = await checkoutApi.createPaymentLink({
       idempotencyKey: uuid,
       description: "Facility Rental",
       quickPay: {
-        name: body.description,
+        name: description,
         priceMoney: {
-          amount: BigInt(Math.round(body.fees * 100)),
+          amount: BigInt(Math.round(fees * 100)),
           currency: "USD",
         },
-        locationId: process.env.SQUARE_LOCATION_ID!,
+        locationId: env.SQUARE_LOCATION_ID,
       },
       checkoutOptions: {
         allowTipping: false,
@@ -42,13 +49,13 @@ export async function POST(req: NextRequest) {
         enableLoyalty: false,
       },
       prePopulatedData: {},
-      paymentNote: body.description,
+      paymentNote: description,
     });
 
     const paymentUrl = res.result.paymentLink?.url;
     const paymentId = res.result.paymentLink?.id;
-    const id = body.id;
-    const update = await db
+
+    await db
       .update(Reservation)
       .set({
         paymentLinkID: paymentId,
@@ -57,14 +64,14 @@ export async function POST(req: NextRequest) {
       .where(eq(Reservation.id, id));
 
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_EMAIL_API}`, {
+      await fetch(`${env.NEXT_PUBLIC_EMAIL_API}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          key: process.env.EMAIL_API_KEY,
-          to: body.email,
+          key: env.EMAIL_API_KEY,
+          to: email,
           from: "Facility Rental",
           subject: "Facility Rental Payment Link",
           html:
@@ -74,25 +81,10 @@ export async function POST(req: NextRequest) {
         }),
       });
     } catch (error) {
-      return NextResponse.json({ ok: false, body: error }, { status: 500 });
+      throw new Error("Email failed to send");
     }
   } catch (error) {
-    return NextResponse.json({ ok: false, body: error }, { status: 500 });
+    throw new Error("Payment Link Failed to Create");
   }
   revalidateTag("reservations");
-  return NextResponse.json(
-    { ok: true, body: "Payment Link Created" },
-    { status: 200 },
-  );
 }
-
-// const { result } = await paymentsApi.createPayment({
-// 	idempotencyKey: randomUUID(),
-// 	sourceId: body.sourceId,
-// 	amountMoney: {
-// 		amount: BigInt(Math.round(body.amount.amount * 100)),
-// 		currency: 'USD',
-// 	},
-// });
-
-// return NextResponse.json(result);

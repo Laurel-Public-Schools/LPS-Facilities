@@ -1,4 +1,3 @@
-import type { FacilityWithCategory } from "@/lib/types";
 import { Suspense } from "react";
 
 import { DataTable } from "@/components/ui/tables";

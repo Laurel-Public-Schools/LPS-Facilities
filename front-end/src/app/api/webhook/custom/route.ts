@@ -5,11 +5,10 @@ import { OAuth2Client } from "google-auth-library";
 import { google } from "googleapis";
 import moment from "moment-timezone";
 
+import { SortedEventsQuery } from "@local/db/queries";
 import { calendarIDs } from "@local/validators/constants";
 
-import { SortedEventsQuery } from "@/lib/db/queries/events";
-
-export async function GET(req: NextRequest) {
+export function GET(req: NextRequest) {
   return NextResponse.error();
 }
 

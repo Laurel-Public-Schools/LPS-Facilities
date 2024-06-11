@@ -6,11 +6,7 @@ import { revalidateTag } from "next/cache";
 import { eq } from "drizzle-orm";
 
 import { db } from "@local/db/client";
-
-import {
-  Category,
-  Facility,
-} from "@local/db/schema";
+import { Category, Facility } from "@local/db/schema";
 
 export async function uploadImage(id: number, formData: FormData) {
   const file = formData.get("file") as File;

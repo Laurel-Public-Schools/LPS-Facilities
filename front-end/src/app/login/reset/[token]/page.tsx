@@ -18,18 +18,14 @@ function decodeToken(token: string) {
   return decoded;
 }
 
-export default async function ResetPage({
-  params,
-}: {
-  params: { token: string };
-}) {
-  const data = await decodeToken(params.token);
+export default function ResetPage({ params }: { params: { token: string } }) {
+  const data = decodeToken(params.token);
 
   if (!data) {
     return <div>Invalid token</div>;
   } else {
     // TODO: improve types
-    // @ts-ignore - expected error
+    // @ts-expect-error - expected error
     const { id: userID } = data;
 
     return (

@@ -1,8 +1,6 @@
-import type { FacilityWithCategory } from "@/lib/types";
 import React, { Suspense } from "react";
 
 import LoadingScreen from "@/components/ui/loadingScreen";
-import { mappedFacilities } from "@/functions/calculations/tableData";
 import { api } from "@/trpc/server";
 import CardLayout from "./cardLayout";
 
@@ -21,7 +19,7 @@ import CardLayout from "./cardLayout";
 //   return mappedFacilities(facilities);
 // }
 
-export default async function FacilitiesPage() {
+export default function FacilitiesPage() {
   const facilities = api.facility.all();
 
   return (

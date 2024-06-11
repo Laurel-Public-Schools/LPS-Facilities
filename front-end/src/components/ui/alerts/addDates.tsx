@@ -1,9 +1,9 @@
 import { revalidateTag } from "next/cache";
 
-import { ReservationDate } from "@local/db";
 import { db } from "@local/db/client";
+import { ReservationDate } from "@local/db/schema";
 
-import { Button } from "@/components/ui/buttons/button";
+import { Button } from "@/components/ui/buttons";
 import {
   Dialog,
   DialogClose,

@@ -1,5 +1,3 @@
-"use server";
-
 import moment from "moment";
 
 import type {
@@ -14,10 +12,10 @@ const dateOptions = {};
 interface TableData extends ReservationType {
   ReservationDate: ReservationDateType[];
   Facility: FacilityType;
-  User: Partial<UserType>;
+  User?: Partial<UserType>;
 }
 
-async function mapRequests(requests: TableData[]) {
+function mapRequests(requests: TableData[]) {
   const mappedRequests = requests.map((requests) => {
     const sortedDates = requests.ReservationDate.sort((a, b) =>
       moment(a.startDate).diff(moment(b.startDate)),
@@ -34,7 +32,7 @@ async function mapRequests(requests: TableData[]) {
   return mappedRequests;
 }
 
-async function mapReservations(Reservations: TableData[]) {
+function mapReservations(Reservations: TableData[]) {
   const currentDate = moment();
 
   const mappedReservations = Reservations.map((reservation) => {
@@ -55,8 +53,7 @@ async function mapReservations(Reservations: TableData[]) {
   }).filter((reservation) => reservation !== null);
   return mappedReservations;
 }
-
-async function mapPastReservations(Reservations: TableData[]) {
+function mapPastReservations(Reservations: TableData[]) {
   const currentDate = moment();
   const mappedReservations = Reservations.map((reservation) => {
     const sortedDates = reservation.ReservationDate.sort((a, b) =>
@@ -82,7 +79,7 @@ async function mapPastReservations(Reservations: TableData[]) {
   return mappedReservations;
 }
 
-async function mapDates(ReservationDates: any[]) {
+function mapDates(ReservationDates: any[]) {
   const mappedDates = ReservationDates.map((date) => {
     return {
       Options: Number(date.id),
@@ -97,7 +94,7 @@ async function mapDates(ReservationDates: any[]) {
   return mappedDates;
 }
 
-async function userReservations(Reservations: TableData[]) {
+function userReservations(Reservations: TableData[]) {
   const currentDate = moment();
   const mappedReservations = Reservations.map((reservation) => {
     const sortedDates = reservation.ReservationDate.sort((a, b) =>
@@ -122,7 +119,7 @@ async function userReservations(Reservations: TableData[]) {
   return mappedReservations;
 }
 
-async function mappedFacilities(facilities: FacilityWithCategory[]) {
+function mappedFacilities(facilities: FacilityWithCategory[]) {
   const mappedFacilities = facilities.map((facility) => {
     return {
       id: facility.id,
@@ -142,7 +139,7 @@ interface FacilityWithCategory extends FacilityType {
   Category: CategoryType[];
 }
 
-async function mapFacilityTable(facilities: FacilityWithCategory[]) {
+function mapFacilityTable(facilities: FacilityWithCategory[]) {
   const mappedFacilities = facilities
     .map((facility) => {
       return {

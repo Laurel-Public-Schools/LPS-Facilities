@@ -1,6 +1,6 @@
 import React from "react";
 
-import { SubmitButton } from "@/components/ui/buttons/submitButton";
+import { Button } from "@/components/ui/buttons";
 import { Email } from "@/functions/mutations/reset";
 
 export default function ResetPassword() {
@@ -22,7 +22,7 @@ export default function ResetPassword() {
           link.
         </p>
       </div>
-      <SubmitButton />
+      <Button />
     </form>
   );
 }

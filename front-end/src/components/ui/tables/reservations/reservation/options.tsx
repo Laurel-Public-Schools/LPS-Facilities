@@ -3,8 +3,9 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
-import type { SelectFacility as Facility } from "@local/db";
+import type { FacilityType as Facility } from "@local/db/schema";
 
 import {
   AlertDialog,
@@ -25,7 +26,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useToast } from "@/components/ui/use-toast";
 import { updateEmail } from "@/functions/emails";
 import {
   approveReservation,
@@ -39,8 +39,6 @@ interface ResNavProps {
 }
 
 export default function ReservationOptions({ id, facility }: ResNavProps) {
-  const { toast } = useToast();
-
   const router = useRouter();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,15 +56,9 @@ export default function ReservationOptions({ id, facility }: ResNavProps) {
     setIsSubmitting(true);
     try {
       await approveReservation(id as number);
-      toast({
-        title: "Reservation Approved",
-        description: "Reservation has been approved",
-      });
+      toast("Reservation Approved");
     } catch (error) {
-      toast({
-        title: "Something went wrong",
-        description: "Reservation failed to approve",
-      });
+      toast("Something went wrong");
     } finally {
       setIsSubmitting(false);
       router.refresh();
@@ -77,15 +69,9 @@ export default function ReservationOptions({ id, facility }: ResNavProps) {
     setIsSubmitting(true);
     try {
       await denyReservation(id as number);
-      toast({
-        title: "Reservation Denied",
-        description: "Reservation has been denied",
-      });
+      toast("Reservation Denied");
     } catch (error) {
-      toast({
-        title: "Something went wrong",
-        description: "Reservation failed to deny",
-      });
+      toast("Something went wrong");
     } finally {
       setIsSubmitting(false);
       router.refresh();
@@ -114,7 +100,7 @@ export default function ReservationOptions({ id, facility }: ResNavProps) {
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => {
-              sendEmail();
+              void sendEmail();
             }}
           >
             Send update email

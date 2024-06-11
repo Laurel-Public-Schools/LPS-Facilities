@@ -1,11 +1,10 @@
-import type { FacilityWithCategory } from "@/lib/types";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import {api} from "@/trpc/server"
+import { notFound } from "next/navigation";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { notFound } from "next/navigation";
+import { api } from "@/trpc/server";
 
 export async function generateStaticParams() {
   const facilities = await api.facility.allIds();
@@ -13,8 +12,6 @@ export async function generateStaticParams() {
     id: facility.id.toString(),
   }));
 }
-
-
 
 export default async function facilityEditForm({
   params,

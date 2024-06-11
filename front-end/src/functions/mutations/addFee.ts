@@ -4,8 +4,7 @@ import { revalidateTag } from "next/cache";
 import { eq, sql } from "drizzle-orm";
 
 import { db } from "@local/db/client";
-
-import { ReservationFees } from "../../../../packages/db/src/schema/schema";
+import { ReservationFees } from "@local/db/schema";
 
 interface IForminput {
   additionalFees: any;

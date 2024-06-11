@@ -4,12 +4,9 @@ import { revalidateTag } from "next/cache";
 import { eq } from "drizzle-orm";
 
 import { db } from "@local/db/client";
+import { GetReservationbyID } from "@local/db/queries";
+import { Reservation, ReservationDate } from "@local/db/schema";
 
-import { GetReservationbyID } from "@/lib/db/queries/reservations";
-import {
-  Reservation,
-  ReservationDate,
-} from "../../../../packages/db/src/schema/schema";
 import { CreateGoogleEvent } from "../google/singleDate";
 
 interface props {

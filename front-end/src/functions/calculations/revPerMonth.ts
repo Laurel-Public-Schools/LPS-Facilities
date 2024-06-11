@@ -3,7 +3,6 @@
 /**
  * This function is used to calculate the monthly revenue for the last 6 months
  */
-import type { ReservationClassType } from "@/lib/classes";
 import type { RevenueData } from "@/lib/types";
 import {
   compareAsc,
@@ -15,9 +14,21 @@ import {
   sub,
 } from "date-fns";
 
-import { ReservationClass } from "@/lib/classes";
-import { api } from "@/trpc/server";
+import type {
+  CategoryType,
+  ReservationDateType,
+  ReservationFeesType,
+  ReservationType,
+} from "@local/db/schema";
 
+import { api } from "@/trpc/server";
+import { CostReducer } from "../other/helpers";
+
+interface ReservationClassType extends ReservationType {
+  ReservationDate: ReservationDateType[];
+  ReservationFees: ReservationFeesType[];
+  Category: CategoryType;
+}
 export default async function MonthlyRevenue(): Promise<{
   revChartData: RevenueData[];
   totalPositive: number;
@@ -63,10 +74,16 @@ export default async function MonthlyRevenue(): Promise<{
 
   reducedData.forEach((reservation: ReservationClassType) => {
     const month = reservation.ReservationDate
-      ? format(new Date(reservation.ReservationDate[0].startDate), "MMMM")
+      ? format(new Date(reservation.ReservationDate[0]?.startDate!), "MMMM")
       : "";
-    const object = new ReservationClass(reservation);
-    const cost = object.CostReducer();
+
+    const cost = CostReducer({
+      ReservationFees: reservation.ReservationFees,
+      ReservationDate: reservation.ReservationDate,
+      categoryId: reservation.categoryId,
+      Category: reservation.Category,
+      CategoryPrice: reservation.Category.price,
+    });
     const numericCost = Number(cost.toFixed()) || 0;
     if (!aggregateData[month]) {
       aggregateData[month] = { Revenue: 0, Loss: 0 };

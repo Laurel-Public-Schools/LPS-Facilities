@@ -24,7 +24,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/buttons/button";
+import { Button } from "@/components/ui/buttons";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Command,
@@ -106,7 +106,7 @@ export default function ReservationForm(props: {
   const watchTechSupport = form.watch("techSupport", false);
   const watchDoorAccess = form.watch("doorAccess", false);
 
-  const onSubmit = async (data: formValues) => {
+  const onSubmit = (data: formValues) => {
     startRequestTransition(() => {
       toast.promise(submitReservation(data), {
         position: "top-center",

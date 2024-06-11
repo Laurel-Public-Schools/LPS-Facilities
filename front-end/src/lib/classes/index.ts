@@ -1,18 +1,18 @@
 import type {
-  SelectCategory,
-  SelectFacility,
-  SelectReservation,
-  SelectReservationDate,
-  SelectReservationFees,
-  SelectUser,
-} from "../../../../packages/db/src/schema/schema";
+  FacilityType,
+  ReservationDateType,
+  ReservationFeesType,
+  ReservationType,
+  CategoryType as SelectCategory,
+  UserType,
+} from "@local/db/schema";
 
-export type ReservationClassType = SelectReservation & {
-  Facility?: SelectFacility;
+export type ReservationClassType = ReservationType & {
+  Facility?: FacilityType;
   Category?: SelectCategory;
-  ReservationDate?: SelectReservationDate[];
-  ReservationFees?: SelectReservationFees[];
-  User?: SelectUser;
+  ReservationDate?: ReservationDateType[];
+  ReservationFees?: ReservationFeesType[];
+  User?: UserType;
 };
 
 /**
@@ -26,15 +26,15 @@ class ReservationClass {
   userId: string;
   eventName: string;
   phone?: string | null;
-  User?: SelectUser;
+  User?: UserType;
   categoryId: number | bigint;
   facilityId: number | bigint;
   details?: string | null;
   approved: "pending" | "approved" | "denied" | "canceled";
   inPerson: boolean;
-  ReservationDate?: SelectReservationDate[];
-  ReservationFees?: SelectReservationFees[];
-  Facility?: SelectFacility;
+  ReservationDate?: ReservationDateType[];
+  ReservationFees?: ReservationFeesType[];
+  Facility?: FacilityType;
   Category?: SelectCategory;
   costOverride?: number | null;
   paid: boolean;
@@ -80,11 +80,11 @@ class ReservationClass {
     const ReservationDate = this.ReservationDate || [];
     let dateRange = "";
     if (ReservationDate.length > 1) {
-      dateRange = `${ReservationDate[0].startDate} - ${
-        ReservationDate[ReservationDate.length - 1].endDate
+      dateRange = `${ReservationDate[0]?.startDate} - ${
+        ReservationDate[ReservationDate.length - 1]?.endDate
       }`;
     } else if (ReservationDate.length === 1) {
-      dateRange = `${ReservationDate[0].startDate}`;
+      dateRange = `${ReservationDate[0]?.startDate}`;
     } else {
       dateRange = "No Upcoming Dates";
     }

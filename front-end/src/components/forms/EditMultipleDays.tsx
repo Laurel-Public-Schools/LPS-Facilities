@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button } from "@/components/ui/buttons/button";
+import { Button } from "@/components/ui/buttons";
 import { Label } from "@/components/ui/label";
 import {
   Sheet,

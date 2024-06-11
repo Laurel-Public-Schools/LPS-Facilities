@@ -19,10 +19,18 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { api } from "@/trpc/server";
+
+async function requestCount() {
+  "use server";
+  const count = await api.reservation.requestCount();
+  return count;
+}
 
 export function AuthenticatedMenu() {
   const { data: session, status } = useSession();
   console.log("session: ", session);
+
   if (status === "loading") {
     return (
       <NavigationMenuItem>
@@ -80,7 +88,7 @@ export function AuthenticatedMenu() {
                   <Link href="/admin/requests" legacyBehavior passHref>
                     <ListItem title="Requests">
                       Manage requests
-                      <RequestBadge />
+                      <RequestBadge requestCount={requestCount()} />
                     </ListItem>
                   </Link>
                   <Link href="/admin/users" legacyBehavior passHref>

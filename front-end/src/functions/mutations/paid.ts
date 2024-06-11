@@ -4,8 +4,7 @@ import { revalidateTag } from "next/cache";
 import { eq } from "drizzle-orm";
 
 import { db } from "@local/db/client";
-
-import { Reservation } from "../../../../packages/db/src/schema/schema";
+import { Reservation } from "@local/db/schema";
 
 export default async function Paid(formdata: FormData) {
   const id = formdata.get("id") as unknown as number;

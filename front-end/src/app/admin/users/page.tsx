@@ -1,10 +1,8 @@
 import { headers } from "next/headers";
 
-
 import { DataTable } from "@/components/ui/tables/users/data-table";
-
-import { columns } from "./columns";
 import { api } from "@/trpc/server";
+import { columns } from "./columns";
 
 interface TableUsers {
   User: string;

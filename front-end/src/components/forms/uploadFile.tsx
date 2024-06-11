@@ -19,7 +19,7 @@ export function UploadFile({ params }: { params: { id: number } }) {
     if (!inputFileRef.current?.files) {
       throw new Error("no file selected");
     }
-    const file = inputFileRef.current.files[0];
+    const file = inputFileRef.current.files[0]!;
 
     const response = await fetch(
       `/api/files/upload?filename=${file.name}&id=${params.id}`,

@@ -1,15 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState as useFormState, useState } from "react";
 import Image from "next/image";
-//@ts-expect-error - type not implemented
-import { useFormState } from "react-dom";
 import { toast } from "sonner";
 
 import { CreateFacilitySchema } from "@local/db/schema";
 import { buildingNames } from "@local/validators/constants";
 
-import { SubmitButton } from "@/components/ui/buttons/submitButton";
+import { Button } from "@/components/ui/buttons";
 import {
   Form,
   FormControl,
@@ -211,7 +209,9 @@ export default function NewFacilityForm() {
               </FormItem>
             )}
           />
-          <SubmitButton variant="outline">Create</SubmitButton>
+          <Button type="submit" variant="outline">
+            Create
+          </Button>
         </form>
       </Form>
     </div>

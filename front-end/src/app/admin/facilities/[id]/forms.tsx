@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { SubmitButton } from "@/components/ui/buttons/submitButton";
+import { Button } from "@/components/ui/buttons";
 import {
   deleteFacility,
   updateCapaciaty,
@@ -42,7 +42,7 @@ const ImageUploadForm = ({ id }: FormProps) => {
           accept=".jpg, .png"
           className="w-full text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100"
         />
-        <SubmitButton variant="outline">Upload</SubmitButton>
+        <Button variant="outline">Upload</Button>
       </form>
     </>
   );
@@ -63,7 +63,7 @@ const FacilityNameForm = ({ id, name }: FormProps) => {
           placeholder={name}
           className={inputStyle}
         />
-        <SubmitButton variant="outline">Update</SubmitButton>
+        <Button variant="outline">Update</Button>
       </form>
     </>
   );
@@ -87,7 +87,7 @@ const UpdatePricesForm = ({ CategoryIDs }: FormProps) => {
               defaultValue={category.price}
               className={inputStyle}
             />
-            <SubmitButton variant="outline">Update</SubmitButton>
+            <Button variant="outline">Update</Button>
           </form>
         </div>
       ))}
@@ -108,7 +108,7 @@ const UpdateCapacityForm = ({ id, capacity }: FormProps) => {
           defaultValue={capacity}
           className={inputStyle}
         />
-        <SubmitButton variant="outline">Update</SubmitButton>
+        <Button variant="outline">Update</Button>
       </form>
     </>
   );

@@ -1,8 +1,7 @@
 "use client";
 
 import * as React from "react";
-//@ts-expect-error - no type in react
-import { useFormState } from "react-dom";
+import { useActionState as useFormState } from "react";
 
 import {
   Dialog,
@@ -25,7 +24,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useMediaQuery } from "../hooks";
-import { Button, SubmitButton } from "../ui/buttons";
+import { Button } from "../ui/buttons";
 import { Checkbox } from "../ui/checkbox";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
@@ -107,7 +106,7 @@ function Form({ className }: React.ComponentProps<"form">) {
           {state?.message}
         </p>
       </div>
-      <SubmitButton>Submit</SubmitButton>
+      <Button type="submit">Submit</Button>
     </form>
   );
 }

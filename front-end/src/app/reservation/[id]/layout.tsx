@@ -2,14 +2,15 @@ import type { ReservationClassType } from "@/lib/classes";
 import React, { Suspense } from "react";
 import { unstable_cache as cache } from "next/cache";
 import { headers } from "next/headers";
+import { notFound } from "next/navigation";
 
 import type { SideBarType } from "@local/validators/constants";
 
 import IsUserReserv from "@/components/contexts/isUserReserv";
 import { Separator } from "@/components/ui/separator";
 import { SidebarNav } from "@/components/ui/sidebar-nav";
+import range from "@/functions/calculations/dateRange";
 import { IsAdmin } from "@/functions/other/helpers";
-import { ReservationClass } from "@/lib/classes";
 import { api } from "@/trpc/server";
 import AdminPanel from "./adminButtons";
 
@@ -21,7 +22,8 @@ export default async function reservationLayout({
   params: { id: number };
 }) {
   const [data, isAdmin] = await cachedData(params.id);
-  const reservation = new ReservationClass(data);
+  const reservation = data;
+  if (!reservation) return notFound();
   const { id, eventName, Facility } = reservation;
 
   const reservationItems: SideBarType = [
@@ -57,7 +59,9 @@ export default async function reservationLayout({
             <h2 className="text-muted-foreground">
               {Facility?.building} {Facility?.name}
             </h2>
-            <h3 className="text-muted-foreground">{reservation?.range()}</h3>
+            <h3 className="text-muted-foreground">
+              {range(reservation.ReservationDate)}
+            </h3>
             <Suspense fallback={<></>}>
               {isAdmin && (
                 <div className="relative float-right self-start p-4 sm:right-0 sm:self-end sm:p-0">

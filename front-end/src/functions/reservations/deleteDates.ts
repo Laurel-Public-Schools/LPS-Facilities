@@ -4,8 +4,7 @@ import { revalidateTag } from "next/cache";
 import { eq } from "drizzle-orm";
 
 import { db } from "@local/db/client";
-
-import { ReservationDate } from "../../../../packages/db/src/schema/schema";
+import { ReservationDate } from "@local/db/schema";
 
 export default async function HandleDelete(id: number, reservationID: number) {
   try {

@@ -1,4 +1,4 @@
-import { SubmitButton } from "@/components/ui/buttons/submitButton";
+import { Button } from "@/components/ui/buttons";
 import { Separator } from "@/components/ui/separator";
 import { Update } from "./actions";
 
@@ -45,7 +45,7 @@ export default function AccountForm({ data }: { data: UserName }) {
         administrator to update your email address on the account.
       </p>
       <Separator />
-      <SubmitButton className="float-right" />
+      <Button className="float-right" />
     </form>
   );
 }

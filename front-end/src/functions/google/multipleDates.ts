@@ -5,10 +5,10 @@ import { OAuth2Client } from "google-auth-library";
 import { google } from "googleapis";
 import moment from "moment-timezone";
 
-import { GetReservationbyID } from "@/lib/db/queries/reservations";
+import { api } from "@/trpc/server";
 import generateId from "../calculations/generate-id";
 
-export default async function CreateGoogleEvents(id: number | bigint) {
+export default async function CreateGoogleEvents(id: number) {
   const scopes = ["https://www.googleapis.com/auth/calendar"];
   const oauth2Client = new OAuth2Client({
     clientId: process.env.GOOGLE_CLIENT_ID,
@@ -20,9 +20,7 @@ export default async function CreateGoogleEvents(id: number | bigint) {
     refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
   });
 
-  const approvedReservation = await GetReservationbyID.execute({
-    id: id as number,
-  });
+  const approvedReservation = await api.reservation.byId({ id: id });
 
   const calendar = google.calendar({ version: "v3", auth: oauth2Client });
   //@ts-expect-error

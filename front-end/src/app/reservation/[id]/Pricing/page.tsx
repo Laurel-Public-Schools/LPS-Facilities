@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { ShowPayment } from "@/components/forms";
 import EditPricing from "@/components/forms/paymentModal";
-import { SubmitButton } from "@/components/ui/buttons/submitButton";
+import { Button } from "@/components/ui/buttons";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DataTable } from "@/components/ui/tables/reservations/data-table";
 import { Paid } from "@/functions/mutations";
@@ -68,10 +68,7 @@ export default async function paymentPage({
                   <EditPricing id={id} />
                 </div>
                 <div className="flex justify-center border-b-2">
-                  <Options
-                    id={id}
-                    facilityID={reservation.facilityId}
-                  />
+                  <Options id={id} facilityID={reservation.facilityId} />
                 </div>
               </>
             ) : (
@@ -108,7 +105,7 @@ export default async function paymentPage({
                       <span className="text-red-500">Not Paid</span>
                       <form action={Paid}>
                         <input type="hidden" name="id" value={id} />
-                        <SubmitButton>Mark as Paid</SubmitButton>
+                        <Button>Mark as Paid</Button>
                       </form>
                     </div>
                   ) : (

@@ -4,9 +4,8 @@ import { revalidateTag } from "next/cache";
 import { eq } from "drizzle-orm";
 
 import { db } from "@local/db/client";
-
-import { CategoryByFacility } from "@/lib/db/queries/categories";
-import { Reservation } from "../../../../packages/db/src/schema/schema";
+import { CategoryByFacility } from "@local/db/queries";
+import { Reservation } from "@local/db/schema";
 
 export async function costChange(id: number, formData: FormData) {
   let value;

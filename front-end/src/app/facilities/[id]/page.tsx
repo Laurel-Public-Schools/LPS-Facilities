@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
 import moment from "moment";
 
-import { Button } from "@/components/ui/buttons/button";
+import { Button } from "@/components/ui/buttons";
 import LoadingScreen from "@/components/ui/loadingScreen";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {

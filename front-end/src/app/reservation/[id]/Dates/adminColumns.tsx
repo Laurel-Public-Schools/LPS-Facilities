@@ -8,7 +8,7 @@ import type { ReservationDateType } from "@local/db/schema";
 
 import EditDates from "@/components/forms/EditDates";
 import EditMultipleDates from "@/components/forms/EditMultipleDays";
-import { Button } from "@/components/ui/buttons/button";
+import { Button } from "@/components/ui/buttons";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,

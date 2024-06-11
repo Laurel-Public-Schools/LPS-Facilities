@@ -211,10 +211,6 @@ export type SelectCategory = typeof Category.$inferSelect;
 export type SelectReservationFees = typeof ReservationFees.$inferSelect;
 export type SelectReservationDate = typeof ReservationDate.$inferSelect;
 
-export type EventsWithFacility = SelectEvents & {
-  facility?: SelectFacility;
-};
-
 export type ReservationWithAll = Reservation & {
   ReservationDate?: SelectReservationDate[];
   ReservationFees?: SelectReservationFees[];
@@ -222,9 +218,6 @@ export type ReservationWithAll = Reservation & {
   Category?: SelectCategory;
 };
 
-export type FacilityWithCategory = SelectFacility & {
-  Category?: SelectCategory[];
-};
 export interface ChartData {
   month?: string;
   totalReservations?: number;

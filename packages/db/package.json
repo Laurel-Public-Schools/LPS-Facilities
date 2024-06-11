@@ -34,7 +34,6 @@
     "introspect": "pnpm with-env drizzle-kit introspect --config ./drizzle.config.ts",
     "migrate": "pnpm with-env tsx src/migrate.ts",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false",
     "with-env": "dotenv -e ../../.env --"
   },

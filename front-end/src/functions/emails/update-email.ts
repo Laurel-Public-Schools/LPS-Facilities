@@ -1,11 +1,11 @@
 "use server";
 
-import { GetReservationbyID } from "@/lib/db/queries/reservations";
+import { api } from "@/trpc/server";
 
-export default async function updateEmail(id: number | bigint) {
-  const reservation = await GetReservationbyID.execute({ id: Number(id) });
+export default async function updateEmail(id: number) {
+  const reservation = await api.reservation.byId({ id: id });
 
-  const res = await fetch(`https://api.laurel.k12.mt.us/email`, {
+  await fetch(`https://api.laurel.k12.mt.us/email`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

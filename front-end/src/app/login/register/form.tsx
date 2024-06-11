@@ -37,7 +37,7 @@ export default function CreateAccount() {
   const onSubmit = async (formData: IFormInput) => {
     try {
       await CreateUser(formData);
-      Swal.fire({
+      void Swal.fire({
         title: "Account Created",
         text: "Your account has been created. Please login.",
         icon: "success",
@@ -46,7 +46,7 @@ export default function CreateAccount() {
         window.location.href = "/login";
       });
     } catch (error) {
-      Swal.fire({
+      void Swal.fire({
         title: "Error",
         text: "Something went wrong. Please contact the administrator.",
         icon: "error",
