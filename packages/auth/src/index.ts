@@ -10,7 +10,7 @@ import type { UserType } from "@local/db/schema";
 import {User, accounts, Session, VerificationToken} from "@local/db/schema";
 import {db} from "@local/db/client"
 
-import { env } from "../env";
+
 import authConfig from "./auth.config";
 
 export type { Session } from "next-auth";

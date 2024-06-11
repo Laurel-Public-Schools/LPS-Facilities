@@ -27,7 +27,7 @@ export const ReservationRouter = {
   }),
   requestCount: protectedProcedure.query(({ ctx }) => {
     return ctx.db
-      .select({ value: count() })
+      .select({ value: count(Reservation.approved) })
       .from(Reservation)
       .where(eq(Reservation.approved, "pending"));
   }),

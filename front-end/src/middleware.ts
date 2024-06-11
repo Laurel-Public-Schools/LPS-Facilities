@@ -6,12 +6,8 @@
  *  @see https://nextjs.org/docs/app/building-your-application/routing/middleware
  */
 
-import { NextResponse } from "next/server";
-import NextAuth from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
 
-import authConfig from "@local/auth/auth.config";
-
-const { auth: middleware } = NextAuth(authConfig);
 const blockedCountries = [
   "CN",
   "RU",
@@ -27,9 +23,8 @@ const blockedCountries = [
 ];
 
 // wrap default middleware with withAuth to provide NextAuth Token context to middleware
-export default middleware((req) => {
+export function middleware(req: NextRequest) {
   const response = NextResponse.next();
-  const token = req.auth;
 
   /**
    * Geo IP Blocking for specific countries.
@@ -59,38 +54,18 @@ export default middleware((req) => {
     }
   }
 
-  if (req.nextUrl.pathname.startsWith("/api/users") && token) {
-    if (token.user.role === "USER" || token.user.role === null) {
-      return new Response("Unauthorized", { status: 401 });
-    }
-  }
-
-  // Redirects to the 404 page if a user tries to access the admin dashboard without being an admin.
-  if (req.nextUrl.pathname.startsWith("/admin") && token) {
-    if (token.user.role === "USER" || token.user.role === null) {
-      return NextResponse.redirect(new URL("/404", req.url));
-    }
-  }
-});
+  return response;
+}
 
 // The matcher property is used to specify which paths the middleware should run on.
 export const config = {
   matcher: [
-    // {
-    //   source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
-    //   missing: [
-    //     { type: "header", key: "next-router-prefetch" },
-    //     { type: "header", key: "purpose", value: "prefetch" },
-    //   ],
-    // },
-    "/api/account",
-    "/api/users",
-    "/api/requests",
-    "/api/reservation",
-    "/api/reservation/:path*",
-    "/reservation",
-    "/reservation/:path*",
-    "/admin/reservations/:path*",
-    "/admin/:path*",
+    {
+      source: "/((?!api|_next/static|_next/image|favicon.ico).*)",
+      missing: [
+        { type: "header", key: "next-router-prefetch" },
+        { type: "header", key: "purpose", value: "prefetch" },
+      ],
+    },
   ],
 };

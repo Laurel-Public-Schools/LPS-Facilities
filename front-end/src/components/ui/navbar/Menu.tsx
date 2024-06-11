@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Loader2 } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-import IsAdminNav from "@/components/contexts/isAdminNav";
 import { IssuesForm } from "@/components/forms";
 import { Button, ModeToggle, RequestBadge } from "@/components/ui/buttons";
 import {
@@ -19,12 +18,16 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import { requestCount } from "./requestCount";
+
+// import { requestCount } from "./requestCount";
 
 export function AuthenticatedMenu() {
   const { data: session, status } = useSession();
   console.log("session: ", session);
-
+  let admin = false;
+  if (session && session.user.role.includes("ADMIN")) {
+    admin = true;
+  }
   if (status === "loading") {
     return (
       <NavigationMenuItem>
@@ -64,7 +67,7 @@ export function AuthenticatedMenu() {
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
-          <IsAdminNav>
+          {admin && (
             <NavigationMenuItem>
               <NavigationMenuTrigger>Admin</NavigationMenuTrigger>
               <NavigationMenuContent>
@@ -82,7 +85,7 @@ export function AuthenticatedMenu() {
                   <Link href="/admin/requests" legacyBehavior passHref>
                     <ListItem title="Requests">
                       Manage requests
-                      <RequestBadge requestCount={requestCount()} />
+                      {/* <RequestBadge requestCount={requestCount()} /> */}
                     </ListItem>
                   </Link>
                   <Link href="/admin/users" legacyBehavior passHref>
@@ -94,7 +97,7 @@ export function AuthenticatedMenu() {
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-          </IsAdminNav>
+          )}
         </div>
         <div className="visible sm:hidden">
           <Link href="/account" legacyBehavior passHref>

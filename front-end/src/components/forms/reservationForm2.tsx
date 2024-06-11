@@ -5,7 +5,7 @@ import * as React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown, Loader2, ScrollText } from "lucide-react";
-import { useSession } from "next-auth/react";
+
 import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -72,7 +72,7 @@ export default function ReservationForm(props: {
   const [isRequestPending, startRequestTransition] = React.useTransition();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const hideModal = () => setIsVisible(false);
-  const { data: session } = useSession();
+
 
   let selectedFacility = 0;
   const router = useRouter();

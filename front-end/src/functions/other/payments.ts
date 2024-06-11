@@ -1,4 +1,4 @@
-"use serveer";
+"use server";
 
 import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
