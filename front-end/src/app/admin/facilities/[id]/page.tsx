@@ -2,17 +2,19 @@ import type { FacilityWithCategory } from "@/lib/types";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import {api} from "@/trpc/server"
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
-  const facilities = await fetch(
-    process.env.NEXT_PUBLIC_HOST + `/api/facilities`,
-  ).then((res) => res.json());
-  return facilities.map((facility: FacilityWithCategory) => ({
+  const facilities = await api.facility.allIds();
+  return facilities.map((facility) => ({
     id: facility.id.toString(),
   }));
 }
+
+
 
 export default async function facilityEditForm({
   params,
@@ -22,19 +24,11 @@ export default async function facilityEditForm({
   };
 }) {
   const Forms = dynamic(() => import("./forms"));
-  const data: FacilityWithCategory = await fetch(
-    process.env.NEXT_PUBLIC_HOST + `/api/facilities/${params.id}`,
-    {
-      next: {
-        revalidate: 3600,
-        tags: ["facilities"],
-      },
-    },
-  ).then((res) => res.json());
-
+  const data = await api.facility.byId({ id: params.id });
+  if (!data) return notFound();
   const { name, address, building, capacity, imagePath } = data;
 
-  const FacilityCategories = data.Category!.map((category) => {
+  const FacilityCategories = data.Category.map((category) => {
     return {
       id: category.id,
       name: category.name,

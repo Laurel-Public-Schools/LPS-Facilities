@@ -1,32 +1,31 @@
 "use server";
 
-import type {
-  FacilityWithCategory,
-  Reservation,
-  TableFacility,
-  TableReservation,
-} from "@/lib/types";
 import moment from "moment";
 
 import type {
+  CategoryType,
   FacilityType,
   ReservationDateType,
   ReservationType,
+  UserType,
 } from "@local/db/schema";
 
 const dateOptions = {};
+interface TableData extends ReservationType {
+  ReservationDate: ReservationDateType[];
+  Facility: FacilityType;
+  User: Partial<UserType>;
+}
 
-async function mapRequests(requests: Reservation[]) {
-  const mappedRequests: TableReservation[] = requests.map((requests) => {
+async function mapRequests(requests: TableData[]) {
+  const mappedRequests = requests.map((requests) => {
     const sortedDates = requests.ReservationDate.sort((a, b) =>
       moment(a.startDate).diff(moment(b.startDate)),
     );
     return {
       eventName: requests.eventName,
       Facility: requests.Facility.name,
-
       ReservationDate: sortedDates[0]?.startDate || "No Dates Defined",
-
       approved: requests.approved,
       User: requests.User?.name || "",
       Details: requests.id,
@@ -35,34 +34,31 @@ async function mapRequests(requests: Reservation[]) {
   return mappedRequests;
 }
 
-async function mapReservations(Reservations: ReservationType[]) {
+async function mapReservations(Reservations: TableData[]) {
   const currentDate = moment();
 
-  const mappedReservations: any[] = Reservations.map((reservation) => {
+  const mappedReservations = Reservations.map((reservation) => {
     const sortedDates = reservation.ReservationDate.sort((a, b) =>
       moment(a.startDate, "YYYY-MM-DD").diff(moment(b.startDate, "YYYY-MM-DD")),
     );
     const nextUpcomingDate = sortedDates?.find(
       (date) => moment(date.startDate, "YYYY-MM-DD") >= currentDate,
     );
-    if (nextUpcomingDate) {
-      return {
-        eventName: reservation.eventName,
-        Facility: reservation.Facility.name,
-        ReservationDate: nextUpcomingDate.startDate,
-        approved: reservation.approved,
-        User: reservation.User?.name || "",
-        Details: reservation.id,
-      };
-    }
-    return null;
+    return {
+      eventName: reservation.eventName,
+      Facility: reservation.Facility.name,
+      ReservationDate: nextUpcomingDate?.startDate,
+      approved: reservation.approved,
+      User: reservation.User?.name || "",
+      Details: reservation.id,
+    };
   }).filter((reservation) => reservation !== null);
-  return mappedReservations as TableReservation[];
+  return mappedReservations;
 }
 
-async function mapPastReservations(Reservations: Reservation[]) {
+async function mapPastReservations(Reservations: TableData[]) {
   const currentDate = moment();
-  const mappedReservations: any[] = Reservations.map((reservation) => {
+  const mappedReservations = Reservations.map((reservation) => {
     const sortedDates = reservation.ReservationDate.sort((a, b) =>
       moment(a.startDate, "YYYY-MM-DD").diff(moment(b.startDate, "YYYY-MM-DD")),
     );
@@ -73,19 +69,17 @@ async function mapPastReservations(Reservations: Reservation[]) {
     const reservationDate = reservation.ReservationDate.map(
       (date) => date.startDate,
     );
-    if (!nextUpcomingDate) {
-      return {
-        eventName: reservation.eventName,
-        Facility: reservation.Facility.name,
-        ReservationDate: reservationDate[0],
-        approved: reservation.approved,
-        User: reservation.User?.name || "",
-        Details: reservation.id,
-      };
-    }
-    return null;
+
+    return {
+      eventName: reservation.eventName,
+      Facility: reservation.Facility.name,
+      ReservationDate: reservationDate[0],
+      approved: reservation.approved,
+      User: reservation.User?.name || "",
+      Details: reservation.id,
+    };
   }).filter((reservation) => reservation !== null);
-  return mappedReservations as TableReservation[];
+  return mappedReservations;
 }
 
 async function mapDates(ReservationDates: any[]) {
@@ -101,11 +95,6 @@ async function mapDates(ReservationDates: any[]) {
     };
   });
   return mappedDates;
-}
-
-interface TableData extends ReservationType {
-  ReservationDate: ReservationDateType[];
-  Facility: FacilityType;
 }
 
 async function userReservations(Reservations: TableData[]) {
@@ -149,6 +138,10 @@ async function mappedFacilities(facilities: FacilityWithCategory[]) {
   return mappedFacilities;
 }
 
+interface FacilityWithCategory extends FacilityType {
+  Category: CategoryType[];
+}
+
 async function mapFacilityTable(facilities: FacilityWithCategory[]) {
   const mappedFacilities = facilities
     .map((facility) => {
@@ -165,7 +158,7 @@ async function mapFacilityTable(facilities: FacilityWithCategory[]) {
       };
     })
     .flat();
-  return mappedFacilities as TableFacility[];
+  return mappedFacilities;
 }
 
 export {

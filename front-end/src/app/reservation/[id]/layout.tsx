@@ -1,8 +1,9 @@
 import type { ReservationClassType } from "@/lib/classes";
-import type { SideBarType } from "@/lib/types/constants";
 import React, { Suspense } from "react";
 import { unstable_cache as cache } from "next/cache";
 import { headers } from "next/headers";
+
+import type { SideBarType } from "@local/validators/constants";
 
 import IsUserReserv from "@/components/contexts/isUserReserv";
 import { Separator } from "@/components/ui/separator";

@@ -18,7 +18,7 @@ export default async function reservationDatesPage({
   const AddDates = dynamic(() => import("@/components/ui/alerts/addDates"));
   const reservation = await api.reservation.byId({ id: params.id });
   if (!reservation) return notFound();
-  const mappedDates = reservation.ReservationDate!;
+  const mappedDates = reservation.ReservationDate;
   return (
     <div className="space-y-7" suppressHydrationWarning>
       <Suspense fallback={<Skeleton className="h-auto w-auto" />}>

@@ -1,9 +1,10 @@
 import { Suspense } from "react";
 
+import { adminSideBar } from "@local/validators/constants";
+
 import { Separator } from "@/components/ui/separator";
 import { SidebarNav } from "@/components/ui/sidebar-nav";
 import { Skeleton } from "@/components/ui/skeleton";
-import { adminSideBar } from "@/lib/types/constants";
 
 export const revalidate = 60;
 

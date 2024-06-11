@@ -7,11 +7,15 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./src/index.ts"
+    },
+    "./constants": {
+      "types": "./dist/constants.d.ts",
+      "default": "./src/constants.ts"
     }
   },
   "scripts": {
     "build": "tsc",
-    "build:libs": "tsc",
+    "build:libs": "tsc ",
     "dev": "tsc --watch",
     "clean": "rm -rf .turbo node_modules",
     "clean:outs": "rm -rf dist",

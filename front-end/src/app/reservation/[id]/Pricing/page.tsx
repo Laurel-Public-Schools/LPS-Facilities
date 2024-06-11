@@ -70,7 +70,7 @@ export default async function paymentPage({
                 <div className="flex justify-center border-b-2">
                   <Options
                     id={id}
-                    facilityID={reservation.facilityId as number}
+                    facilityID={reservation.facilityId}
                   />
                 </div>
               </>

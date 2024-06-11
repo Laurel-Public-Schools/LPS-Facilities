@@ -1,20 +1,20 @@
 import React, { Suspense } from "react";
+import { notFound } from "next/navigation";
 import moment from "moment";
 
 import type {
-  SelectFacility,
-  SelectReservation,
-  SelectReservationDate,
-} from "@local/db";
+  FacilityType,
+  ReservationDateType,
+  ReservationType,
+} from "@local/db/schema";
 
 import { DataTable } from "@/components/ui/tables";
-import { getUser } from "@/functions/data/users";
-import { User } from "@/lib/types";
+import { api } from "@/trpc/server";
 import { columns } from "./columns";
 import TableSkeleton from "./skeleton";
 
 interface TableUser {
-  name: string;
+  Name: string;
 
   eventName: string;
   Facility: string;
@@ -23,36 +23,46 @@ interface TableUser {
   Details: number;
 }
 
-interface Reservation extends SelectReservation {
-  ReservationDate: SelectReservationDate[];
-  Facility: SelectFacility;
+interface Reservation extends ReservationType {
+  ReservationDate: ReservationDateType[];
+  Facility: FacilityType;
 }
 
 const currentDate = moment().format("YYYY-MM-DD");
 
 async function getData(id: string) {
-  const user = await getUser(id);
+  const user = await api.user.ById({ id: id });
   const reservation: Reservation[] = user?.Reservation || [];
+  let mappedReservations: TableUser[] = [];
   if (reservation.length === 0) {
-    return [user];
+    mappedReservations = [
+      {
+        Name: user?.name ?? "N/A",
+        eventName: "N/A",
+        Facility: "N/A",
+        ReservationDate: "N/A",
+        approved: "N/A",
+        Details: 0,
+      },
+    ];
+  } else {
+    mappedReservations = reservation.map((reservation) => {
+      const sortedDates = reservation.ReservationDate.sort((a, b) =>
+        moment(a.startDate).diff(moment(b.startDate)),
+      );
+      const nextUpcomingDate = sortedDates.find((date) =>
+        moment(date.startDate).isSameOrAfter(currentDate),
+      );
+      return {
+        Name: user?.name ?? "N/A",
+        eventName: reservation.eventName,
+        Facility: reservation.Facility.name,
+        ReservationDate: nextUpcomingDate ? nextUpcomingDate.startDate : "N/A",
+        approved: reservation.approved,
+        Details: reservation.id,
+      };
+    });
   }
-
-  const mappedReservations: TableUser[] = reservation.map((reservation) => {
-    const sortedDates = reservation.ReservationDate.sort((a, b) =>
-      moment(a.startDate).diff(moment(b.startDate)),
-    );
-    const nextUpcomingDate = sortedDates.find((date) =>
-      moment(date.startDate).isSameOrAfter(currentDate),
-    );
-    return {
-      Name: user?.name ?? "N/A",
-      eventName: reservation.eventName,
-      Facility: reservation.Facility.name,
-      ReservationDate: nextUpcomingDate ? nextUpcomingDate.startDate : "N/A",
-      approved: reservation.approved,
-      Details: reservation.id,
-    };
-  });
   return mappedReservations;
 }
 
@@ -63,9 +73,9 @@ export default async function accountPage({
 }) {
   const id = params.id;
 
-  const data: TableUser = await getData(id);
-
-  const name = data[0]?.name!;
+  const data = await getData(id);
+  if (!data) return notFound();
+  const name = data[0]?.Name;
   return (
     <div className="space-x-2 space-y-7">
       <h1 className="m-3 flex justify-center border-b p-3 text-4xl font-bold drop-shadow-lg">

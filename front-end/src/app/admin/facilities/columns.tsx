@@ -1,6 +1,5 @@
 "use client";
 
-import type { TableFacility } from "@/lib/types";
 import type { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,12 +7,22 @@ import { ArrowUpDown } from "lucide-react";
 
 import { Button } from "@/components/ui/buttons";
 
+type TableFacility = {
+  id: number;
+  name: string;
+  building: string;
+  address: string;
+  imagePath: string | null;
+  capacity: number | null;
+  googleCalendarId: string;
+  Category: number[];
+};
 export const columns: ColumnDef<TableFacility>[] = [
   {
     accessorKey: "imagePath",
     header: "Image",
     cell: ({ row }) => {
-      const imagePath = row.getValue("imagePath") as string;
+      const imagePath = row.original.imagePath;
       return (
         <>
           {imagePath ? (
@@ -73,7 +82,7 @@ export const columns: ColumnDef<TableFacility>[] = [
     accessorKey: "Category",
     header: "Category Prices",
     cell: ({ row }) => {
-      const prices = row.getValue("Category") as number[];
+      const prices = row.original.Category;
       return (
         <>{prices?.map((price, index) => <div key={index}>${price}/hr</div>)}</>
       );
@@ -89,7 +98,7 @@ export const columns: ColumnDef<TableFacility>[] = [
       );
     },
     cell: ({ row }) => {
-      const id = row.getValue("id");
+      const id = row.original.id;
       return (
         <>
           <Button variant="link" asChild>

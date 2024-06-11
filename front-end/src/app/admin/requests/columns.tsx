@@ -1,6 +1,5 @@
 "use client";
 
-import type { TableReservation } from "@/lib/types";
 import type { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 import { ArrowUpDown } from "lucide-react";
@@ -18,6 +17,15 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/buttons";
 import { approveReservation, denyReservation } from "@/functions/reservations";
+
+type TableReservation = {
+  eventName: string;
+  Facility: string;
+  ReservationDate: string;
+  approved: "pending" | "approved" | "denied" | "canceled";
+  User: string;
+  Details: number;
+};
 
 export const columns: ColumnDef<TableReservation>[] = [
   {

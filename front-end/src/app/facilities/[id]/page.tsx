@@ -151,7 +151,7 @@ export default async function facilityPage({
                           {moment(event.start).format(
                             "ddd, MMM Do YYYY,  h:mm a",
                           )}{" "}
-                          {" to "} {moment(event.end!).format("h:mm a")}
+                          {" to "} {moment(event.end).format("h:mm a")}
                         </p>
                       </div>
                     </div>

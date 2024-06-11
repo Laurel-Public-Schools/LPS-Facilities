@@ -1,8 +1,9 @@
 import React, { Suspense } from "react";
 
+import { buildingSideBar } from "@local/validators/constants";
+
 import { Separator } from "@/components/ui/separator";
 import { SidebarSearchParamsNav } from "@/components/ui/sidebar-searchParams";
-import { buildingSideBar } from "@/lib/types/constants";
 
 export default function facilitiesLayout({
   children,

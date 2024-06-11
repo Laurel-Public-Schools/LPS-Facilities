@@ -10,7 +10,7 @@ import { db } from "@local/db/client";
 import {
   Category,
   Facility,
-} from "../../../../../../packages/db/src/schema/schema";
+} from "@local/db/schema";
 
 export async function uploadImage(id: number, formData: FormData) {
   const file = formData.get("file") as File;

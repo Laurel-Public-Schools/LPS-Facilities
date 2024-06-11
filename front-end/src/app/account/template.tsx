@@ -1,8 +1,9 @@
 import React from "react";
 
+import { userSideBar } from "@local/validators/constants";
+
 import { Separator } from "@/components/ui/separator";
 import { SidebarNav } from "@/components/ui/sidebar-nav";
-import { userSideBar } from "@/lib/types/constants";
 
 export const dynamic = "force-dynamic";
 

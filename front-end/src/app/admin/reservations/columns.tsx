@@ -1,12 +1,20 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
-import type { TableReservation } from "lib/types";
 import Link from "next/link";
-import { Reservation } from "lib/types";
 import { ArrowUpDown } from "lucide-react";
 
 import { Button } from "@/components/ui/buttons";
+import { Reservation } from "@/lib/types";
+
+type TableReservation = {
+  eventName: string;
+  Facility: string;
+  ReservationDate: string | undefined;
+  approved: "approved" | "pending" | "denied" | "canceled";
+  User: string;
+  Details: number;
+};
 
 export const columns: ColumnDef<TableReservation>[] = [
   {
@@ -64,7 +72,7 @@ export const columns: ColumnDef<TableReservation>[] = [
     accessorKey: "Details",
     header: "Details",
     cell: ({ row }) => {
-      const id = parseInt(row.getValue("Details"));
+      const id = row.original.Details;
 
       return (
         <Button asChild>

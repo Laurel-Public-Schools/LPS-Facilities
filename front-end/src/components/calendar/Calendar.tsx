@@ -7,13 +7,14 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import type { Schema$Event } from "@/functions/events/types";
-import type { BuildingAll } from "@/lib/types/constants";
 import { useSearchParams } from "next/navigation";
 import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { useTheme } from "next-themes";
 
+import type { BuildingAll } from "@local/validators/constants";
+import { buildingCalendars, buildingColors } from "@local/validators/constants";
+
 import { GetAllEvents } from "@/functions/events/googleAPI";
-import { buildingCalendars, buildingColors } from "@/lib/types/constants";
 import { CalendarInfo } from "../ui";
 import {
   AlertDialog,

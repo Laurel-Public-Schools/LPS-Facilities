@@ -7,9 +7,10 @@ import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/buttons";
 
 interface TableUser {
+  Name: string;
   eventName: string;
   Facility?: string;
-  ReservationDate?: any[];
+  ReservationDate?: string;
   approved: "pending" | "approved" | "denied" | "canceled" | "N/A";
   Details: number;
 }

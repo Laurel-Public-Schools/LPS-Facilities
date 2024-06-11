@@ -143,7 +143,7 @@ export const adminColumns: ColumnDef<ReservationDateType>[] = [
     header: ({ table }) => {
       const selectedRows = table.getSelectedRowModel();
       const selectedData = selectedRows.flatRows.map((row) => row.original);
-      const SelectedRowIds = selectedData.map((row) => row.id!);
+      const SelectedRowIds = selectedData.map((row) => row.id);
       return (
         <>
           <EditMultipleDates ids={SelectedRowIds} />

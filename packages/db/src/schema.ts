@@ -544,6 +544,25 @@ export const Facility = facilities_db.table(
 
 export const FacilitySchema = createSelectSchema(Facility);
 export const FacilityArray = z.array(FacilitySchema);
+export const insertFacilitySchema = createInsertSchema(Facility, {
+  name: z.string().max(191),
+  building: z.string().max(191),
+  address: z.string().max(191),
+  imagePath: z.string().max(191),
+  capacity: z.number().max(2000).min(0),
+  googleCalendarId: z.string().max(191),
+}).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const CreateFacilitySchema = insertFacilitySchema.extend({
+  category1: z.number().nullable(),
+  category2: z.number().nullable(),
+  category3: z.number().nullable(),
+});
+
 export type FacilityType = z.infer<typeof FacilitySchema>;
 
 export const facilityRelations = relations(Facility, ({ one, many }) => ({
