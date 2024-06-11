@@ -6,13 +6,6 @@ import { notFound } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/trpc/server";
 
-export async function generateStaticParams() {
-  const facilities = await api.facility.allIds();
-  return facilities.map((facility) => ({
-    id: facility.id.toString(),
-  }));
-}
-
 export default async function facilityEditForm({
   params,
 }: {

@@ -17,7 +17,7 @@ interface IFormInput {
   terms: boolean;
 }
 export default async function CreateUser(formData: IFormInput) {
-  const password = formData.password!;
+  const password = formData.password;
   const newHash = bcrypt.hashSync(password, 10);
   try {
     await db.insert(User).values({

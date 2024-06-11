@@ -16,13 +16,6 @@ import {
 } from "@/components/ui/tooltip";
 import { api } from "@/trpc/server";
 
-export async function generateStaticParams() {
-  const facilities = await api.facility.allIds();
-  return facilities.map((facility) => ({
-    id: facility.id.toString(),
-  }));
-}
-
 export default async function facilityPage({
   params,
 }: {

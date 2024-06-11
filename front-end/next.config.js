@@ -16,6 +16,7 @@ const nextConfig = {
   eslint: { ignoreDuringBuilds: true },
   experimental: {
     optimizePackageImports: ["bcryptjs", "googleapis"],
+    ppr: true,
   },
   transpilePackages: ["@local/auth", "@local/api"],
   serverExternalPackages: ["@local/db"],
