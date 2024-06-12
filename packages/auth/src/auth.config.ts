@@ -129,12 +129,14 @@ export default {
       if (token?.data?.role && session.user) {
         // @ts-ignore - authjs types are wrong
         session.user.role = token.data.role;
+        session.user.id = token.id as string;
       }
       return session;
     },
     jwt({ token, account, user }) {
       if (user) {
         token.data = user;
+        token.id = user.id;
       }
       return token;
     },
