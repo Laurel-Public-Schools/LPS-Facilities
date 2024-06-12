@@ -1,11 +1,12 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Separator } from '@/components/ui/separator';
-import { JiraModal } from '@/components/forms';
-import type { SelectFacility as Facility } from '@/lib/db/schema';
+import React from "react";
 
-import ReservationOptions from '@/components/ui/tables/reservations/reservation/options';
+import type { FacilityType as Facility } from "@local/db/schema";
+
+import { JiraModal } from "@/components/forms";
+import { Separator } from "@/components/ui/separator";
+import ReservationOptions from "@/components/ui/tables/reservations/reservation/options";
 
 interface AdminPanelProps {
   id: number | bigint;
@@ -14,7 +15,7 @@ interface AdminPanelProps {
 
 export default function AdminPanel({ id, facility }: AdminPanelProps) {
   return (
-    <div className="flex h-5 items-center space-x-4 text-md">
+    <div className="text-md flex h-5 items-center space-x-4">
       <Separator orientation="vertical" />
       <div>
         <ReservationOptions id={id} facility={facility} />

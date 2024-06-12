@@ -1,46 +1,37 @@
-'use server';
+"use server";
+
 /**
  * Serverless function for creating a new reservation from form data
  */
+import type { z } from "zod";
+import { revalidateTag } from "next/cache";
 
-import type { formSchema } from '@/components/forms/schemas/reservationForm';
-import { UserByEmail } from '@/lib/db/queries/users';
-import { CategoryByFacility } from '@/lib/db/queries/categories';
-import { FacilityQuery } from '@/lib/db/queries/facility';
+import { db } from "@local/db/client";
+import { CreateReservationSchema } from "@local/db/schema";
+import { formSchema } from "@local/validators";
 
-import type { z } from 'zod';
-import type {
-  NewReservation} from '@/lib/db/schema';
-import {
-  Events,
-  Reservation,
-  ReservationDate,
-} from '@/lib/db/schema';
-import { db } from '@/lib/db';
-import { revalidateTag } from 'next/cache';
-import { newReservationEmail } from '../emails/reservationEmail';
+import { api } from "@/trpc/server";
+import { newReservationEmail } from "../emails/reservationEmail";
 
 // Validate form data values against the form schema
 type formValues = z.infer<typeof formSchema>;
-
+type NewReservation = z.infer<typeof CreateReservationSchema>;
 export default async function submitReservation(data: formValues) {
   try {
     // Helper database function to find a category by facility and category name
-    const categoryId = await CategoryByFacility.execute({
+    const categoryId = await api.category.byFacility({
       facilityId: data.facility,
       name: `%${data.category}%`,
     });
 
-    // Helper database function to find a user by email
-    const UserID = await UserByEmail.execute({ email: data.email });
     // Helper database function to find a facility by id
-    const Facility = await FacilityQuery.execute({ id: data.facility });
+    const Facility = await api.facility.byId({ id: data.facility });
     // Helper database function to find a building by id
-    const Building = Facility?.building;
+    const Building = Facility?.building!;
 
     // Create a new reservation object with strict typing from the database schema
     const NReservation: NewReservation = {
-      userId: UserID?.id || '',
+      userId: data.userId,
       eventName: data.eventName,
       facilityId: data.facility,
       details: data.details,
@@ -55,13 +46,10 @@ export default async function submitReservation(data: formValues) {
     };
 
     // Create the new reservation in the database and return the id
-    const [NewId] = await db
-      .insert(Reservation)
-      .values(NReservation)
-      .returning({ NewId: Reservation.id });
+    const NewId = await api.reservation.createReservation(NReservation);
 
     // Extract the id from the returned object
-    const reservationId = NewId.NewId;
+    const reservationId = NewId?.id!;
 
     // Create new empy arrays for the events and reservation dates table inserts
 
@@ -74,15 +62,14 @@ export default async function submitReservation(data: formValues) {
         endDate: event.startDate,
         startTime: event.startTime,
         endTime: event.endTime,
-        reservationId: Number(reservationId),
+        reservationId: reservationId,
       });
     }
 
     // Insert the events and reservation dates into the database
-    await db.insert(ReservationDate).values(reservationDatesToInsert);
-
+    await api.reservation.createReservationDates(reservationDatesToInsert);
     // Send an email to building admins, prevents action while testing
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === "production") {
       newReservationEmail({
         building: Building,
         name: data.name,
@@ -92,9 +79,9 @@ export default async function submitReservation(data: formValues) {
     }
 
     // Revalidate the admin page to update the cache
-    revalidateTag('reservations');
-    return 'Success';
+    revalidateTag("reservations");
+    return "Success";
   } catch (error) {
-    throw new Error('Error creating reservation');
+    throw new Error("Error creating reservation");
   }
 }

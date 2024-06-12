@@ -1,31 +1,40 @@
-'use server';
+"use server";
+
 /**
  * This function is used to calculate the monthly revenue for the last 6 months
  */
-
-import type { ReservationClassType } from '@/lib/classes';
-import { ReservationClass } from '@/lib/classes';
-import type { RevenueData } from '@/lib/types';
-
+import type { RevenueData } from "@/lib/types";
 import {
-  format,
-  sub,
-  isBefore,
-  isAfter,
-  parse,
   compareAsc,
+  format,
+  isAfter,
+  isBefore,
   lastDayOfMonth,
-} from 'date-fns';
+  parse,
+  sub,
+} from "date-fns";
 
-export default async function MonthlyRevenue({
-  data,
-}: {
-  data: ReservationClassType[];
-}): Promise<{
+import type {
+  CategoryType,
+  ReservationDateType,
+  ReservationFeesType,
+  ReservationType,
+} from "@local/db/schema";
+
+import { api } from "@/trpc/server";
+import { CostReducer } from "../other/helpers";
+
+interface ReservationClassType extends ReservationType {
+  ReservationDate: ReservationDateType[];
+  ReservationFees: ReservationFeesType[];
+  Category: CategoryType;
+}
+export default async function MonthlyRevenue(): Promise<{
   revChartData: RevenueData[];
   totalPositive: number;
   totalNegative: number;
 }> {
+  const data = await api.reservation.all();
   // initialize variables
   const aggregateData: any = {};
   const now = lastDayOfMonth(new Date());
@@ -38,26 +47,25 @@ export default async function MonthlyRevenue({
    */
   const reducedData = data.filter(
     (reservation) =>
-      reservation.ReservationDate &&
-      reservation.ReservationDate.some(
-        (date) => date.approved === 'approved'
+      reservation.ReservationDate?.some(
+        (date) => date.approved === "approved",
       ) &&
       isAfter(
         new Date(
           reservation.ReservationDate.reduce((a, b) => {
             return new Date(a.startDate) > new Date(b.startDate) ? a : b;
-          }).startDate
+          }).startDate,
         ),
-        sixMonthsAgo
+        sixMonthsAgo,
       ) &&
       isBefore(
         new Date(
           reservation.ReservationDate.reduce((a, b) => {
             return new Date(a.startDate) > new Date(b.startDate) ? a : b;
-          }).startDate
+          }).startDate,
         ),
-        now
-      )
+        now,
+      ),
   );
 
   /**
@@ -66,10 +74,16 @@ export default async function MonthlyRevenue({
 
   reducedData.forEach((reservation: ReservationClassType) => {
     const month = reservation.ReservationDate
-      ? format(new Date(reservation.ReservationDate[0].startDate), 'MMMM')
-      : '';
-    const object = new ReservationClass(reservation);
-    const cost = object.CostReducer();
+      ? format(new Date(reservation.ReservationDate[0]?.startDate!), "MMMM")
+      : "";
+
+    const cost = CostReducer({
+      ReservationFees: reservation.ReservationFees,
+      ReservationDate: reservation.ReservationDate,
+      categoryId: reservation.categoryId,
+      Category: reservation.Category,
+      CategoryPrice: reservation.Category.price,
+    });
     const numericCost = Number(cost.toFixed()) || 0;
     if (!aggregateData[month]) {
       aggregateData[month] = { Revenue: 0, Loss: 0 };
@@ -95,10 +109,10 @@ export default async function MonthlyRevenue({
   });
 
   const sortedChartData = chartData.sort((a, b) => {
-    const monthA = parse(a.month!, 'MMMM', new Date());
-    const monthB = parse(b.month!, 'MMMM', new Date());
+    const monthA = parse(a.month!, "MMMM", new Date());
+    const monthB = parse(b.month!, "MMMM", new Date());
     return compareAsc(monthA, monthB);
   });
-
+  console.log(sortedChartData);
   return { revChartData: sortedChartData, totalPositive, totalNegative };
 }

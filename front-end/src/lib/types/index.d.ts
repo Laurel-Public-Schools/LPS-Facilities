@@ -1,19 +1,21 @@
-import type { User as NextAuthUser } from 'next-auth';
-import NextAuth from 'next-auth';
+import type { Schema$Event } from "@/functions/events/types";
+import type { $Enums, Category } from "@prisma/client";
+import type { User as NextAuthUser } from "next-auth";
+import type { Path, UseFormRegister } from "react-hook-form";
+import NextAuth from "next-auth";
+
 import type {
-  Category,
-  ReservationDate,
-  ReservationFees,
+  SelectCategory,
   SelectEvents,
   SelectFacility,
-} from '../db/schema';
-import type { Path, UseFormRegister } from 'react-hook-form';
-import type { $Enums, Category } from '@prisma/client';
+  SelectReservationDate,
+  SelectReservationFees,
+} from "@local/db";
 
 export interface Facility {
   map(
-    arg0: (facility: Facility) => import('react').JSX.Element
-  ): import('react').ReactNode;
+    arg0: (facility: Facility) => import("react").JSX.Element,
+  ): import("react").ReactNode;
   id: number;
   image_path: string;
   name: string;
@@ -26,7 +28,7 @@ export interface Facility {
       name: string;
       description: string;
       price: string;
-    }
+    },
   ];
 }
 
@@ -117,7 +119,7 @@ export interface Reservation {
   fees?: string;
   facilityId: number;
   recurrence?: string;
-  approved: 'pending' | 'approved' | 'denied' | 'canceled';
+  approved: "pending" | "approved" | "denied" | "canceled";
   createdAt: Date;
   updatedAt: Date;
   additionalFees: [];
@@ -156,7 +158,7 @@ export interface TableReservation {
   eventName: string;
   Facility: string;
   ReservationDate: any[];
-  approved: 'pending' | 'approved' | 'denied' | 'canceled';
+  approved: "pending" | "approved" | "denied" | "canceled";
   User?: string;
   Details: number;
 }
@@ -178,7 +180,7 @@ export interface DateType {
   endDate: string;
   startTime: string;
   endTime: string;
-  approved: 'pending' | 'approved' | 'denied' | 'canceled';
+  approved: "pending" | "approved" | "denied" | "canceled";
   ReservationID: any;
 }
 
@@ -195,13 +197,19 @@ export interface Events {
   placeholder: boolean;
 }
 
+export interface GoogleEvents {
+  gLink: string | null | undefined;
+  description: string | null | undefined;
+  location: string | null | undefined;
+  start: string | null | undefined;
+  end: string | null | undefined;
+  title: string | null | undefined;
+  meta: Schema$Event;
+}
+
 export type SelectCategory = typeof Category.$inferSelect;
 export type SelectReservationFees = typeof ReservationFees.$inferSelect;
 export type SelectReservationDate = typeof ReservationDate.$inferSelect;
-
-export type EventsWithFacility = SelectEvents & {
-  facility?: SelectFacility;
-};
 
 export type ReservationWithAll = Reservation & {
   ReservationDate?: SelectReservationDate[];
@@ -210,9 +218,6 @@ export type ReservationWithAll = Reservation & {
   Category?: SelectCategory;
 };
 
-export type FacilityWithCategory = SelectFacility & {
-  Category?: SelectCategory[];
-};
 export interface ChartData {
   month?: string;
   totalReservations?: number;

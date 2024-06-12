@@ -1,12 +1,10 @@
-import useCalculateNumberOfEvents from './useCalculateNumberOfEvents';
-import { useFacilities } from './useFacilities';
-import useHandleAddDate from './useHandleAddDate';
-import useMediaQuery from './useMediaQuery';
-import FacilitySelect from './useFacilitiesSelect';
+import useCalculateNumberOfEvents from "./useCalculateNumberOfEvents";
+import FacilitySelect from "./useFacilitiesSelect";
+import useHandleAddDate from "./useHandleAddDate";
+import useMediaQuery from "./useMediaQuery";
 
 export {
   useCalculateNumberOfEvents,
-  useFacilities,
   useHandleAddDate,
   FacilitySelect,
   useMediaQuery,

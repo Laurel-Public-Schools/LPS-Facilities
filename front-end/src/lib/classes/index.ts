@@ -1,11 +1,18 @@
-import type {SelectReservation, SelectReservationDate, SelectReservationFees, SelectFacility, SelectCategory, SelectUser} from '../db/schema';
+import type {
+  FacilityType,
+  ReservationDateType,
+  ReservationFeesType,
+  ReservationType,
+  CategoryType as SelectCategory,
+  UserType,
+} from "@local/db/schema";
 
-export type ReservationClassType = SelectReservation & {
-  Facility?: SelectFacility;
+export type ReservationClassType = ReservationType & {
+  Facility?: FacilityType;
   Category?: SelectCategory;
-  ReservationDate?: SelectReservationDate[];
-  ReservationFees?: SelectReservationFees[];
-  User?: SelectUser;
+  ReservationDate?: ReservationDateType[];
+  ReservationFees?: ReservationFeesType[];
+  User?: UserType;
 };
 
 /**
@@ -19,15 +26,15 @@ class ReservationClass {
   userId: string;
   eventName: string;
   phone?: string | null;
-  User?: SelectUser;
+  User?: UserType;
   categoryId: number | bigint;
   facilityId: number | bigint;
   details?: string | null;
-  approved: 'pending' | 'approved' | 'denied' | 'canceled';
+  approved: "pending" | "approved" | "denied" | "canceled";
   inPerson: boolean;
-  ReservationDate?: SelectReservationDate[];
-  ReservationFees?: SelectReservationFees[];
-  Facility?: SelectFacility;
+  ReservationDate?: ReservationDateType[];
+  ReservationFees?: ReservationFeesType[];
+  Facility?: FacilityType;
   Category?: SelectCategory;
   costOverride?: number | null;
   paid: boolean;
@@ -71,15 +78,15 @@ class ReservationClass {
    */
   range(): string {
     const ReservationDate = this.ReservationDate || [];
-    let dateRange = '';
+    let dateRange = "";
     if (ReservationDate.length > 1) {
-      dateRange = `${ReservationDate[0].startDate} - ${
-        ReservationDate[ReservationDate.length - 1].endDate
+      dateRange = `${ReservationDate[0]?.startDate} - ${
+        ReservationDate[ReservationDate.length - 1]?.endDate
       }`;
     } else if (ReservationDate.length === 1) {
-      dateRange = `${ReservationDate[0].startDate}`;
+      dateRange = `${ReservationDate[0]?.startDate}`;
     } else {
-      dateRange = 'No Upcoming Dates';
+      dateRange = "No Upcoming Dates";
     }
 
     return dateRange;
@@ -112,8 +119,8 @@ class ReservationClass {
     }
     const approvedReservationDates = ReservationDate.filter(
       (reservationDate: any) => {
-        return reservationDate.approved === 'approved';
-      }
+        return reservationDate.approved === "approved";
+      },
     );
     if (categoryId === 105 || categoryId === 106 || categoryId === 107) {
       totalCost = CategoryPrice + additionalFeesTotal;
@@ -121,15 +128,15 @@ class ReservationClass {
       const totalHours = approvedReservationDates.reduce(
         (acc: any, reservationDate: any) => {
           const startTime: any = new Date(
-            `1970-01-01T${reservationDate.startTime}Z`
+            `1970-01-01T${reservationDate.startTime}Z`,
           );
           const endTime: any = new Date(
-            `1970-01-01T${reservationDate.endTime}Z`
+            `1970-01-01T${reservationDate.endTime}Z`,
           );
           const hours = Math.abs(endTime - startTime) / 36e5;
           return acc + hours;
         },
-        0
+        0,
       );
       totalCost = totalHours * CategoryPrice + additionalFeesTotal;
     }

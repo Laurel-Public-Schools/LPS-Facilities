@@ -1,18 +1,13 @@
-import { mapFacilityTable } from '@/functions/calculations/tableData';
-import type {FacilityWithCategory} from '@/lib/types';
-import { Suspense } from 'react';
-import TableSkeleton from '../requests/skeleton';
-import { DataTable } from '@/components/ui/tables';
-import { columns } from './columns';
+import { Suspense } from "react";
+
+import { DataTable } from "@/components/ui/tables";
+import { mapFacilityTable } from "@/functions/calculations/tableData";
+import { api } from "@/trpc/server";
+import TableSkeleton from "../requests/skeleton";
+import { columns } from "./columns";
 
 async function getFacilities() {
-  const res = await fetch(process.env.NEXT_PUBLIC_HOST + '/api/facilities', {
-    next: {
-      revalidate: 3600,
-      tags: ['facilities'],
-    },
-  });
-  const facilities = await res.json();
+  const facilities = await api.facility.all();
   return mapFacilityTable(facilities);
 }
 

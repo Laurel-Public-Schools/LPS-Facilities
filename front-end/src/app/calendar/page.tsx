@@ -1,26 +1,15 @@
-import React from 'react';
-import CalendarMain from '@/components/calendar/Calendar';
-import { Suspense } from 'react';
-import LoadingScreen from '@/components/ui/loadingScreen';
+import React, { Suspense } from "react";
 
-async function getEvents() {
-  const data = await fetch(process.env.NEXT_PUBLIC_HOST + '/api/events', {
-    next: {
-      tags: ['events'],
-      revalidate: 60,
-    },
-  }).then((res) => res.json());
+import CalendarMain from "@/components/calendar/Calendar";
+import LoadingScreen from "@/components/ui/loadingScreen";
+import { GetAllEvents } from "@/functions/events/googleAPI";
 
-  return data;
-}
-
-export default async function Page() {
-  const events = await getEvents();
-
+export const dynamic = "force-dynamic";
+export default function Page() {
   return (
     <div className="space-y-7">
       <Suspense fallback={<LoadingScreen />}>
-        <CalendarMain fetchedEvents={events} />
+        <CalendarMain promise={GetAllEvents()} />
       </Suspense>
     </div>
   );

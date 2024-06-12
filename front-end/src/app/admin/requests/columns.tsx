@@ -1,11 +1,9 @@
-'use client';
+"use client";
 
-import type { ColumnDef } from '@tanstack/react-table';
-import { Button } from '@/components/ui/buttons';
-import Link from 'next/link';
-import { ArrowUpDown } from 'lucide-react';
-import { approveReservation, denyReservation } from '@/functions/reservations';
-import type { TableReservation } from '@/lib/types';
+import type { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
+import { ArrowUpDown } from "lucide-react";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,20 +14,31 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/buttons";
+import { approveReservation, denyReservation } from "@/functions/reservations";
+
+type TableReservation = {
+  eventName: string;
+  Facility: string;
+  ReservationDate: string;
+  approved: "pending" | "approved" | "denied" | "canceled";
+  User: string;
+  Details: number;
+};
 
 export const columns: ColumnDef<TableReservation>[] = [
   {
-    accessorKey: 'eventName',
-    header: 'Event Name',
+    accessorKey: "eventName",
+    header: "Event Name",
   },
   {
-    accessorKey: 'Facility',
+    accessorKey: "Facility",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Facility
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -38,13 +47,13 @@ export const columns: ColumnDef<TableReservation>[] = [
     },
   },
   {
-    accessorKey: 'ReservationDate',
+    accessorKey: "ReservationDate",
 
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Reservation Date
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -53,10 +62,10 @@ export const columns: ColumnDef<TableReservation>[] = [
     },
   },
   {
-    accessorKey: 'approved',
-    header: 'Approve or Deny',
+    accessorKey: "approved",
+    header: "Approve or Deny",
     cell: ({ row }) => {
-      const id = parseInt(row.getValue('Details'));
+      const id = parseInt(row.getValue("Details"));
 
       return (
         <AlertDialog>
@@ -74,14 +83,14 @@ export const columns: ColumnDef<TableReservation>[] = [
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction
                 onClick={() => {
-                  approveReservation(id);
+                  void approveReservation(id);
                 }}
               >
                 Approve
               </AlertDialogAction>
               <AlertDialogAction
                 onClick={() => {
-                  denyReservation(id);
+                  void denyReservation(id);
                 }}
               >
                 Deny
@@ -93,12 +102,12 @@ export const columns: ColumnDef<TableReservation>[] = [
     },
   },
   {
-    accessorKey: 'User',
+    accessorKey: "User",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           User
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -107,10 +116,10 @@ export const columns: ColumnDef<TableReservation>[] = [
     },
   },
   {
-    accessorKey: 'Details',
-    header: 'Details',
+    accessorKey: "Details",
+    header: "Details",
     cell: ({ row }) => {
-      const id = parseInt(row.getValue('Details'));
+      const id = parseInt(row.getValue("Details"));
       return (
         <Button asChild>
           <Link prefetch={false} href={`/reservation/${id}`}>

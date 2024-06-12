@@ -1,92 +1,86 @@
-'use server';
+"use server";
 
-import type { Schema$Event } from './types';
-import {
-  handleDaily,
-  handleDateOfMonth,
-  handleDayOfMonth,
-  handleWeekly,
-} from './algorithms';
+import type { GoogleEvents } from "@/lib/types";
+import { OAuth2Client } from "google-auth-library";
+import { google } from "googleapis";
 
-import {
-  filterByOneProperty,
-  filterIncludesString,
-  oneTime,
-  recurring,
-  recurringByProperty,
-  removeCancelled,
-  removeRecurrenceProperty,
-} from './functions';
+import { env } from "@/env";
+import { getClient } from "@/lib/oauth";
+import { api } from "@/trpc/server";
 
-import { calendarConfig } from '@/lib/types/constants';
+export async function GetEvents(id: number) {
+  const res = await api.facility.byId({ id: id });
 
-Object.defineProperty(Array.prototype, 'flat', {
-  value: function (depth = 1) {
-    return this.reduce(function (flat: string, toFlatten: any) {
-      return flat.concat(
-        Array.isArray(toFlatten) && depth > 1
-          ? toFlatten.flat(depth - 1)
-          : toFlatten
-      );
-    }, []);
-  },
-});
+  const calID = res?.googleCalendarId;
 
-export default async function getAllCalendars(items: any[]) {
-  /**
-   * Get events from all calendars specified and created specified number of recurring events
-   */
+  const oauth2Client = getClient();
+  const calendar = google.calendar({ version: "v3", auth: oauth2Client });
+  try {
+    const twoMonthsAgo = new Date();
+    twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
 
-  const config = calendarConfig;
-  const calendar = calendarConfig.calendars[0];
-  const events = removeCancelled(items);
-  const oneTimeEvents = oneTime(calendar, events) as Schema$Event[];
-  const recurringEvents = recurring(events);
+    const response = await calendar.events.list({
+      calendarId: calID,
+      maxResults: 1000,
+      singleEvents: true,
 
-  const daily = filterByOneProperty('RRULE:FREQ=DAILY', recurringEvents);
-  const recurringDaily = recurringByProperty(
-    removeRecurrenceProperty(daily),
-    handleDaily,
-    calendar,
-    config.dailyRecurrence
-  ).flat();
+      orderBy: "startTime",
+    });
+    let events: GoogleEvents[] = [];
+    if (response.data.items) {
+      events = response.data.items.map((e) => {
+        const start = e.start?.dateTime || e.start?.date;
+        const end = e.end?.dateTime || e.end?.date;
+        return {
+          gLink: e.htmlLink,
+          description: e.description,
+          location: e.location,
+          start,
+          end,
+          title: e.summary,
+          meta: e,
+        };
+      });
+    }
+    return events;
+  } catch (error) {
+    throw new Error("Error getting events");
+  }
+}
 
-  const weekly = filterByOneProperty('RRULE:FREQ=WEEKLY', recurringEvents);
-  const recurringWeekly = recurringByProperty(
-    removeRecurrenceProperty(weekly),
-    handleWeekly,
-    calendar,
-    config.weeklyRecurrence
-  ).flat();
+export async function GetAllEvents() {
+  const oauth2Client = getClient();
+  const calendar = google.calendar({ version: "v3", auth: oauth2Client });
+  try {
+    const twoMonthsAgo = new Date();
+    twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
 
-  const monthly = filterByOneProperty('RRULE:FREQ=MONTHLY', recurringEvents);
-  const dateOfMonth = monthly.filter((item) =>
-    filterIncludesString(item.r, 'TH')
-  );
-  const dayOfMonth = monthly.filter(
-    (item) => !filterIncludesString(item.r, 'TH')
-  );
-
-  const recurringDateOfMonth = recurringByProperty(
-    removeRecurrenceProperty(dateOfMonth),
-    handleDateOfMonth,
-    calendar,
-    config.monthlyRecurrence
-  ).flat();
-
-  const recurringDayOfMonth = recurringByProperty(
-    removeRecurrenceProperty(dayOfMonth),
-    handleDayOfMonth,
-    calendar,
-    config.monthlyRecurrence
-  ).flat();
-
-  const allEvents = ([] as Schema$Event[]).concat(
-    oneTimeEvents,
-    recurringDaily,
-    recurringWeekly,
-    recurringDateOfMonth,
-    recurringDayOfMonth
-  );
-  return allEvents.flat();
+    const response = await calendar.events.list({
+      calendarId:
+        "c_a55b94eb4dd05e5dd936dd548d434d6a25c2694efe67224e3eff10205d2fb82b@group.calendar.google.com",
+      maxResults: 1000,
+      singleEvents: true,
+      orderBy: "startTime",
+    });
+    let events: GoogleEvents[] = [];
+    if (response.data.items) {
+      events = response.data.items.map((e) => {
+        const start = e.start?.dateTime || e.start?.date;
+        const end = e.end?.dateTime || e.end?.date;
+        return {
+          gLink: e.htmlLink,
+          description: e.description,
+          location: e.location,
+          start,
+          end,
+          title: e.summary,
+          meta: e,
+        };
+      });
+    }
+    return events;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error getting events");
+  }
 }

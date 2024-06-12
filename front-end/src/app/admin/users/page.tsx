@@ -1,8 +1,8 @@
-import { DataTable } from '@/components/ui/tables/users/data-table';
-import { GetUsers } from '@/lib/db/queries/users';
-import type { SelectUser } from '@/lib/db/schema';
-import { columns } from './columns';
-import { headers } from 'next/headers';
+import { headers } from "next/headers";
+
+import { DataTable } from "@/components/ui/tables/users/data-table";
+import { api } from "@/trpc/server";
+import { columns } from "./columns";
 
 interface TableUsers {
   User: string;
@@ -12,16 +12,7 @@ interface TableUsers {
 }
 
 async function getUsers() {
-  const headersInstance = headers();
-  const auth = headersInstance.get('Cookie')!;
-
-  const res = await fetch(process.env.NEXT_PUBLIC_HOST + `/api/users`, {
-    headers: {
-      Cookie: auth,
-    },
-    cache: 'no-store',
-  });
-  const users: SelectUser[] = await res.json();
+  const users = await api.user.all();
 
   const mappedUsers: TableUsers[] = users.map((user) => {
     return {

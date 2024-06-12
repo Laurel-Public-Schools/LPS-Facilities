@@ -1,60 +1,46 @@
-import React from 'react';
-import { SidebarNav } from '@/components/ui/sidebar-nav';
-import IsUserReserv from '@/components/contexts/isUserReserv';
-import { headers } from 'next/headers';
-import { Separator } from '@/components/ui/separator';
-import type {SideBarType} from '@/lib/types/constants';
-import { ReservationClass } from '@/lib/classes';
-import AdminPanel from './adminButtons';
-import { getCurrentUser } from '@/functions/data/auth';
-import { Suspense } from 'react';
+import type { ReservationClassType } from "@/lib/classes";
+import React, { Suspense } from "react";
+import { unstable_cache as cache } from "next/cache";
+import { headers } from "next/headers";
+import { notFound } from "next/navigation";
 
-async function getReservation(id: number) {
-  const headersInstance = headers();
-  const auth = headersInstance.get('Cookie')!;
+import type { SideBarType } from "@local/validators/constants";
 
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_HOST + `/api/reservation/${id}`,
-    {
-      headers: {
-        cookie: auth,
-      },
-      next: {
-        tags: ['reservations'],
-      },
-    }
-  );
-  const data = await res.json();
-  const reservation = new ReservationClass(data);
-  return reservation;
-}
+import IsUserReserv from "@/components/contexts/isUserReserv";
+import { Separator } from "@/components/ui/separator";
+import { SidebarNav } from "@/components/ui/sidebar-nav";
+import range from "@/functions/calculations/dateRange";
+import { IsAdmin } from "@/functions/other/helpers";
+import { api } from "@/trpc/server";
+import AdminPanel from "./adminButtons";
 
 export default async function reservationLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { id: number };
+  params: { id: string };
 }) {
-  const session = await getCurrentUser();
-  const reservation = await getReservation(params.id);
+  const [data, isAdmin] = await cachedData(parseInt(params.id));
+  const reservation = data;
+  if (!reservation) return notFound();
   const { id, eventName, Facility } = reservation;
 
   const reservationItems: SideBarType = [
     {
-      title: 'Summary',
+      title: "Summary",
       href: `/reservation/${id}`,
     },
     {
-      title: 'Insurance',
+      title: "Insurance",
       href: `/reservation/${id}/Insurance`,
     },
     {
-      title: 'Pricing & Payments',
+      title: "Pricing & Payments",
       href: `/reservation/${id}/Pricing`,
     },
     {
-      title: 'Reservation Dates',
+      title: "Reservation Dates",
       href: `/reservation/${id}/Dates`,
     },
     {
@@ -67,16 +53,18 @@ export default async function reservationLayout({
     <IsUserReserv reservation={reservation}>
       <div className="container relative">
         <div className="sm:hidden">{children}</div>
-        <div className="hidden sm:block space-y-6 p-10 pb-16 ">
+        <div className="hidden space-y-6 p-10 pb-16 sm:block">
           <div className="space-y-0.5">
             <h1 className="text-2xl font-bold">{eventName}</h1>
-            <h2 className=" text-muted-foreground">
+            <h2 className="text-muted-foreground">
               {Facility?.building} {Facility?.name}
             </h2>
-            <h3 className="text-muted-foreground">{reservation?.range()}</h3>
+            <h3 className="text-muted-foreground">
+              {range(reservation.ReservationDate)}
+            </h3>
             <Suspense fallback={<></>}>
-              {session.isAdmin() && (
-                <div className="p-4 sm:p-0 self-start sm:self-end sm:right-0 float-right relative">
+              {isAdmin && (
+                <div className="relative float-right self-start p-4 sm:right-0 sm:self-end sm:p-0">
                   <AdminPanel id={id} facility={reservation.Facility} />
                 </div>
               )}
@@ -94,3 +82,13 @@ export default async function reservationLayout({
     </IsUserReserv>
   );
 }
+
+async function getData(id: number) {
+  const res = api.reservation.byId({ id: id });
+
+  const isAdmin = IsAdmin();
+
+  return Promise.all([res, isAdmin]);
+}
+
+const cachedData = cache(async (id: number) => getData(id), ["reservations"]);

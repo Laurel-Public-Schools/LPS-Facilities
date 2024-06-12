@@ -1,20 +1,26 @@
-import { adminSideBar } from '@/lib/types/constants';
-import { Separator } from '@/components/ui/separator';
-import { Suspense } from 'react';
-import { SidebarNav } from '@/components/ui/sidebar-nav';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Suspense } from "react";
+import { notFound } from "next/navigation";
+
+import { adminSideBar } from "@local/validators/constants";
+
+import { Separator } from "@/components/ui/separator";
+import { SidebarNav } from "@/components/ui/sidebar-nav";
+import { Skeleton } from "@/components/ui/skeleton";
+import { IsAdmin } from "@/functions/other/helpers";
 
 export const revalidate = 60;
 
-export default function authLayout({
+export default async function authLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const admin = await IsAdmin();
+  if (!admin) return notFound();
   return (
     <div className="container relative">
       <div className="sm:hidden">{children}</div>
-      <div className="hidden sm:block space-y-6 p-2 pb-16">
+      <div className="hidden space-y-6 p-2 pb-16 sm:block">
         <div className="space-y-0.5">
           <h1 className="text-2xl font-bold">Admin</h1>
           <h2 className="text-muted-foreground">Admin Dashboard</h2>
@@ -37,12 +43,12 @@ const SearchBarSkeleton = () => {
   return (
     <>
       <div className="flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1">
-        <Skeleton className="w-full h-full">
-          <Skeleton className="w-full h-4" />
-          <Skeleton className="w-full h-4" />
-          <Skeleton className="w-full h-4" />
-          <Skeleton className="w-full h-4" />
-          <Skeleton className="w-full h-4" />
+        <Skeleton className="h-full w-full">
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-full" />
         </Skeleton>
       </div>
     </>

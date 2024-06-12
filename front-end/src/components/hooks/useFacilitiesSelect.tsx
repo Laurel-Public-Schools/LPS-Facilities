@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import type { Facility } from '@/lib/types';
+import type { Facility } from "@/lib/types";
+import React, { useState } from "react";
 
 interface FacilitySelectProps {
   facilities: Facility[];
@@ -15,18 +15,18 @@ export default function FacilitySelect({
   const buildings = Array.from(new Set(facilities.map((f) => f.building)));
 
   const handleBuildingSelect = (
-    event: React.ChangeEvent<HTMLSelectElement>
+    event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setSelectedBuilding(event.target.value);
   };
 
   const handleFacilitySelect = (
-    event: React.ChangeEvent<HTMLSelectElement>
+    event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     const facility = facilities.find(
-      (f) => f.id === parseInt(event.target.value)
+      (f) => f.id === parseInt(event.target.value),
     );
-    if (facility && typeof onFacilitySelect === 'function') {
+    if (facility && typeof onFacilitySelect === "function") {
       onFacilitySelect(facility);
     }
   };

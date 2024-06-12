@@ -1,8 +1,10 @@
-import React, { Suspense } from 'react';
-import { SidebarSearchParamsNav } from '@/components/ui/sidebar-searchParams';
-import { Separator } from '@/components/ui/separator';
-import { buildingSideBar2 } from '@/lib/types/constants';
-import { Skeleton } from '@/components/ui/skeleton';
+import React, { Suspense } from "react";
+
+import { buildingSideBar2 } from "@local/validators/constants";
+
+import { Separator } from "@/components/ui/separator";
+import { SidebarSearchParamsNav } from "@/components/ui/sidebar-searchParams";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function calendarLayout({
   children,
@@ -12,18 +14,18 @@ export default function calendarLayout({
   return (
     <div className="container relative">
       <div className="sm:hidden">
-        <Suspense fallback={<Skeleton className="w-auto h-auto" />}>
+        <Suspense fallback={<Skeleton className="h-auto w-auto" />}>
           {children}
         </Suspense>
       </div>
-      <div className="hidden sm:block space-y-6 p-10 lg:p-2 pb-16">
+      <div className="hidden space-y-6 p-10 pb-16 sm:block lg:p-2">
         <div className="space-y-0.5">
           <h1 className="text-2xl font-bold">Calendar</h1>
         </div>
         <Separator className="my-6" />
         <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
           <aside className="-mx-4 lg:w-1/5">
-            <Suspense fallback={<Skeleton className="w-auto h-auto" />}>
+            <Suspense fallback={<Skeleton className="h-auto w-auto" />}>
               <SidebarSearchParamsNav items={buildingSideBar2} />
             </Suspense>
           </aside>

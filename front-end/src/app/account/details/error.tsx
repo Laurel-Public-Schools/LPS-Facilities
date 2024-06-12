@@ -1,7 +1,8 @@
-'use client'; // Error components must be Client Components
+"use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+// Error components must be Client Components
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Error({
   error,
@@ -16,11 +17,11 @@ export default function Error({
   }, [error]);
   const router = useRouter();
   return (
-    <div className="flex flex-col justify-center align-middle m-5">
+    <div className="m-5 flex flex-col justify-center align-middle">
       <h2>You are not signed in</h2>
       <button
         onClick={() => {
-          router.push('/login');
+          router.push("/login");
         }}
       >
         Login

@@ -1,38 +1,44 @@
-'use client';
-import { useSession, signIn, signOut } from 'next-auth/react';
+"use client";
+
+import React from "react";
+import Link from "next/link";
+import { Loader2 } from "lucide-react";
+import { signIn, signOut, useSession } from "next-auth/react";
+
+import { IssuesForm } from "@/components/forms";
+import { Button, ModeToggle, RequestBadge } from "@/components/ui/buttons";
 import {
   NavigationMenu,
   NavigationMenuContent,
-  NavigationMenuMobileTrigger,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuMobileTrigger,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu';
-import { IssuesForm } from '@/components/forms';
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
 
-import { Button, ModeToggle, RequestBadge } from '@/components/ui/buttons';
-import IsAdminNav from '@/components/contexts/isAdminNav';
-import React from 'react';
-import { cn } from '@/lib/utils';
-import { Loader2 } from 'lucide-react';
-import Link from 'next/link';
+// import { requestCount } from "./requestCount";
 
 export function AuthenticatedMenu() {
   const { data: session, status } = useSession();
-
-  if (status === 'loading') {
+  console.log("session: ", session);
+  let admin = false;
+  if (session && session.user.role.includes("ADMIN")) {
+    admin = true;
+  }
+  if (status === "loading") {
     return (
       <NavigationMenuItem>
         <Button disabled>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          <Loader2 className="animate-spin mr-2 h-4 w-4" />
           Please Wait
         </Button>
       </NavigationMenuItem>
     );
   }
-  if (status === 'authenticated') {
+  if (status === "authenticated") {
     return (
       <>
         <div className="hidden sm:flex">
@@ -61,7 +67,7 @@ export function AuthenticatedMenu() {
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
-          <IsAdminNav>
+          {admin && (
             <NavigationMenuItem>
               <NavigationMenuTrigger>Admin</NavigationMenuTrigger>
               <NavigationMenuContent>
@@ -79,7 +85,7 @@ export function AuthenticatedMenu() {
                   <Link href="/admin/requests" legacyBehavior passHref>
                     <ListItem title="Requests">
                       Manage requests
-                      <RequestBadge />
+                      {/* <RequestBadge requestCount={requestCount()} /> */}
                     </ListItem>
                   </Link>
                   <Link href="/admin/users" legacyBehavior passHref>
@@ -91,7 +97,7 @@ export function AuthenticatedMenu() {
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
-          </IsAdminNav>
+          )}
         </div>
         <div className="visible sm:hidden">
           <Link href="/account" legacyBehavior passHref>
@@ -170,13 +176,13 @@ export default function NavMenu() {
             <ModeToggle />
           </NavigationMenuList>
         </div>
-        <div className=" flex flex-1 ml-4 sm:hidden">
+        <div className="ml-4 flex flex-1 sm:hidden">
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuMobileTrigger />
 
-              <NavigationMenuContent className="  ">
-                <ul className="list-none flex flex-col max-h-screen flex-nowrap columns-1 text-lg items-start gap-4">
+              <NavigationMenuContent className=" ">
+                <ul className="flex max-h-screen list-none columns-1 flex-col flex-nowrap items-start gap-4 text-lg">
                   <Link href="/" legacyBehavior passHref>
                     <ListItem title="Home" />
                   </Link>
@@ -196,8 +202,8 @@ export default function NavMenu() {
 }
 
 const ListItem = React.forwardRef<
-  React.ElementRef<'a'>,
-  React.ComponentPropsWithoutRef<'a'>
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>
@@ -205,12 +211,12 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-            className
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className,
           )}
           {...props}
         >
-          <div className=" text-lg sm:text-sm font-bold sm:font-medium leading-none">
+          <div className="text-lg font-bold leading-none sm:text-sm sm:font-medium">
             {title}
           </div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -221,4 +227,4 @@ const ListItem = React.forwardRef<
     </li>
   );
 });
-ListItem.displayName = 'ListItem';
+ListItem.displayName = "ListItem";

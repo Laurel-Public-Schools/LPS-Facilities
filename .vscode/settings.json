@@ -16,8 +16,9 @@
   "editor.formatOnSave": true,
   "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
   "eslint.workingDirectories": [
-    { "pattern": "apps/*/" },
-    { "pattern": "packages/*/" }
+    { "pattern": "front-end/*" },
+    { "pattern": "packages/*/" },
+    { "pattern": "tooling/*/" }
   ],
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.acceptSuggestionOnCommitCharacter": false,
@@ -29,10 +30,19 @@
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
-  "tailwindCSS.experimental.configFile": "./tooling/tailwind/web.ts",
+  "tailwindCSS.experimental.configFile": "./front-end/tailwind.config.ts",
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.linkedEditing": true,
   "editor.mouseWheelZoom": true,
+  "terminal.integrated.fontFamily": "Cascadia Code NF",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.gpuAcceleration": "on",
+  "terminal.integrated.fontWeight": "normal",
+  "terminal.integrated.fontWeightBold": "bold",
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.cursorWidth": 1,
+
   "editor.fontFamily": "Cascadia Code", // =>
   "editor.accessibilitySupport": "off",
   "editor.detectIndentation": false,
@@ -53,6 +63,7 @@
   "[dotenv]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
+
   "workbench.editor.customLabels.patterns": {
     "apps/**/src/**/page.tsx": "${dirname}/📄",
     "apps/**/src/**/layout.tsx": "${dirname}/${filename}",
@@ -62,5 +73,7 @@
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
-  "editor.insertSpaces": true
+  "editor.insertSpaces": true,
+  "vim.useSystemClipboard": true,
+  "vim.useCtrlKeys": false
 }

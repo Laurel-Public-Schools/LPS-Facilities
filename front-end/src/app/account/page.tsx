@@ -1,41 +1,28 @@
-import { DataTable } from '@/components/ui/tables';
-import { columns } from './columns';
-import React from 'react';
-import type { Reservation} from '@/lib/types';
-import { TableReservation } from '@/lib/types';
-import { userReservations } from '@/functions/calculations/tableData';
+import React, { Suspense } from "react";
+import { notFound } from "next/navigation";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
-import { ReloadIcon } from '@radix-ui/react-icons';
-import { Separator } from '@/components/ui/separator';
-import { getServerSession } from 'next-auth/next';
+import { auth } from "@local/auth";
 
-import { Suspense } from 'react';
-import { GetUserById } from '@/lib/db/queries/users';
-import { authOptions } from '@/lib/auth';
+import { Separator } from "@/components/ui/separator";
+import { DataTable } from "@/components/ui/tables";
+import { userReservations } from "@/functions/calculations/tableData";
+import { api } from "@/trpc/server";
+import { columns } from "./columns";
 
-const baseUrl = process.env.NEXT_PUBLIC_HOST;
-
-async function getData() {
-  try {
-    const userSession = await getServerSession(authOptions);
-    if (!userSession) {
-      return [];
-    } else if (userSession) {
-      const user = await GetUserById.execute({ id: userSession.user.id });
-      //@ts-expect-error
-      const reservations: Reservation[] = user?.Reservation;
-      if (!reservations) {
-        return [];
-      }
-      return userReservations(reservations);
-    }
-  } catch (error) {
+async function getData(id: string) {
+  const user = await api.user.ById({ id: id });
+  const reservations = user?.Reservation;
+  if (!reservations) {
     return [];
   }
+  return userReservations(reservations);
 }
 
 export default async function Account() {
-  const data = await getData();
+  const session = await auth();
+  if (!session) return notFound();
+  const data = await getData(session.user.id);
   if (!data) {
     return <div>loading ...</div>;
   }
@@ -57,7 +44,7 @@ export default async function Account() {
 const LoadingComponent = () => {
   return (
     <div>
-      Loading <ReloadIcon className="w-4 h-4 animate-spin" />
+      Loading <ReloadIcon className="animate-spin h-4 w-4" />
     </div>
   );
 };

@@ -1,29 +1,37 @@
-'use server';
-import type { ReservationWithAll } from '@/lib/types';
+"use server";
+
+import type {
+  FacilityType,
+  ReservationDateType,
+  ReservationType,
+} from "@local/db/schema";
+
+import { api } from "@/trpc/server";
+
+interface ReservationWithAll extends ReservationType {
+  Facility: FacilityType;
+  ReservationDate: ReservationDateType[];
+}
 
 type ChartData = Record<string, number | string | undefined>;
 
-export default async function aggregateChartData({
-  data,
-}: {
-  data: ReservationWithAll[];
-}): Promise<ChartData[]> {
+export default async function aggregateChartData(): Promise<ChartData[]> {
   // calculate 6 months ago
-
+  const data = await api.reservation.all();
   const now = new Date();
   const sixMonthsAgo = new Date();
   sixMonthsAgo.setMonth(now.getMonth() - 6);
 
   //filter data within the last 6 months
   const recentData = data.filter(
-    (reservation) => new Date(reservation.createdAt) > sixMonthsAgo
+    (reservation) => new Date(reservation.createdAt!) > sixMonthsAgo,
   );
 
   // Aggregate Data
   const aggregateData: any = {};
   recentData.forEach((reservation: ReservationWithAll) => {
-    const month = new Date(reservation.createdAt).toLocaleString('default', {
-      month: 'long',
+    const month = new Date(reservation.createdAt!).toLocaleString("default", {
+      month: "long",
     });
     const building = reservation.Facility.building;
 

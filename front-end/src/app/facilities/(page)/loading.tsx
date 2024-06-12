@@ -1,5 +1,6 @@
-import FacilityCardSkeleton from '@/components/ui/skeletons/CardSkeleton';
-import React from 'react';
+import React from "react";
+
+import FacilityCardSkeleton from "@/components/ui/skeletons/CardSkeleton";
 
 export default function Loading() {
   return (

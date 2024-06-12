@@ -1,11 +1,12 @@
-import React from 'react';
-import { SubmitButton } from '@/components/ui/buttons/submitButton';
-import { Email } from '@/functions/mutations/reset';
+import React from "react";
+
+import { Button } from "@/components/ui/buttons";
+import { Email } from "@/functions/mutations/reset";
 
 export default function ResetPassword() {
   return (
     <form action={Email} className="space-y-8">
-      <h1 className="text-4xl font-bold ">Password Reset</h1>
+      <h1 className="text-4xl font-bold">Password Reset</h1>
 
       <input
         type="email"
@@ -13,7 +14,7 @@ export default function ResetPassword() {
         id="email"
         required
         placeholder="Email address"
-        className="placeholder:italic placeholder:text-slate-400 block border-slate-300 rounded-md py-2 pl-9 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"
+        className="block rounded-md border-slate-300 py-2 pl-9 shadow-sm placeholder:italic placeholder:text-slate-400 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
       />
       <div>
         <p>
@@ -21,7 +22,7 @@ export default function ResetPassword() {
           link.
         </p>
       </div>
-      <SubmitButton />
+      <Button />
     </form>
   );
 }

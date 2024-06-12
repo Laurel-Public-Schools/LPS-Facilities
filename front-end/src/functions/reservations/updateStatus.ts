@@ -1,15 +1,17 @@
-'use server';
+"use server";
 
-import { revalidateTag } from 'next/cache';
-import { db } from '@/lib/db';
-import { eq } from 'drizzle-orm';
-import { Reservation, ReservationDate } from '@/lib/db/schema';
-import { GetReservationbyID } from '@/lib/db/queries/reservations';
-import { CreateGoogleEvent } from '../google/singleDate';
+import { revalidateTag } from "next/cache";
+import { eq } from "drizzle-orm";
+
+import { db } from "@local/db/client";
+import { Reservation, ReservationDate } from "@local/db/schema";
+
+import { api } from "@/trpc/server";
+import { CreateGoogleEvent } from "../google/singleDate";
 
 interface props {
   id: number;
-  status: 'approved' | 'denied' | 'pending';
+  status: "approved" | "denied" | "pending";
   reservationID?: number;
 }
 
@@ -20,11 +22,11 @@ export default async function UpdateStatus({
 }: props) {
   try {
     if (reservationID) {
-      const reservation = await GetReservationbyID.execute({
+      const reservation = await api.reservation.byId({
         id: reservationID,
       });
 
-      if (reservation?.approved === 'pending' && status === 'approved') {
+      if (reservation?.approved === "pending" && status === "approved") {
         await db
           .update(Reservation)
           .set({
@@ -43,12 +45,12 @@ export default async function UpdateStatus({
   } catch (error) {
     return error;
   }
-  if (status === 'approved') {
+  if (status === "approved") {
     try {
       await CreateGoogleEvent(id);
     } catch (error) {
-      return { message: 'failed to update event' };
+      return { message: "failed to update event" };
     }
   }
-  return revalidateTag('reservations');
+  return revalidateTag("reservations");
 }

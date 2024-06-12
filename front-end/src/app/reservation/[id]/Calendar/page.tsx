@@ -1,39 +1,14 @@
-import React from 'react';
-import SmallCalendar from '@/components/calendar/smallCalendar';
-import { headers } from 'next/headers';
+import * as React from "react";
+import { notFound } from "next/navigation";
 
-async function getReservation(id: number) {
-  const headersInstance = headers();
-  const auth = headersInstance.get('Cookie')!;
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_HOST + `/api/reservation/${id}`,
-    {
-      headers: {
-        cookie: auth,
-      },
-    }
-  );
+import SmallCalendar from "@/components/calendar/smallCalendar";
+import { GetEvents } from "@/functions/events/googleAPI";
+import { api } from "@/trpc/server";
 
-  return res.json();
-}
-
-async function getEvents(id: number) {
-  'use server';
-  const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/events/${id}`, {
-    next: {
-      tags: ['events'],
-      revalidate: 3600,
-    },
-  }).then((res) => res.json());
-
-  return res;
-}
-
-export default async function calPage({ params }: { params: { id: number } }) {
-  const reservation = await getReservation(params.id);
+export default async function calPage({ params }: { params: { id: string } }) {
+  const reservation = await api.reservation.byId({ id: parseInt(params.id) });
+  if (!reservation) return notFound();
   const facilityId = reservation.Facility.id;
-  const events = await getEvents(facilityId);
-  const startDate = events[0].start;
   return (
     <div className="space-y-7">
       <div>
@@ -41,8 +16,9 @@ export default async function calPage({ params }: { params: { id: number } }) {
           {reservation.Facility.name}Calendar
         </h3>
       </div>
-
-      <SmallCalendar startDate={startDate} events={events} />
+      <React.Suspense fallback={<div>Loading...</div>}>
+        <SmallCalendar promise={GetEvents(facilityId)} />
+      </React.Suspense>
     </div>
   );
 }

@@ -1,15 +1,16 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import NavMenu from './Menu';
-import { ModeToggle } from '../buttons';
-import { Suspense } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Suspense } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Loader2 } from "lucide-react";
+
+import { ModeToggle } from "../buttons";
+import NavMenu from "./Menu";
 
 export default function Navbar() {
   return (
     <>
-      <nav className="w-full flex items-center  py-1 justify-between sticky top-0 sm:px-2 z-30   bg-primary">
-        <div className=" hidden gap-10 sm:flex">
+      <nav className="sticky top-0 z-30 flex w-full items-center justify-between bg-primary py-1 sm:px-2">
+        <div className="hidden gap-10 sm:flex">
           <Link href="https://laurel.k12.mt.us" target="_blank">
             <Image
               src="/logo-white.png"
@@ -18,16 +19,16 @@ export default function Navbar() {
               height={50}
             />
           </Link>
-          <h1 className=" text-white hidden font-bold sm:inline-block text-sm sm:text-xl ">
+          <h1 className="hidden text-sm font-bold text-white sm:inline-block sm:text-xl">
             Laurel Montana Facility Rentals
           </h1>
         </div>
         <div className="justify-end">
-          <Suspense fallback={<Loader2 className="h-4 w-4 animate-spin" />}>
+          <Suspense fallback={<Loader2 className="animate-spin h-4 w-4" />}>
             <NavMenu />
           </Suspense>
         </div>
-        <div className="flex sm:hidden mr-4">
+        <div className="mr-4 flex sm:hidden">
           <ModeToggle />
         </div>
       </nav>

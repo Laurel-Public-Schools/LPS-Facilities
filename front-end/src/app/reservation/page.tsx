@@ -1,22 +1,30 @@
-import ReservationForm from '@/components/forms/reservationForm2';
-import { Suspense } from 'react';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Suspense } from "react";
+
+import { auth } from "@local/auth";
+
+import ReservationForm from "@/components/forms/reservationForm2";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Loading = () => {
   return (
     <div>
-      <Skeleton className=" h-20 w-auto" />
-      <Skeleton className=" h-96 w-auto" />
-      <Skeleton className=" h-20 w-auto" />
+      <Skeleton className="h-20 w-auto" />
+      <Skeleton className="h-96 w-auto" />
+      <Skeleton className="h-20 w-auto" />
     </div>
   );
 };
 
-export default function reservationPage() {
+export default async function reservationPage() {
+  const session = await auth();
+
   return (
-    <section className="justify-center flex flex-col sm:flex-row my-4">
+    <section className="my-4 flex flex-col justify-center sm:flex-row">
       <Suspense fallback={<Loading />}>
-        <ReservationForm />
+        <ReservationForm
+          email={session?.user.email!}
+          userId={session?.user.id!}
+        />
       </Suspense>
     </section>
   );

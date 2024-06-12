@@ -1,8 +1,10 @@
-import React from 'react';
-import { SidebarSearchParamsNav } from '@/components/ui/sidebar-searchParams';
-import { Separator } from '@/components/ui/separator';
-import { buildingSideBar } from '@/lib/types/constants';
-import { Suspense } from 'react';
+import React, { Suspense } from "react";
+
+import { buildingSideBar } from "@local/validators/constants";
+
+import { Separator } from "@/components/ui/separator";
+import { SidebarSearchParamsNav } from "@/components/ui/sidebar-searchParams";
+
 export default function facilitiesLayout({
   children,
 }: {
@@ -11,7 +13,7 @@ export default function facilitiesLayout({
   return (
     <div className="container relative">
       <div className="sm:hidden">{children}</div>
-      <div className="hidden sm:block space-y-6 p-2 pb-16">
+      <div className="hidden space-y-6 p-2 pb-16 sm:block">
         <div className="space-y-0.5">
           <h1 className="text-2xl font-bold">Facilities</h1>
         </div>

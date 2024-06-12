@@ -1,15 +1,7 @@
-import CustomInput from './customInput';
-import SquarePayment from './SquarePayment';
-import TosModal from './tos';
-import { IssuesForm } from './issues';
-import ShowPayment from './showPayment';
-import JiraModal from './jiraModal';
+import CustomInput from "./customInput";
+import { IssuesForm } from "./issues";
+import JiraModal from "./jiraModal";
+import ShowPayment from "./showPayment";
+import TosModal from "./tos";
 
-export {
-  CustomInput,
-  IssuesForm,
-  SquarePayment,
-  TosModal,
-  ShowPayment,
-  JiraModal,
-};
+export { CustomInput, IssuesForm, TosModal, ShowPayment, JiraModal };

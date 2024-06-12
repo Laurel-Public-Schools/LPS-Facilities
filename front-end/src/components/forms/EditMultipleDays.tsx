@@ -1,18 +1,18 @@
-import { Button } from '@/components/ui/buttons/button';
-import { Label } from '@/components/ui/label';
+import React from "react";
 
-import { modifyDates } from '@/functions/mutations/modifyDate';
+import { Button } from "@/components/ui/buttons";
+import { Label } from "@/components/ui/label";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-  SheetFooter,
-  SheetClose,
-} from '@/components/ui/sheet';
-import React from 'react';
+} from "@/components/ui/sheet";
+import { modifyDates } from "@/functions/mutations/modifyDate";
 
 export default function EditMultipleDates({ ids }: { ids: number[] }) {
   const updateDatewithProps = modifyDates.bind(null, ids);

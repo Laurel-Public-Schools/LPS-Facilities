@@ -1,39 +1,30 @@
-import { DataTable } from '@/components/ui/tables';
-import { columns } from './columns';
-import React from 'react';
+import React, { Suspense } from "react";
+import { headers } from "next/headers";
+
+import { DataTable } from "@/components/ui/tables";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  mapReservations,
   mapPastReservations,
-} from '@/functions/calculations/tableData';
-import { headers } from 'next/headers';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import TableSkeleton from '../requests/skeleton';
-import { Suspense } from 'react';
+  mapReservations,
+} from "@/functions/calculations/tableData";
+import { api } from "@/trpc/server";
+import TableSkeleton from "../requests/skeleton";
+import { columns } from "./columns";
 
 async function getReservations() {
-  const headersInstance = headers();
-  const auth = headersInstance.get('Cookie')!;
-
-  const res = await fetch(process.env.NEXT_PUBLIC_HOST + `/api/reservation`, {
-    headers: {
-      Cookie: auth,
-    },
-    next: {
-      revalidate: 60,
-      tags: ['reservations'],
-    },
-  });
-  const data = await res.json();
-  const [Reservations, PastReservations] = await Promise.all([
+  const data = await api.reservation.all();
+  const [ReservationsData, PastReservationsData] = await Promise.all([
     mapReservations(data),
     mapPastReservations(data),
   ]);
 
-  return { Reservations, PastReservations };
+  return { ReservationsData, PastReservationsData };
 }
 
 export default async function Reservations() {
-  const { Reservations, PastReservations } = await getReservations();
+  const { ReservationsData, PastReservationsData } = await getReservations();
+  const Reservations = ReservationsData ?? [];
+  const PastReservations = PastReservationsData ?? [];
   return (
     <div className="space-y-7">
       <div>

@@ -1,9 +1,20 @@
-'use client';
+"use client";
 
-import { ModalInput } from '@/components/forms/recurringModal';
-import useHandleAddDate from '@/components/hooks/useHandleAddDate';
+import type * as z from "zod";
+import * as React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Check, ChevronsUpDown, Loader2, ScrollText } from "lucide-react";
+import { useFieldArray, useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+import { formSchema } from "@local/validators";
+
+import { ModalInput } from "@/components/forms/recurringModal";
+import useHandleAddDate from "@/components/hooks/useHandleAddDate";
 import {
   AlertDialog,
+  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -11,18 +22,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-  AlertDialogAction,
-} from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/buttons/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { useSearchParams } from 'next/navigation';
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/buttons";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from '@/components/ui/command';
+} from "@/components/ui/command";
 import {
   Form,
   FormControl,
@@ -31,106 +40,96 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/components/ui/use-toast';
-import { categoryOptions, locations } from '@/lib/formOptions';
-import { cn } from '@/lib/utils';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Check, ChevronsUpDown, ScrollText, Loader2 } from 'lucide-react';
-import { useSession } from 'next-auth/react';
-import React from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
-import type * as z from 'zod';
-import { ToastAction } from '../ui/toast';
-import { formSchema } from './schemas/reservationForm';
-import submitReservation from '@/functions/reservations/createReservation';
-import { useRouter } from 'next/navigation';
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import submitReservation from "@/functions/reservations/createReservation";
+import { categoryOptions, locations } from "@/lib/formOptions";
+import { cn } from "@/lib/utils";
 
 type formValues = z.infer<typeof formSchema>;
 
-export default function ReservationForm() {
+export default function ReservationForm(props: {
+  userId: string;
+  email: string;
+}) {
   const [isVisible, setIsVisible] = React.useState(false);
-  const [selectedData, setSelectedData] = React.useState(null);
+  // const [selectedData, setSelectedData] = React.useState(null);
   const [open, setOpen] = React.useState(false);
+  const [isRequestPending, startRequestTransition] = React.useTransition();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const hideModal = () => setIsVisible(false);
-  const { data: session } = useSession();
-  const email = session?.user?.email;
+
   let selectedFacility = 0;
   const router = useRouter();
-  const { toast } = useToast();
+
   const searchParams = useSearchParams();
-  if (searchParams.has('id')) {
-    selectedFacility = Number(searchParams.get('id'));
+  if (searchParams.has("id")) {
+    selectedFacility = Number(searchParams.get("id"));
   }
   const form = useForm<formValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: email,
+      email: props.email,
+      userId: props.userId,
       facility: selectedFacility,
       techSupport: false,
       doorAccess: false,
-      category: '',
-      techDetails: '',
-      doorsDetails: '',
+      category: "",
+      techDetails: "",
+      doorsDetails: "",
     },
   });
   const control = form.control;
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'events',
+    name: "events",
     rules: { required: true },
   });
-
-  //@ts-expect-error
+  //@ts-expect-error - TS doesn't like the function signature
   const handleAddDate = useHandleAddDate(append);
-  const watchTechSupport = form.watch('techSupport', false);
-  const watchDoorAccess = form.watch('doorAccess', false);
+  const watchTechSupport = form.watch("techSupport", false);
+  const watchDoorAccess = form.watch("doorAccess", false);
 
-  const onSubmit = async (data: formValues) => {
-    setIsSubmitting(true);
-    try {
-      const res = await submitReservation(data);
-
-      if (res === 'Success') {
-        setOpen(true);
-      }
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Something went wrong',
-        action: <ToastAction altText="retry">close</ToastAction>,
+  const onSubmit = (data: formValues) => {
+    startRequestTransition(() => {
+      toast.promise(submitReservation(data), {
+        position: "top-center",
+        loading: "Submitting...",
+        success: () => {
+          setOpen(true);
+          return "Request Submitted!";
+        },
+        error: (error) => {
+          return "something went wrong";
+        },
       });
-    } finally {
-      setIsSubmitting(false);
-    }
+    });
   };
   return (
-    <div className="   w-screen  sm:w-[850px]  justify-center drop-shadow-md  flex flex-col ">
+    <div className="flex w-screen flex-col justify-center drop-shadow-md sm:w-[850px]">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 p-2 sm:p-0 mt-10 mb-10 sm:w-[800px]"
+          className="mb-10 mt-10 space-y-8 p-2 sm:w-[800px] sm:p-0"
         >
           <div>
             <FormField
               control={form.control}
-              name={'eventName'}
+              name={"eventName"}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-lg">Event Name</FormLabel>
@@ -150,10 +149,10 @@ export default function ReservationForm() {
               )}
             />
           </div>
-          <div className="flex flex-col sm:flex-row gap-y-2 justify-between">
+          <div className="flex flex-col justify-between gap-y-2 sm:flex-row">
             <FormField
               control={form.control}
-              name={'name'}
+              name={"name"}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-lg">
@@ -174,7 +173,7 @@ export default function ReservationForm() {
             />
             <FormField
               control={form.control}
-              name={'phone'}
+              name={"phone"}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-lg">Phone Number</FormLabel>
@@ -193,7 +192,7 @@ export default function ReservationForm() {
             />
             <FormField
               control={form.control}
-              name={'email'}
+              name={"email"}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-lg">Email</FormLabel>
@@ -210,7 +209,7 @@ export default function ReservationForm() {
           </div>
           <FormField
             control={form.control}
-            name={'details'}
+            name={"details"}
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-lg">Event Description</FormLabel>
@@ -227,19 +226,19 @@ export default function ReservationForm() {
               </FormItem>
             )}
           />
-          <div className=" justify-center flex-col flex  p-2">
-            <h2 className="font-bold text-center text-xl">Event Dates</h2>
-            <div className="justify-center flex">
+          <div className="flex flex-col justify-center p-2">
+            <h2 className="text-center text-xl font-bold">Event Dates</h2>
+            <div className="flex justify-center">
               <Button
-                className="hover:cursor-pointer h-8"
-                size={'sm'}
+                className="h-8 hover:cursor-pointer"
+                size={"sm"}
                 variant="outline"
                 type="button"
                 onClick={() =>
                   append({
-                    startDate: '',
-                    startTime: '',
-                    endTime: '',
+                    startDate: "",
+                    startTime: "",
+                    endTime: "",
                   })
                 }
               >
@@ -247,21 +246,21 @@ export default function ReservationForm() {
               </Button>
               <ModalInput onSave={handleAddDate} />
               <Button
-                className="hover:cursor-pointer h-8"
+                className="h-8 hover:cursor-pointer"
                 variant="outline"
-                size={'sm'}
+                size={"sm"}
                 type="button"
                 onClick={() => remove()}
               >
                 Clear All
               </Button>
             </div>
-            <div className="max-h-[400px] overflow-y-scroll gap-x-2 justify-center align-middle items-center self-center max-w-[800px] border-2 rounded-md">
+            <div className="max-h-[400px] max-w-[800px] items-center justify-center gap-x-2 self-center overflow-y-scroll rounded-md border-2 align-middle">
               {fields.map((field, index) => {
                 return (
                   <div
                     key={field.id}
-                    className="flex flex-row  border-b-2   p-2 gap-2 gap-x-4  grid-rows-6  justify-start sm:justify-between flex-wrap flex-shrink sm:flex-nowrap"
+                    className="flex flex-shrink grid-rows-6 flex-row flex-wrap justify-start gap-2 gap-x-4 border-b-2 p-2 sm:flex-nowrap sm:justify-between"
                   >
                     <FormField
                       control={form.control}
@@ -271,7 +270,7 @@ export default function ReservationForm() {
                           <FormLabel className="text-lg">Start Date</FormLabel>
                           <FormControl>
                             <Input
-                              className="w-auto h-auto"
+                              className="h-auto w-auto"
                               type="date"
                               placeholder="Start Date"
                               {...field}
@@ -289,7 +288,7 @@ export default function ReservationForm() {
                           <FormLabel className="text-lg">Start Time</FormLabel>
                           <FormControl>
                             <Input
-                              className="w-auto h-auto"
+                              className="h-auto w-auto"
                               type="time"
                               placeholder="Start Time"
                               {...field}
@@ -308,7 +307,7 @@ export default function ReservationForm() {
                           <FormLabel className="text-lg">End Time</FormLabel>
                           <FormControl>
                             <Input
-                              className="w-auto h-auto"
+                              className="h-auto w-auto"
                               type="time"
                               placeholder="End Time"
                               {...field}
@@ -332,14 +331,14 @@ export default function ReservationForm() {
               })}
             </div>
           </div>
-          <div className="flex flex-col place-items-center sm:flex-row justify-center sm:justify-between">
+          <div className="flex flex-col place-items-center justify-center sm:flex-row sm:justify-between">
             <div className="text-center sm:text-start">
               <FormField
                 control={form.control}
-                name={'facility'}
+                name={"facility"}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-lg text-center sm:text-start">
+                    <FormLabel className="text-center text-lg sm:text-start">
                       Select A Facility
                     </FormLabel>
                     <div />
@@ -350,20 +349,20 @@ export default function ReservationForm() {
                             variant="outline"
                             role="combobox"
                             className={cn(
-                              'w-[200px] justify-between',
-                              !field.value && 'text-muted-foreground'
+                              "w-[200px] justify-between",
+                              !field.value && "text-muted-foreground",
                             )}
                           >
                             {field.value
                               ? locations.find(
-                                  (location) => location.value === field.value
+                                  (location) => location.value === field.value,
                                 )?.label
-                              : 'Select a Facility'}
+                              : "Select a Facility"}
                             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent className="w-[200px] h-[400px] overflow-y-scroll">
+                      <PopoverContent className="h-[400px] w-[200px] overflow-y-scroll">
                         <Command>
                           <CommandInput
                             className="h-2"
@@ -376,15 +375,15 @@ export default function ReservationForm() {
                                 value={location.label}
                                 key={location.value}
                                 onSelect={() => {
-                                  form.setValue('facility', location.value);
+                                  form.setValue("facility", location.value);
                                 }}
                               >
                                 <Check
                                   className={cn(
-                                    'mr-2 h-4 w-4',
+                                    "mr-2 h-4 w-4",
                                     location.value === field.value
-                                      ? 'opacity-100'
-                                      : 'opacity-0'
+                                      ? "opacity-100"
+                                      : "opacity-0",
                                   )}
                                 />
                                 {location.label}
@@ -402,7 +401,7 @@ export default function ReservationForm() {
                 )}
               />
             </div>
-            <div className="w-[200px] text-center sm:text-start mt-2">
+            <div className="mt-2 w-[200px] text-center sm:text-start">
               <FormField
                 control={form.control}
                 name="category"
@@ -430,12 +429,12 @@ export default function ReservationForm() {
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
                           <p className="flex">
-                            Category Descriptions{' '}
+                            Category Descriptions{" "}
                             <ScrollText
-                              className="animate-pulse hover:stroke-blue-500 cursor-pointer"
+                              className="animate-pulse cursor-pointer hover:stroke-blue-500"
                               size={16}
                               strokeWidth={1.5}
-                            />{' '}
+                            />{" "}
                           </p>
                         </AlertDialogTrigger>
                         <AlertDialogContent>
@@ -444,7 +443,7 @@ export default function ReservationForm() {
                               Pricing Category Descriptions
                             </AlertDialogTitle>
                             <AlertDialogDescription>
-                              <h1 className="font-bold text-lg my-1">
+                              <h1 className="my-1 text-lg font-bold">
                                 Category 1
                               </h1>
                               Groups in this category are basically community
@@ -456,7 +455,7 @@ export default function ReservationForm() {
                               a rental fee for the use of the buildings except
                               the LHS auditorium, any computer labs, or the
                               Stadium.
-                              <h1 className="font-bold text-lg my-1">
+                              <h1 className="my-1 text-lg font-bold">
                                 Category 2
                               </h1>
                               This category includes all community non-profit
@@ -468,14 +467,14 @@ export default function ReservationForm() {
                               dance groups, church services or other activities
                               for which public halls or commercial facilities
                               generally are rented.
-                              <h1 className="font-bold text-lg my-1">
+                              <h1 className="my-1 text-lg font-bold">
                                 Category 3
                               </h1>
                               This group shall include all for-profit
                               organizations not listed in #1 or #2 and
                               non-profit organizations from outside the
                               community.
-                              <h1 className="font-bold text-lg my-1">
+                              <h1 className="my-1 text-lg font-bold">
                                 LPS Staff
                               </h1>
                               For all LPS Staff members to reserve space for
@@ -498,7 +497,7 @@ export default function ReservationForm() {
             <div>
               <FormField
                 control={form.control}
-                name={'techSupport'}
+                name={"techSupport"}
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                     <FormControl>
@@ -519,7 +518,7 @@ export default function ReservationForm() {
             {watchTechSupport && (
               <FormField
                 control={form.control}
-                name={'techDetails'}
+                name={"techDetails"}
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
@@ -538,7 +537,7 @@ export default function ReservationForm() {
             <div>
               <FormField
                 control={form.control}
-                name={'doorAccess'}
+                name={"doorAccess"}
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                     <FormControl>
@@ -560,7 +559,7 @@ export default function ReservationForm() {
               {watchDoorAccess && (
                 <FormField
                   control={form.control}
-                  name={'doorsDetails'}
+                  name={"doorsDetails"}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
@@ -576,12 +575,12 @@ export default function ReservationForm() {
               )}
             </div>
           </div>
-          <div className="justify-end self-end flex">
+          <div className="flex justify-end self-end">
             {!isSubmitting ? (
               <Button type="submit">Submit</Button>
             ) : (
               <Button disabled>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="animate-spin mr-2 h-4 w-4" />
               </Button>
             )}
           </div>
@@ -597,7 +596,7 @@ export default function ReservationForm() {
           </AlertDialogDescription>
           <AlertDialogFooter>
             Submit another request?
-            <AlertDialogCancel onClick={() => router.push('/')}>
+            <AlertDialogCancel onClick={() => router.push("/")}>
               No
             </AlertDialogCancel>
             <AlertDialogAction onClick={() => location.reload()}>

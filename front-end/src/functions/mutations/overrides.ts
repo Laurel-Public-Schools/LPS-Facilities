@@ -1,14 +1,16 @@
-'use server';
+"use server";
 
-import { db } from '@/lib/db';
-import { CategoryByFacility } from '@/lib/db/queries/categories';
-import { Reservation } from '@/lib/db/schema';
-import { eq } from 'drizzle-orm';
-import { revalidateTag } from 'next/cache';
+import { revalidateTag } from "next/cache";
+import { eq } from "drizzle-orm";
+
+import { db } from "@local/db/client";
+import { Reservation } from "@local/db/schema";
+
+import { api } from "@/trpc/server";
 
 export async function costChange(id: number, formData: FormData) {
   let value;
-  const cost = formData.get('newCost');
+  const cost = formData.get("newCost");
   if (cost === null || cost === undefined) {
     value = null;
   } else {
@@ -22,7 +24,7 @@ export async function costChange(id: number, formData: FormData) {
         costOverride: value,
       })
       .where(eq(Reservation.id, id));
-    return revalidateTag('reservations');
+    return revalidateTag("reservations");
   } catch (error) {
     throw new Error();
   }
@@ -38,14 +40,14 @@ export async function facilityChange(id: number, data: any) {
       })
       .where(eq(Reservation.id, id));
 
-    return revalidateTag('reservations');
+    return revalidateTag("reservations");
   } catch (error) {
     throw new Error();
   }
 }
 
 export async function categoryChange(id: number, facilityID: any, data: any) {
-  const categories = await CategoryByFacility.execute({
+  const categories = await api.category.byFacility({
     facilityId: Number(facilityID),
     name: `%${data}%`,
   });
@@ -57,7 +59,7 @@ export async function categoryChange(id: number, facilityID: any, data: any) {
         categoryId: categoryID,
       })
       .where(eq(Reservation.id, id));
-    return revalidateTag('reservations');
+    return revalidateTag("reservations");
   } catch (error: any) {
     throw new Error();
   }

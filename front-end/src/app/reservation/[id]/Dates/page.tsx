@@ -1,43 +1,24 @@
-import { Suspense } from 'react';
-import { DataTable } from '@/components/ui/tables/reservations/reservation/data-table';
-import { columns } from './columns';
-import { Skeleton } from '@/components/ui/skeleton';
-import { headers } from 'next/headers';
-import { mapDates } from '@/functions/calculations/tableData';
-import { adminColumns } from './adminColumns';
-import { getCurrentUser } from '@/functions/data/auth';
-import { Button } from '@/components/ui/buttons';
-import dynamic from 'next/dynamic';
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
+import { notFound } from "next/navigation";
 
-async function getReservation(id: number) {
-  const headersInstance = headers();
-  const auth = headersInstance.get('Cookie')!;
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_HOST + `/api/reservation/${id}`,
-    {
-      headers: {
-        cookie: auth,
-      },
-      next: {
-        tags: ['reservations'],
-      },
-    }
-  );
-  const response = await res.json();
-  const dates = response.ReservationDate;
-
-  return mapDates(dates);
-}
+import { Skeleton } from "@/components/ui/skeleton";
+import { DataTable } from "@/components/ui/tables/reservations/reservation/data-table";
+import { IsAdmin } from "@/functions/other/helpers";
+import { api } from "@/trpc/server";
+import { adminColumns } from "./adminColumns";
+import { columns } from "./columns";
 
 export default async function reservationDatesPage({
   params,
 }: {
-  params: { id: number };
+  params: { id: string };
 }) {
-  const session = await getCurrentUser();
-  const AddDates = dynamic(() => import('@/components/ui/alerts/addDates'));
-
-  const mappedDates = await getReservation(params.id);
+  const isAdmin = await IsAdmin();
+  const AddDates = dynamic(() => import("@/components/ui/alerts/addDates"));
+  const reservation = await api.reservation.byId({ id: parseInt(params.id) });
+  if (!reservation) return notFound();
+  const mappedDates = reservation.ReservationDate;
   return (
     <div className="space-y-7" suppressHydrationWarning>
       <Suspense fallback={<Skeleton className="h-auto w-auto" />}>
@@ -45,11 +26,11 @@ export default async function reservationDatesPage({
           <h2 className="Text-lg font-medium">Reservation Dates </h2>
         </div>
 
-        {session.isAdmin() ? (
+        {isAdmin ? (
           <>
             <DataTable columns={adminColumns} data={mappedDates} />
             <div className="float-right">
-              <AddDates id={params.id} />
+              <AddDates id={parseInt(params.id)} />
             </div>
           </>
         ) : (

@@ -1,26 +1,25 @@
-import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { dayOptions } from '@/lib/formOptions';
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 
-import makeAnimated from 'react-select/animated';
-import Select from 'react-select';
-
-import { Button } from '../ui/buttons';
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogTrigger,
-  DialogClose,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { dayOptions } from "@/lib/formOptions";
+import { Button } from "../ui/buttons";
 
 export const ModalInput = (props: { onSave: (data: any) => void }) => {
   const { onSave } = props;
   const { register, handleSubmit, control } = useForm();
   const dialogClose = () => {
-    document.getElementById('closeDialog')?.click();
+    document.getElementById("closeDialog")?.click();
   };
   const animatedComponents = makeAnimated();
   const forwardChange = (data: any) => {
@@ -31,43 +30,43 @@ export const ModalInput = (props: { onSave: (data: any) => void }) => {
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          className="hover:cursor-pointer h-8"
+          className="h-8 hover:cursor-pointer"
           variant="outline"
-          size={'sm'}
+          size={"sm"}
         >
           Add Reoccurring Dates
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <div className="items-center place-content-center   justify-center flex flex-col">
+        <div className="flex flex-col place-content-center items-center justify-center">
           <form onSubmit={handleSubmit(forwardChange)}>
-            <div className="border-b-2 gap-2 my-2 p-2 ">
+            <div className="my-2 gap-2 border-b-2 p-2">
               <Label className="font-Bold">Start Date</Label>
 
               <Input
-                className="form-date bg-gray-300 hover:bg-gray-200 text-black"
+                className="form-date bg-gray-300 text-black hover:bg-gray-200"
                 type="date"
-                {...register('startDate')}
+                {...register("startDate")}
               />
             </div>
-            <div className="border-b-2 gap-2 my-2 p-2">
+            <div className="my-2 gap-2 border-b-2 p-2">
               <Label className="label">Event start time? </Label>
               <Input
                 type="time"
-                className="form-date bg-gray-300 hover:bg-gray-200 my-2 text-black"
-                {...register('startTime')}
+                className="form-date my-2 bg-gray-300 text-black hover:bg-gray-200"
+                {...register("startTime")}
               />
             </div>
             <div>
-              <div className="border-b-2 gap-2 my-2 p-2">
+              <div className="my-2 gap-2 border-b-2 p-2">
                 <Label className="label">Event end time? </Label>
                 <Input
                   type="time"
-                  className="form-date bg-gray-300 hover:bg-gray-200 text-black"
-                  {...register('endTime')}
+                  className="form-date bg-gray-300 text-black hover:bg-gray-200"
+                  {...register("endTime")}
                 />
               </div>
-              <div className="border-b-2 gap-2 my-2 p-2">
+              <div className="my-2 gap-2 border-b-2 p-2">
                 <Label className="label">Day of the Week</Label>
                 <div className="control text-black">
                   <Controller
@@ -87,13 +86,13 @@ export const ModalInput = (props: { onSave: (data: any) => void }) => {
                   />
                 </div>
               </div>
-              <div className="border-b-2 gap-2 my-2 p-2">
+              <div className="my-2 gap-2 border-b-2 p-2">
                 <Label className="label">Repeat Until</Label>
                 <div className="control">
                   <Input
                     type="date"
-                    className="form-date bg-gray-300 hover:bg-gray-200 text-black"
-                    {...register('repeatUntil')}
+                    className="form-date bg-gray-300 text-black hover:bg-gray-200"
+                    {...register("repeatUntil")}
                   />
                 </div>
               </div>

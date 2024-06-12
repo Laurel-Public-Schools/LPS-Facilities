@@ -1,30 +1,36 @@
-'use client';
+"use client";
 
-import React from 'react';
-import type { ChartData } from '@/lib/types';
-import { ReservationWithAll } from '@/lib/types';
-
+import type { ChartData } from "@/lib/types";
+import * as React from "react";
 import {
-  LineChart,
+  CartesianGrid,
+  Legend,
   Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
+} from "recharts";
+
+import aggregateChartData from "@/functions/calculations/reservsByMonth";
+import { ReservationWithAll } from "@/lib/types";
 
 const buildingColors = [
-  { building: 'West Elementary', color: '#800080' },
-  { building: 'South Elementary', color: '#0000FF' },
-  { building: 'Laurel Middle School', color: '#008000' },
-  { building: 'Laurel High School', color: '#87CEEB' },
-  { building: 'Graff Elementary', color: '#FFC0CB' },
-  { building: 'Administration Building', color: '#FFA500' },
+  { building: "West Elementary", color: "#800080" },
+  { building: "South Elementary", color: "#0000FF" },
+  { building: "Laurel Middle School", color: "#008000" },
+  { building: "Laurel High School", color: "#87CEEB" },
+  { building: "Graff Elementary", color: "#FFC0CB" },
+  { building: "Administration Building", color: "#FFA500" },
 ];
 
-export default function ByMonthLine({ data }: { data: ChartData[] }) {
+export default function ByMonthLine({
+  dataPromise,
+}: {
+  dataPromise: ReturnType<typeof aggregateChartData>;
+}) {
+  const data = React.use(dataPromise);
   return (
     <>
       <ResponsiveContainer width="100%" height={400}>

@@ -1,30 +1,31 @@
-'use client';
+"use client";
 
-import type { ColumnDef } from '@tanstack/react-table';
-import { Button } from '@/components/ui/buttons';
-import Link from 'next/link';
-import { ArrowUpDown } from 'lucide-react';
+import type { ColumnDef } from "@tanstack/react-table";
+import Link from "next/link";
+import { ArrowUpDown } from "lucide-react";
+
+import { Button } from "@/components/ui/buttons";
 
 interface TableReservations {
   eventName: string;
   Facility: string;
-  ReservationDate: any[];
-  approved: 'pending' | 'approved' | 'denied' | 'canceled';
-  Details: number;
+  ReservationDate: string | undefined;
+  approved: "pending" | "approved" | "denied" | "canceled";
+  id: number;
 }
 
 export const columns: ColumnDef<TableReservations>[] = [
   {
-    accessorKey: 'eventName',
-    header: 'Event Name',
+    accessorKey: "eventName",
+    header: "Event Name",
   },
   {
-    accessorKey: 'Facility',
+    accessorKey: "Facility",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Facility
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -33,13 +34,13 @@ export const columns: ColumnDef<TableReservations>[] = [
     },
   },
   {
-    accessorKey: 'ReservationDate',
+    accessorKey: "ReservationDate",
 
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Reservation Date
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -48,14 +49,14 @@ export const columns: ColumnDef<TableReservations>[] = [
     },
   },
   {
-    accessorKey: 'approved',
-    header: 'Status',
+    accessorKey: "approved",
+    header: "Status",
   },
   {
-    accessorKey: 'Details',
-    header: 'Details',
+    accessorKey: "id",
+    header: "Details",
     cell: ({ row }) => {
-      const id = parseInt(row.getValue('Details'));
+      const id = row.original.id;
 
       return (
         <Button asChild>

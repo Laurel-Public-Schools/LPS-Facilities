@@ -1,16 +1,11 @@
-'use client';
-import React, { useState } from 'react';
-import type { SelectFacility as Facility } from '@/lib/db/schema';
-import { Button } from '@/components/ui/buttons';
-import { useToast } from '@/components/ui/use-toast';
-import { updateEmail } from '@/functions/emails';
-import { useRouter } from 'next/navigation';
-import {
-  approveReservation,
-  denyReservation,
-  HandleDelete,
-} from '@/functions/reservations';
-import { Loader2 } from 'lucide-react';
+"use client";
+
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+
+import type { FacilityType as Facility } from "@local/db/schema";
 
 import {
   AlertDialog,
@@ -22,14 +17,21 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/buttons";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
+import { updateEmail } from "@/functions/emails";
+import {
+  approveReservation,
+  denyReservation,
+  HandleDelete,
+} from "@/functions/reservations";
 
 interface ResNavProps {
   id: number | bigint;
@@ -37,8 +39,6 @@ interface ResNavProps {
 }
 
 export default function ReservationOptions({ id, facility }: ResNavProps) {
-  const { toast } = useToast();
-
   const router = useRouter();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -46,9 +46,9 @@ export default function ReservationOptions({ id, facility }: ResNavProps) {
   const sendEmail = async () => {
     try {
       await updateEmail(id as number);
-      alert('Email sent');
+      alert("Email sent");
     } catch (error) {
-      alert('Email failed to send');
+      alert("Email failed to send");
     }
   };
 
@@ -56,15 +56,9 @@ export default function ReservationOptions({ id, facility }: ResNavProps) {
     setIsSubmitting(true);
     try {
       await approveReservation(id as number);
-      toast({
-        title: 'Reservation Approved',
-        description: 'Reservation has been approved',
-      });
+      toast("Reservation Approved");
     } catch (error) {
-      toast({
-        title: 'Something went wrong',
-        description: 'Reservation failed to approve',
-      });
+      toast("Something went wrong");
     } finally {
       setIsSubmitting(false);
       router.refresh();
@@ -75,15 +69,9 @@ export default function ReservationOptions({ id, facility }: ResNavProps) {
     setIsSubmitting(true);
     try {
       await denyReservation(id as number);
-      toast({
-        title: 'Reservation Denied',
-        description: 'Reservation has been denied',
-      });
+      toast("Reservation Denied");
     } catch (error) {
-      toast({
-        title: 'Something went wrong',
-        description: 'Reservation failed to deny',
-      });
+      toast("Something went wrong");
     } finally {
       setIsSubmitting(false);
       router.refresh();
@@ -104,7 +92,7 @@ export default function ReservationOptions({ id, facility }: ResNavProps) {
               </AlertDialogTrigger>
             ) : (
               <Button disabled>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="animate-spin mr-2 h-4 w-4" />
                 Please Wait
               </Button>
             )}
@@ -112,7 +100,7 @@ export default function ReservationOptions({ id, facility }: ResNavProps) {
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => {
-              sendEmail();
+              void sendEmail();
             }}
           >
             Send update email
@@ -121,7 +109,7 @@ export default function ReservationOptions({ id, facility }: ResNavProps) {
           <DropdownMenuItem
             onClick={() => {
               HandleDelete(id as number);
-              router.push('/admin/reservations');
+              router.push("/admin/reservations");
             }}
           >
             Delete Reservation

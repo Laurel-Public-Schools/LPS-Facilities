@@ -1,31 +1,31 @@
-import React from 'react';
+import React, { Suspense } from "react";
 
-import CardLayout from './cardLayout';
-import { mappedFacilities } from '@/functions/calculations/tableData';
-import type {FacilityWithCategory} from '@/lib/types';
-import { Suspense } from 'react';
-import LoadingScreen from '@/components/ui/loadingScreen';
+import LoadingScreen from "@/components/ui/loadingScreen";
+import { api } from "@/trpc/server";
+import CardLayout from "./cardLayout";
 
-type PartialFacility = Partial<FacilityWithCategory>;
+// #TODO: delete this
 
-async function getFacilities() {
-  const res = await fetch(process.env.NEXT_PUBLIC_HOST + '/api/facilities', {
-    next: {
-      revalidate: 3600,
-      tags: ['facilities'],
-    },
-  });
-  const facilities = await res.json();
-  return mappedFacilities(facilities);
-}
+// type PartialFacility = Partial<FacilityWithCategory>;
 
-export default async function FacilitiesPage() {
-  const facilities = await getFacilities();
+// async function getFacilities() {
+//   const res = await fetch(process.env.NEXT_PUBLIC_HOST + '/api/facilities', {
+//     next: {
+//       revalidate: 3600,
+//       tags: ['facilities'],
+//     },
+//   });
+//   const facilities = await res.json();
+//   return mappedFacilities(facilities);
+// }
+
+export default function FacilitiesPage() {
+  const facilities = api.facility.all();
 
   return (
-    <div className=" space-y-7 ">
+    <div className="space-y-7">
       <Suspense fallback={<LoadingScreen />}>
-        <CardLayout facilities={facilities as unknown as PartialFacility[]} />
+        <CardLayout facilities={facilities} />
       </Suspense>
     </div>
   );

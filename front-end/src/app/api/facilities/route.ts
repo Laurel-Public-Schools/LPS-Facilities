@@ -1,12 +1,8 @@
-import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
-import { serializeJSON } from '@/utils/serializeJSON';
+import SuperJSON from "superjson";
 
-export async function GET(request: Request) {
-  const res = await db.query.Facility.findMany({
-    with: {
-      Category: true,
-    },
-  });
-  return NextResponse.json(serializeJSON(res));
+import { db } from "@local/db/client";
+
+export async function GET() {
+  const data = await db.query.Facility.findMany();
+  return SuperJSON.stringify(data);
 }

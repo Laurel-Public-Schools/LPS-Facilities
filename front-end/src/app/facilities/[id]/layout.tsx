@@ -5,7 +5,7 @@ export default function facilityLayout({
 }) {
   return (
     <section className="relative">
-      <div className="flex flex-col justify-between items-center h-full p-3">
+      <div className="flex h-full flex-col items-center justify-between p-3">
         {children}
       </div>
     </section>

@@ -1,15 +1,21 @@
-import { Suspense } from 'react';
-import { Skeleton } from '@/components/ui/skeleton';
-import Image from 'next/image';
-import dynamic from 'next/dynamic';
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { notFound } from "next/navigation";
 
-import type { FacilityWithCategory } from '@/lib/types';
+import { FacilityType } from "@local/db/schema";
+
+import { Skeleton } from "@/components/ui/skeleton";
+import { env } from "@/env";
+import { api } from "@/trpc/server";
 
 export async function generateStaticParams() {
-  const facilities = await fetch(
-    process.env.NEXT_PUBLIC_HOST + `/api/facilities`
-  ).then((res) => res.json());
-  return facilities.map((facility: any) => ({
+  const url = "https://facilities.laurel.k12.mt.us";
+  const facilities: FacilityType[] = await fetch(url + "/api/facilities").then(
+    (res) => res.json(),
+  );
+
+  return facilities.map((facility) => ({
     id: facility.id.toString(),
   }));
 }
@@ -18,23 +24,15 @@ export default async function facilityEditForm({
   params,
 }: {
   params: {
-    id: number;
+    id: string;
   };
 }) {
-  const Forms = dynamic(() => import('./forms'));
-  const data: FacilityWithCategory = await fetch(
-    process.env.NEXT_PUBLIC_HOST + `/api/facilities/${params.id}`,
-    {
-      next: {
-        revalidate: 3600,
-        tags: ['facilities'],
-      },
-    }
-  ).then((res) => res.json());
-
+  const Forms = dynamic(() => import("./forms"));
+  const data = await api.facility.byId({ id: parseInt(params.id) });
+  if (!data) return notFound();
   const { name, address, building, capacity, imagePath } = data;
 
-  const FacilityCategories = data.Category!.map((category) => {
+  const FacilityCategories = data.Category.map((category) => {
     return {
       id: category.id,
       name: category.name,
@@ -42,17 +40,17 @@ export default async function facilityEditForm({
     };
   });
 
-  const id = Number(params.id);
+  const id = parseInt(params.id);
 
   return (
-    <div className="space-y-7 gap-y-4">
+    <div className="gap-y-4 space-y-7">
       <div>
         <h1 className="text-lg font-medium">
           Edit {building} {name}
         </h1>
       </div>
       <div className="flex flex-col justify-center">
-        <Suspense fallback={<Skeleton className="w-[400px] h-[400px]" />}>
+        <Suspense fallback={<Skeleton className="h-[400px] w-[400px]" />}>
           <div>
             {imagePath ? (
               <Image
@@ -60,7 +58,7 @@ export default async function facilityEditForm({
                 alt={name}
                 width={400}
                 height={400}
-                className="drop-shadow-md shadow-md border-2 "
+                className="border-2 shadow-md drop-shadow-md"
               />
             ) : (
               <Image
@@ -68,16 +66,16 @@ export default async function facilityEditForm({
                 alt={name}
                 width={480}
                 height={480}
-                className=" drop-shadow-xl border-2"
+                className="border-2 drop-shadow-xl"
               />
             )}
           </div>
         </Suspense>
-        <Suspense fallback={<Skeleton className="w-[400px] h-[400px]" />}>
+        <Suspense fallback={<Skeleton className="h-[400px] w-[400px]" />}>
           <Forms
             id={id}
             name={name}
-            capacity={capacity!}
+            capacity={capacity ?? 30}
             CategoryIDs={FacilityCategories}
           />
         </Suspense>

@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import React from 'react';
-import ReactModal from 'react-modal';
-import { Button } from '../ui/buttons';
+import React from "react";
+import ReactModal from "react-modal";
+
+import { Button } from "../ui/buttons";
 
 export default function TosModal() {
   const hideModal = () => setIsVisible(false);
@@ -12,19 +13,19 @@ export default function TosModal() {
   return (
     <>
       <button
-        className="hover:text-blue-500 hover:cursor-pointer hover:underline"
+        className="hover:cursor-pointer hover:text-blue-500 hover:underline"
         onClick={showModal}
       >
         Rules and Regulations
       </button>
       <ReactModal
-        className="relative  flex animate-overlayShow max-h-fit  flex-col items-center overflow-auto text-black dark:text-black top-0 lg:top-0 justify-center z-50 transition-all ease-in-out duration-1000"
+        className="relative top-0 z-50 flex max-h-fit animate-overlayShow flex-col items-center justify-center overflow-auto text-black transition-all duration-1000 ease-in-out dark:text-black lg:top-0"
         overlayClassName="fixed inset-0 bg-black bg-opacity-50 modal-overlay"
         isOpen={!!isVisible}
       >
-        <div className="bg-white max-h-fit align-center self-center  justify-center flex flex-col flex-wrap  rounded-lg max-w-6xl min-w-lg p-4">
-          <article className=" overflow-auto max-h-screen sm:max-h-[720px] prose dark:prose-dark max-w-none w-full prose-h2:font-bold  prose-headings:underline prose-headings:my-2 prose-p:p-5 prose-ul:list-decimal prose-ul:text-sm p-4">
-            <h1 className="font-bold text-3xl">Rules and Regulations</h1>
+        <div className="align-center min-w-lg flex max-h-fit max-w-6xl flex-col flex-wrap justify-center self-center rounded-lg bg-white p-4">
+          <article className="dark:prose-dark prose max-h-screen w-full max-w-none overflow-auto p-4 prose-headings:my-2 prose-headings:underline prose-h2:font-bold prose-p:p-5 prose-ul:list-decimal prose-ul:text-sm sm:max-h-[720px]">
+            <h1 className="text-3xl font-bold">Rules and Regulations</h1>
             <h2>Premises and Conditions</h2>
             <p>
               Conditions of Facilities Use - Use of District facilities is
@@ -84,7 +85,7 @@ export default function TosModal() {
             </p>
             <h2>Rent and deposit</h2>
             <p>
-              {' '}
+              {" "}
               The requesting organization or individual agrees to pay the
               District, as rent for the premises and as payment for special
               services (if any) provided by the District, the total amount

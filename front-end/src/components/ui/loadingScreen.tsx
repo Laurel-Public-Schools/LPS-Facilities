@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import styled from 'styled-components';
-import React from 'react';
+import React from "react";
+import styled from "styled-components";
 
 const LoadingContainer = styled.div`
   position: relative;

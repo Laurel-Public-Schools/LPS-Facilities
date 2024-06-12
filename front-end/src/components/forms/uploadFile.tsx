@@ -1,11 +1,12 @@
-'use client';
-import { useRouter } from 'next/navigation';
-import { Button } from '../ui/buttons';
+"use client";
 
-import { Loader2 } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
-export function UploadFile({ params }: { params: { id: number } }) {
+import { Button } from "../ui/buttons";
+
+export function UploadFile({ params }: { params: { id: string } }) {
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const [loading, setLoading] = useState(false);
@@ -16,22 +17,22 @@ export function UploadFile({ params }: { params: { id: number } }) {
 
     setLoading(true);
     if (!inputFileRef.current?.files) {
-      throw new Error('no file selected');
+      throw new Error("no file selected");
     }
-    const file = inputFileRef.current.files[0];
+    const file = inputFileRef.current.files[0]!;
 
     const response = await fetch(
       `/api/files/upload?filename=${file.name}&id=${params.id}`,
       {
-        method: 'POST',
+        method: "POST",
         body: file,
-      }
+      },
     );
     const result = await response.json();
     if (result.error) {
       alert(result.error);
     } else {
-      alert('File uploaded successfully!');
+      alert("File uploaded successfully!");
     }
     setLoading(false);
     router.refresh();

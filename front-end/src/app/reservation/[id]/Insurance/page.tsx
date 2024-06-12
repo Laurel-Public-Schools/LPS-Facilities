@@ -1,35 +1,18 @@
-import { UploadFile } from '@/components/forms/uploadFile';
-import Link from 'next/link';
-import { Button } from '@/components/ui/buttons';
-import { headers } from 'next/headers';
+import Link from "next/link";
+import { notFound } from "next/navigation";
+
+import { UploadFile } from "@/components/forms/uploadFile";
+import { Button } from "@/components/ui/buttons";
+import { api } from "@/trpc/server";
+
 export default async function insurancePage({
-  //@ts-ignore
   params,
 }: {
-  params?: { id: number };
+  params: { id: string };
 }) {
-  if (!params) {
-    return <div>Loading...</div>;
-  }
-  const headersInstance = headers();
-  const auth = headersInstance.get('Cookie')!;
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_HOST + `/api/reservation/${params.id}`,
-
-    {
-      cache: 'no-store',
-      headers: {
-        Cookie: auth,
-      },
-      next: {
-        tags: ['reservations'],
-      },
-    }
-  );
-
-  const reservation = await res.json();
-
-  let link;
+  const reservation = await api.reservation.byId({ id: parseInt(params.id) });
+  if (!reservation) return notFound();
+  let link = undefined;
   if (reservation.insuranceLink) {
     link = reservation.insuranceLink;
   }
@@ -37,8 +20,8 @@ export default async function insurancePage({
     <div className="space-y-7">
       <div className=" ">
         <h2 className="text-2xl text-muted-foreground">Insurance</h2>
-        <div className="justify-between my-5 mx-2 w-auto   gap-36">
-          <div className="flex flex-wrap my-2 p-2  justify-between text-xl border-b-2 border-b-gray-700 dark:border-b-white text-justify ">
+        <div className="mx-2 my-5 w-auto justify-between gap-36">
+          <div className="my-2 flex flex-wrap justify-between border-b-2 border-b-gray-700 p-2 text-justify text-xl dark:border-b-white">
             <p>
               Upon approval, your event(s) will be shown in the chart below
               along with any requirement for insurance coverage. If you do not
@@ -48,7 +31,7 @@ export default async function insurancePage({
               policy:
             </p>
 
-            <div className="text-sm dark:bg-gray-500 bg-gray-300 p-5 m-2">
+            <div className="m-2 bg-gray-300 p-5 text-sm dark:bg-gray-500">
               <p>
                 The user of the facility shall provide the District with a
                 certificate of insurance and endorsement to their property and
@@ -70,17 +53,17 @@ export default async function insurancePage({
             </div>
           </div>
           <div className="p-2">
-            <h2 className="flex font-bold text-2xl my-3 mb-6  text-gray-600 dark:text-gray-300">
+            <h2 className="my-3 mb-6 flex text-2xl font-bold text-gray-600 dark:text-gray-300">
               Proof of insurance
             </h2>
-            <div className="flex flex-wrap bg-gray-300 dark:bg-gray-500 p-5 m-3">
-              <h3 className="m-2 border-b-2 mb-5">
-                You may upload your certificate of liability insurance here.{' '}
-                <b className=" underline decoration-red-500 decoration-8">
-                  Note:{' '}
-                </b>{' '}
-                Your policy must name <strong> Laurel Public Schools </strong>{' '}
-                as an additional insured.{' '}
+            <div className="m-3 flex flex-wrap bg-gray-300 p-5 dark:bg-gray-500">
+              <h3 className="m-2 mb-5 border-b-2">
+                You may upload your certificate of liability insurance here.{" "}
+                <b className="underline decoration-red-500 decoration-8">
+                  Note:{" "}
+                </b>{" "}
+                Your policy must name <strong> Laurel Public Schools </strong>{" "}
+                as an additional insured.{" "}
               </h3>
               <div className="w-full">
                 {link && (

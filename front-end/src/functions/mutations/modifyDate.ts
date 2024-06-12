@@ -1,20 +1,21 @@
-'use server';
+"use server";
 
-import { db } from '@/lib/db';
-import { ReservationDate } from '@/lib/db/schema';
-import { eq, sql } from 'drizzle-orm';
-import { revalidateTag } from 'next/cache';
+import { revalidateTag } from "next/cache";
+import { eq, sql } from "drizzle-orm";
+
+import { db } from "@local/db/client";
+import { ReservationDate } from "@local/db/schema";
 
 export default async function modifyDate(
   id: number,
   reservationID: number,
-  formData: FormData
+  formData: FormData,
 ) {
   const data = {
-    startDate: formData.get('startDate') as unknown as string,
-    endDate: formData.get('endDate') as unknown as string,
-    startTime: formData.get('startTime') as unknown as string,
-    endTime: formData.get('endTime') as unknown as string,
+    startDate: formData.get("startDate") as unknown as string,
+    endDate: formData.get("endDate") as unknown as string,
+    startTime: formData.get("startTime") as unknown as string,
+    endTime: formData.get("endTime") as unknown as string,
   };
 
   await db
@@ -27,13 +28,13 @@ export default async function modifyDate(
     })
     .where(eq(ReservationDate.id, id));
 
-  revalidateTag('reservations');
+  revalidateTag("reservations");
 }
 
 export async function modifyDates(ids: number[], formData: FormData) {
   const data = {
-    startTime: formData.get('startTime') as unknown as string,
-    endTime: formData.get('endTime') as unknown as string,
+    startTime: formData.get("startTime") as unknown as string,
+    endTime: formData.get("endTime") as unknown as string,
   };
 
   await db.transaction(async (tx) => {
@@ -49,5 +50,5 @@ export async function modifyDates(ids: number[], formData: FormData) {
         .where(eq(ReservationDate.id, id));
     }
   });
-  revalidateTag('reservations');
+  revalidateTag("reservations");
 }

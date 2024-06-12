@@ -1,3 +1,3 @@
-import menu from './menu.png';
+import menu from "./menu.png";
 
 export { menu };
