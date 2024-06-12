@@ -142,7 +142,7 @@ export const GetAllReservations = db.query.Reservation.findMany({
     eq(Reservation.approved, "approved"),
     eq(Reservation.approved, "pending"),
   ),
-}).prepare("allReservations");
+});
 
 export const ReservationCountThisWeek = db
   .select({ count: count() })

@@ -7,6 +7,7 @@ import { google } from "googleapis";
 import { FacilityQuery, GetApprovedDates } from "@local/db/queries";
 
 import { env } from "@/env";
+import { api } from "@/trpc/server";
 
 export async function GetEvents(id: number | string) {
   const res = await FacilityQuery.execute({ id: id });

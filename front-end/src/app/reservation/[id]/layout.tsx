@@ -19,9 +19,9 @@ export default async function reservationLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { id: number };
+  params: { id: string };
 }) {
-  const [data, isAdmin] = await cachedData(params.id);
+  const [data, isAdmin] = await cachedData(parseInt(params.id));
   const reservation = data;
   if (!reservation) return notFound();
   const { id, eventName, Facility } = reservation;

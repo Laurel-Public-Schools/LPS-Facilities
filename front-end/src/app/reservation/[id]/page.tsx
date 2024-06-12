@@ -5,9 +5,9 @@ import { api } from "@/trpc/server";
 export default async function reservationPage({
   params,
 }: {
-  params: { id: number };
+  params: { id: string };
 }) {
-  const reservation = await api.reservation.byId({ id: params.id });
+  const reservation = await api.reservation.byId({ id: parseInt(params.id) });
   if (!reservation) return notFound();
   const { name, Facility, primaryContact, phone, details, Category } =
     reservation;

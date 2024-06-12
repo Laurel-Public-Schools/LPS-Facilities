@@ -1,16 +1,8 @@
 import type { TRPCRouterRecord } from "@trpc/server";
+import { addDays, format } from "date-fns";
 import { z } from "zod";
 
-import { and, count, eq, gte } from "@local/db";
-import {
-  GetAllReservations,
-  GetApprovedDates,
-  GetDateByID,
-  GetRequests,
-  GetReservationbyID,
-  GetReservations,
-  ReservationCountThisWeek,
-} from "@local/db/queries";
+import { and, count, eq, gte, lte, or, sql } from "@local/db";
 import {
   CreateReservationDateArray,
   CreateReservationSchema,
@@ -21,39 +13,133 @@ import {
 
 import { protectedProcedure, publicProcedure } from "../trpc";
 
+const today = new Date();
+const sevenDaysFromNow = addDays(today, 7);
+
 export const ReservationRouter = {
-  all: protectedProcedure.query(() => {
-    return GetAllReservations.execute();
+  all: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.query.Reservation.findMany({
+      with: {
+        ReservationDate: true,
+        Facility: true,
+        Category: true,
+        ReservationFees: true,
+        User: {
+          columns: {
+            password: false,
+          },
+        },
+      },
+      where: or(
+        eq(Reservation.approved, "approved"),
+        eq(Reservation.approved, "pending"),
+      ),
+    });
   }),
   requestCount: protectedProcedure.query(({ ctx }) => {
     return ctx.db
-      .select({ value: count(Reservation.approved) })
+      .select({ value: count() })
       .from(Reservation)
       .where(eq(Reservation.approved, "pending"));
   }),
-  thisWeek: protectedProcedure.query(() => {
-    return ReservationCountThisWeek.execute();
+  thisWeek: protectedProcedure.query(({ ctx }) => {
+    return ctx.db
+      .select({ count: count() })
+      .from(ReservationDate)
+      .where(
+        and(
+          gte(ReservationDate.startDate, format(today, "yyyy-MM-dd")),
+          lte(
+            ReservationDate.startDate,
+            format(sevenDaysFromNow, "yyyy-MM-dd"),
+          ),
+          eq(ReservationDate.approved, "approved"),
+        ),
+      );
   }),
-  allRequests: protectedProcedure.query(() => {
-    return GetRequests.execute();
+  allRequests: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.query.Reservation.findMany({
+      where: eq(Reservation.approved, "pending"),
+      with: {
+        Facility: true,
+        ReservationDate: true,
+        User: {
+          columns: {
+            password: false,
+          },
+        },
+      },
+    });
   }),
-  allApproved: protectedProcedure.query(() => {
-    return GetReservations.execute();
+  allApproved: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.query.Reservation.findMany({
+      where: eq(Reservation.approved, "approved"),
+
+      with: {
+        Facility: true,
+        ReservationDate: true,
+        Category: true,
+        User: {
+          columns: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+            createdAt: true,
+            tos: true,
+          },
+        },
+      },
+    });
   }),
   byId: protectedProcedure
     .input(z.object({ id: z.number() }))
-    .query(({ input }) => {
-      return GetReservationbyID.execute({ id: input.id });
+    .query(({ ctx, input }) => {
+      return ctx.db.query.Reservation.findFirst({
+        where: eq(Reservation.id, input.id),
+        with: {
+          Facility: true,
+          ReservationDate: true,
+          ReservationFees: true,
+          Category: true,
+          User: {
+            columns: {
+              password: false,
+            },
+          },
+        },
+      });
     }),
   approvedDates: protectedProcedure
     .input(z.object({ reservationId: z.number() }))
-    .query(({ input }) => {
-      return GetApprovedDates.execute({ reservationId: input.reservationId });
+    .query(({ ctx, input }) => {
+      return ctx.db.query.ReservationDate.findMany({
+        where: and(
+          eq(ReservationDate.approved, "approved"),
+          eq(ReservationDate.reservationId, input.reservationId),
+        ),
+        with: {
+          Reservation: {
+            with: {
+              Facility: true,
+            },
+          },
+        },
+      });
     }),
   dateById: protectedProcedure
     .input(z.object({ id: z.number() }))
-    .query(({ input }) => {
-      return GetDateByID.execute({ id: input.id });
+    .query(({ ctx, input }) => {
+      return ctx.db.query.ReservationDate.findFirst({
+        where: eq(ReservationDate.id, input.id),
+        with: {
+          Reservation: {
+            with: {
+              Facility: true,
+            },
+          },
+        },
+      });
     }),
   createReservation: protectedProcedure
     .input(CreateReservationSchema)

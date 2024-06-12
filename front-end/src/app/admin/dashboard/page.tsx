@@ -16,6 +16,7 @@ export default async function DashboardPage() {
   const { count, weeklyCount } = await getData();
   const totalCount = count[0]?.value!;
   const weekly = weeklyCount[0]?.count!;
+
   return (
     <>
       <div className="flex flex-col">
@@ -99,6 +100,7 @@ export default async function DashboardPage() {
 async function getData() {
   const totalCount = api.reservation.requestCount();
   const thisWeek = api.reservation.thisWeek();
+  // const thisWeek = Promise.resolve({ count: 1 }) as unknown as number;
   const [count, weeklyCount] = await Promise.all([totalCount, thisWeek]);
 
   return { count, weeklyCount };

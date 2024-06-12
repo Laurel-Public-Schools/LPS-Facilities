@@ -1,6 +1,7 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod";
 
+import { and, asc, count, eq, gte, like, lt, lte, or, sql } from "@local/db";
 import {
   BuildingnameQuery,
   BuildingQuery,
@@ -25,7 +26,13 @@ export const FacilityRouter = {
   byId: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(({ input, ctx }) => {
-      return FacilityQuery.execute({ id: input.id });
+      return ctx.db.query.Facility.findFirst({
+        where: eq(Facility.id, input.id),
+        with: {
+          Category: true,
+          Reservation: true,
+        },
+      });
     }),
   byBuilding: publicProcedure
     .input(z.object({ building: z.string() }))
@@ -35,7 +42,9 @@ export const FacilityRouter = {
   byBuildingName: publicProcedure
     .input(z.object({ building: z.string() }))
     .query(({ input, ctx }) => {
-      return BuildingnameQuery.execute({ building: input.building });
+      return ctx.db.query.Facility.findMany({
+        where: eq(Facility.building, input.building),
+      });
     }),
   new: protectedProcedure
     .input(CreateFacilitySchema)
@@ -86,4 +95,4 @@ export const FacilityRouter = {
         },
       ]);
     }),
-};
+} satisfies TRPCRouterRecord;

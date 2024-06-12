@@ -74,5 +74,6 @@
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
   "editor.insertSpaces": true,
-  "vim.useSystemClipboard": true
+  "vim.useSystemClipboard": true,
+  "vim.useCtrlKeys": false
 }

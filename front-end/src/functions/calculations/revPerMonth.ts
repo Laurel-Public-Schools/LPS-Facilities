@@ -113,6 +113,6 @@ export default async function MonthlyRevenue(): Promise<{
     const monthB = parse(b.month!, "MMMM", new Date());
     return compareAsc(monthA, monthB);
   });
-
+  console.log(sortedChartData);
   return { revChartData: sortedChartData, totalPositive, totalNegative };
 }
