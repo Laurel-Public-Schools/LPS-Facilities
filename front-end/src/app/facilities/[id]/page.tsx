@@ -21,17 +21,6 @@ import { env } from "@/env";
 import { GetEvents } from "@/functions/events/googleAPI";
 import { api } from "@/trpc/server";
 
-export async function generateStaticParams() {
-  const url = "https://facilities.laurel.k12.mt.us";
-  const facilities = await fetch(url + "/api/facilities").then((res) =>
-    res.json(),
-  );
-
-  return facilities.map((facility: FacilityType) => ({
-    id: facility.id.toString(),
-  }));
-}
-
 async function getData(id: string) {
   const facilityPromise = api.facility.byId({ id: parseInt(id) });
   const eventsPromise = GetEvents(parseInt(id));
