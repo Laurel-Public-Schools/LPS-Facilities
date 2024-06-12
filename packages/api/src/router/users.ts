@@ -1,4 +1,5 @@
 import type { TRPCRouterRecord } from "@trpc/server";
+import { format } from "date-fns";
 import { z } from "zod";
 
 import { and, eq, gte, or, sql } from "@local/db";
@@ -6,6 +7,7 @@ import { ReservationDate, User } from "@local/db/schema";
 
 import { protectedProcedure, publicProcedure } from "../trpc";
 
+const today = new Date();
 export const UserRouter = {
   all: protectedProcedure.query(({ ctx }) => {
     return ctx.db.select().from(User);
@@ -37,7 +39,10 @@ export const UserRouter = {
           Reservation: {
             with: {
               ReservationDate: {
-                where: gte(ReservationDate.startDate, sql`now()`),
+                where: gte(
+                  ReservationDate.startDate,
+                  format(today, "yyyy-MM-dd"),
+                ),
               },
               Facility: true,
               ReservationFees: true,

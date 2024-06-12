@@ -32,6 +32,7 @@ const currentDate = moment().format("YYYY-MM-DD");
 
 async function getData(id: string) {
   const user = await api.user.ById({ id: id });
+  console.log(user);
   const reservation: Reservation[] = user?.Reservation || [];
   let mappedReservations: TableUser[] = [];
   if (reservation.length === 0) {
