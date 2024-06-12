@@ -379,7 +379,7 @@ importers:
         specifier: ^7.4.2
         version: 7.4.2
       drizzle-kit:
-        specifier: ^0.22.1
+        specifier: ^0.22.7
         version: 0.22.7
       eslint-config-prettier:
         specifier: ^8.10.0
@@ -523,7 +523,7 @@ importers:
         specifier: ^7.4.2
         version: 7.4.2
       drizzle-kit:
-        specifier: ^0.22.1
+        specifier: ^0.22.7
         version: 0.22.7
       eslint:
         specifier: ^9.4.0
