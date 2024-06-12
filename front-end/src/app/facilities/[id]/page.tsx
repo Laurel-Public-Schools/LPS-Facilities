@@ -6,6 +6,8 @@ import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
 import moment from "moment";
 
+import type { FacilityType } from "@local/db/schema";
+
 import { Button } from "@/components/ui/buttons";
 import LoadingScreen from "@/components/ui/loadingScreen";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -15,12 +17,17 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { env } from "@/env";
 import { GetEvents } from "@/functions/events/googleAPI";
 import { api } from "@/trpc/server";
 
 export async function generateStaticParams() {
-  const facilities = await api.facility.allIds();
-  return facilities.map((facility) => ({
+  const url = "https://facilities.laurel.k12.mt.us";
+  const facilities = await fetch(url + "/api/facilities").then((res) =>
+    res.json(),
+  );
+
+  return facilities.map((facility: FacilityType) => ({
     id: facility.id.toString(),
   }));
 }
@@ -35,11 +42,6 @@ async function getData(id: string) {
   return { facility, events };
 }
 
-const cachedData = cache(
-  async (id: string) => getData(id),
-  ["facilities", "events"],
-);
-
 export default async function facilityPage({
   params,
 }: {
@@ -47,7 +49,7 @@ export default async function facilityPage({
     id: string;
   };
 }) {
-  const { facility, events } = await cachedData(params.id);
+  const { facility, events } = await getData(params.id);
   if (!facility) return notFound();
 
   const map = `https://www.google.com/maps/search/?api=1&query=${facility.address}`;
