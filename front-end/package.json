@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "pnpm with-env:dev next dev ",
-    "build": "pnpm with-env next build",
+    "build": "next build",
     "start": "pnpm with-env next start",
     "lint": "eslint",
     "with-env:dev": "dotenv -e ../.env.local --",
