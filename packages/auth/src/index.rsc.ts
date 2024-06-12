@@ -10,6 +10,7 @@ import { pgTable, PgTableFn } from "@local/db";
 import { db } from "@local/db/client";
 import { accounts, Session, User, VerificationToken } from "@local/db/schema";
 
+import { mySqlDrizzleAdapter } from "./adapter";
 import authConfig from "./auth.config";
 
 export type { Session } from "next-auth";
@@ -92,7 +93,8 @@ const {
   signIn,
   signOut,
 } = NextAuth({
-  adapter: DrizzleAdapter(db),
+  // @ts-ignore - this is a hack to make the adapter less picky about column names
+  adapter: mySqlDrizzleAdapter(db),
 
   ...authConfig,
 });

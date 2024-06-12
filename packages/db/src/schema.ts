@@ -131,7 +131,7 @@ export const ReservationFeesRelations = relations(
 );
 
 export const Session = facilities_db.table(
-  "Session",
+  "session",
   {
     id: varchar("id", { length: 191 }).primaryKey().notNull(),
     sessionToken: varchar("sessionToken", { length: 191 }).notNull(),
@@ -292,7 +292,7 @@ export const CreateInsuranceFilesSchema = createInsertSchema(InsuranceFiles, {
 });
 
 export const accounts = facilities_db.table(
-  "Account",
+  "account",
   {
     id: varchar("id", { length: 191 }).primaryKey().notNull(),
     userId: varchar("userId", { length: 191 })
@@ -572,7 +572,7 @@ export const facilityRelations = relations(Facility, ({ one, many }) => ({
 }));
 
 export const User = facilities_db.table(
-  "User",
+  "user",
   {
     id: varchar("id", { length: 191 })
       .primaryKey()

@@ -97,14 +97,14 @@ export default {
       clientId: process.env.AZURE_AD_CLIENT_ID,
       clientSecret: process.env.AZURE_AD_CLIENT_SECRET,
       tenantId: process.env.AZURE_TENANT_ID,
-      profile(profile: any) {
-        return {
-          id: profile.oid,
-          name: profile.name,
-          email: profile.email,
-          role: profile.roles[0] || "USER",
-        };
-      },
+      // profile(profile: any) {
+      //   return {
+      //     id: profile.oid,
+      //     name: profile.name,
+      //     email: profile.email,
+      //     role: profile.roles[0] || "USER",
+      //   };
+      // },
       allowDangerousEmailAccountLinking: true,
     }),
   ],
@@ -120,8 +120,6 @@ export default {
   },
   callbacks: {
     async redirect({ url, baseUrl }) {
-      console.log("baseurl: ", baseUrl);
-      console.log("url", url);
       if (url.startsWith("/")) return `${baseUrl}${url}`;
       else if (new URL(url).origin === baseUrl) return url;
       return baseUrl;
