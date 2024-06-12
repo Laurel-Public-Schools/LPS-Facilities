@@ -5,34 +5,58 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import NextAuth from "next-auth";
 import { decode, getToken } from "next-auth/jwt";
 
-import {   pgTable, PgTableFn, } from "@local/db";
 import type { UserType } from "@local/db/schema";
-import {User, accounts, Session, VerificationToken} from "@local/db/schema";
-import {db} from "@local/db/client"
-
-
+import { pgTable, PgTableFn } from "@local/db";
+import { db } from "@local/db/client";
+import { accounts, Session, User, VerificationToken } from "@local/db/schema";
 
 import authConfig from "./auth.config";
 
 export type { Session } from "next-auth";
 
-
 declare module "next-auth" {
   interface Session {
     User: {
       id: string;
-      roles: "SUP_ADMIN" | "WE_ADMIN" | "SO_ADMIN" | "LHS_ADMIN" | "LMS_ADMIN" |"GR_ADMIN" | "USER" | "CAL_ADMIN" | "ADMIN_ADMIN"
+      roles:
+        | "SUP_ADMIN"
+        | "WE_ADMIN"
+        | "SO_ADMIN"
+        | "LHS_ADMIN"
+        | "LMS_ADMIN"
+        | "GR_ADMIN"
+        | "USER"
+        | "CAL_ADMIN"
+        | "ADMIN_ADMIN";
     } & DefaultSession["user"];
   }
   interface JWT {
     id: string;
-    roles: "SUP_ADMIN" | "WE_ADMIN" | "SO_ADMIN" | "LHS_ADMIN" | "LMS_ADMIN" |"GR_ADMIN" | "USER" | "CAL_ADMIN" | "ADMIN_ADMIN"
+    roles:
+      | "SUP_ADMIN"
+      | "WE_ADMIN"
+      | "SO_ADMIN"
+      | "LHS_ADMIN"
+      | "LMS_ADMIN"
+      | "GR_ADMIN"
+      | "USER"
+      | "CAL_ADMIN"
+      | "ADMIN_ADMIN";
   }
 }
 
 declare module "@auth/core/adapters" {
   export interface AdapterUser extends UserType {
-    roles: "SUP_ADMIN" | "WE_ADMIN" | "SO_ADMIN" | "LHS_ADMIN" | "LMS_ADMIN" |"GR_ADMIN" | "USER" | "CAL_ADMIN" | "ADMIN_ADMIN"
+    roles:
+      | "SUP_ADMIN"
+      | "WE_ADMIN"
+      | "SO_ADMIN"
+      | "LHS_ADMIN"
+      | "LMS_ADMIN"
+      | "GR_ADMIN"
+      | "USER"
+      | "CAL_ADMIN"
+      | "ADMIN_ADMIN";
   }
 }
 
@@ -62,14 +86,12 @@ export const adapter = DrizzleAdapter(
   dumbAdapter as PgTableFn<undefined>,
 ) as Adapter;
 
-
 const {
   handlers: { GET, POST },
   auth: defaultAuth,
   signIn,
   signOut,
 } = NextAuth({
-
   adapter: adapter,
 
   ...authConfig,

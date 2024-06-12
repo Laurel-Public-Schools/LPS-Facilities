@@ -9,17 +9,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { env } from "@/env";
 import { api } from "@/trpc/server";
 
-export async function generateStaticParams() {
-  const url = "https://facilities.laurel.k12.mt.us";
-  const facilities: FacilityType[] = await fetch(url + "/api/facilities").then(
-    (res) => res.json(),
-  );
-
-  return facilities.map((facility) => ({
-    id: facility.id.toString(),
-  }));
-}
-
 export default async function facilityEditForm({
   params,
 }: {

@@ -71,7 +71,7 @@ export const {
   adapter: adapter,
 
   ...authConfig,
-  debug: true,
+ 
 });
 
 export { decode, getToken, authConfig };
