@@ -49,7 +49,6 @@ export const env = createEnv({
     NEXT_PUBLIC_HOST: z.string(),
     NEXT_PUBLIC_EMAIL_API: z.string(),
     NEXT_PUBLIC_GA_TRACKING_ID: z.string(),
-    NEXT_PUBLIC_GOOGLE_ANALYTICS: z.string(),
   },
   shared: {
     NODE_ENV: z
@@ -63,7 +62,6 @@ export const env = createEnv({
     NEXT_PUBLIC_HOST: process.env.NEXT_PUBLIC_HOST,
     NEXT_PUBLIC_EMAIL_API: process.env.NEXT_PUBLIC_EMAIL_API,
     NEXT_PUBLIC_GA_TRACKING_ID: process.env.NEXT_PUBLIC_GA_TRACKING_ID,
-    NEXT_PUBLIC_GOOGLE_ANALYTICS: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
   },
   skipValidation:
     !!process.env.CI ||
