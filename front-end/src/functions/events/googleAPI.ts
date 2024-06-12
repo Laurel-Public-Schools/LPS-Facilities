@@ -5,6 +5,7 @@ import { OAuth2Client } from "google-auth-library";
 import { google } from "googleapis";
 
 import { env } from "@/env";
+import { getClient } from "@/lib/oauth";
 import { api } from "@/trpc/server";
 
 export async function GetEvents(id: number) {
@@ -12,14 +13,7 @@ export async function GetEvents(id: number) {
 
   const calID = res?.googleCalendarId;
 
-  const oauth2Client = new OAuth2Client({
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    redirectUri: process.env.GOOGLE_REDIRECT_URI,
-  });
-  oauth2Client.setCredentials({
-    refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
-  });
+  const oauth2Client = getClient();
   const calendar = google.calendar({ version: "v3", auth: oauth2Client });
   try {
     const twoMonthsAgo = new Date();
@@ -55,14 +49,7 @@ export async function GetEvents(id: number) {
 }
 
 export async function GetAllEvents() {
-  const oauth2Client = new OAuth2Client({
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    redirectUri: process.env.GOOGLE_REDIRECT_URI,
-  });
-  oauth2Client.setCredentials({
-    refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
-  });
+  const oauth2Client = getClient();
   const calendar = google.calendar({ version: "v3", auth: oauth2Client });
   try {
     const twoMonthsAgo = new Date();
