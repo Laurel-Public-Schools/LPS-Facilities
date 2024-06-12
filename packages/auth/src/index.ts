@@ -68,10 +68,10 @@ export const {
   signOut,
 } = NextAuth({
   
-  adapter: adapter,
+  adapter: DrizzleAdapter(db) ,
 
   ...authConfig,
- 
+,
 });
 
 export { decode, getToken, authConfig };

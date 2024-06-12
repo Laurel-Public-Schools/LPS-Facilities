@@ -92,7 +92,7 @@ const {
   signIn,
   signOut,
 } = NextAuth({
-  adapter: adapter,
+  adapter: DrizzleAdapter(db),
 
   ...authConfig,
 });
