@@ -24,7 +24,7 @@ export default function LoginForm() {
         action={async () => {
           "use server";
           await signIn("azure-ad", {
-            redirect: true,
+            redirectTo: "/",
           });
         }}
       >
