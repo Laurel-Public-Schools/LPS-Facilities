@@ -4,8 +4,9 @@ import { revalidateTag } from "next/cache";
 import { eq } from "drizzle-orm";
 
 import { db } from "@local/db/client";
-import { CategoryByFacility } from "@local/db/queries";
 import { Reservation } from "@local/db/schema";
+
+import { api } from "@/trpc/server";
 
 export async function costChange(id: number, formData: FormData) {
   let value;
@@ -46,7 +47,7 @@ export async function facilityChange(id: number, data: any) {
 }
 
 export async function categoryChange(id: number, facilityID: any, data: any) {
-  const categories = await CategoryByFacility.execute({
+  const categories = await api.category.byFacility({
     facilityId: Number(facilityID),
     name: `%${data}%`,
   });

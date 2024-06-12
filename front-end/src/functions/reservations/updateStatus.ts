@@ -4,9 +4,9 @@ import { revalidateTag } from "next/cache";
 import { eq } from "drizzle-orm";
 
 import { db } from "@local/db/client";
-import { GetReservationbyID } from "@local/db/queries";
 import { Reservation, ReservationDate } from "@local/db/schema";
 
+import { api } from "@/trpc/server";
 import { CreateGoogleEvent } from "../google/singleDate";
 
 interface props {
@@ -22,7 +22,7 @@ export default async function UpdateStatus({
 }: props) {
   try {
     if (reservationID) {
-      const reservation = await GetReservationbyID.execute({
+      const reservation = await api.reservation.byId({
         id: reservationID,
       });
 

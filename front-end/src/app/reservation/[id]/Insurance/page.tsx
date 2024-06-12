@@ -8,9 +8,9 @@ import { api } from "@/trpc/server";
 export default async function insurancePage({
   params,
 }: {
-  params: { id: number };
+  params: { id: string };
 }) {
-  const reservation = await api.reservation.byId({ id: params.id });
+  const reservation = await api.reservation.byId({ id: parseInt(params.id) });
   if (!reservation) return notFound();
   let link = undefined;
   if (reservation.insuranceLink) {

@@ -10,12 +10,12 @@ import { IsAdmin } from "@/functions/other/helpers";
 
 export const revalidate = 60;
 
-export default function authLayout({
+export default async function authLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const admin = IsAdmin();
+  const admin = await IsAdmin();
   if (!admin) return notFound();
   return (
     <div className="container relative">

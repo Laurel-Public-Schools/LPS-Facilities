@@ -6,15 +6,22 @@ import { notFound } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/trpc/server";
 
+export async function generateStaticParams() {
+  const facilities = await api.facility.allIds();
+  return facilities.map((facility) => ({
+    id: facility.id.toString(),
+  }));
+}
+
 export default async function facilityEditForm({
   params,
 }: {
   params: {
-    id: number;
+    id: string;
   };
 }) {
   const Forms = dynamic(() => import("./forms"));
-  const data = await api.facility.byId({ id: params.id });
+  const data = await api.facility.byId({ id: parseInt(params.id) });
   if (!data) return notFound();
   const { name, address, building, capacity, imagePath } = data;
 
@@ -26,7 +33,7 @@ export default async function facilityEditForm({
     };
   });
 
-  const id = Number(params.id);
+  const id = parseInt(params.id);
 
   return (
     <div className="gap-y-4 space-y-7">

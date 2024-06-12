@@ -37,7 +37,9 @@ export const FacilityRouter = {
   byBuilding: publicProcedure
     .input(z.object({ building: z.string() }))
     .query(({ input, ctx }) => {
-      return BuildingQuery.execute({ building: input.building });
+      return ctx.db.query.Facility.findMany({
+        where: eq(Facility.building, input.building),
+      });
     }),
   byBuildingName: publicProcedure
     .input(z.object({ building: z.string() }))

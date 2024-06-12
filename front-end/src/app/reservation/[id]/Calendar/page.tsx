@@ -5,8 +5,8 @@ import SmallCalendar from "@/components/calendar/smallCalendar";
 import { GetEvents } from "@/functions/events/googleAPI";
 import { api } from "@/trpc/server";
 
-export default async function calPage({ params }: { params: { id: number } }) {
-  const reservation = await api.reservation.byId({ id: params.id });
+export default async function calPage({ params }: { params: { id: string } }) {
+  const reservation = await api.reservation.byId({ id: parseInt(params.id) });
   if (!reservation) return notFound();
   const facilityId = reservation.Facility.id;
   return (

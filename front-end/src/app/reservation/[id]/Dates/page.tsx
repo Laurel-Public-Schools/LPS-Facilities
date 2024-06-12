@@ -12,11 +12,11 @@ import { columns } from "./columns";
 export default async function reservationDatesPage({
   params,
 }: {
-  params: { id: number };
+  params: { id: string };
 }) {
   const isAdmin = await IsAdmin();
   const AddDates = dynamic(() => import("@/components/ui/alerts/addDates"));
-  const reservation = await api.reservation.byId({ id: params.id });
+  const reservation = await api.reservation.byId({ id: parseInt(params.id) });
   if (!reservation) return notFound();
   const mappedDates = reservation.ReservationDate;
   return (
@@ -30,7 +30,7 @@ export default async function reservationDatesPage({
           <>
             <DataTable columns={adminColumns} data={mappedDates} />
             <div className="float-right">
-              <AddDates id={params.id} />
+              <AddDates id={parseInt(params.id)} />
             </div>
           </>
         ) : (

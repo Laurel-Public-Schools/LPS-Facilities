@@ -17,9 +17,9 @@ import Options from "./options";
 export default async function paymentPage({
   params,
 }: {
-  params: { id: number };
+  params: { id: string };
 }) {
-  const id = params.id;
+  const id = parseInt(params.id);
 
   const reservation = await api.reservation.byId({ id: id });
   if (!reservation) return notFound();

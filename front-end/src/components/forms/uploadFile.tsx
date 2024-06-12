@@ -6,7 +6,7 @@ import { Loader2 } from "lucide-react";
 
 import { Button } from "../ui/buttons";
 
-export function UploadFile({ params }: { params: { id: number } }) {
+export function UploadFile({ params }: { params: { id: string } }) {
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const [loading, setLoading] = useState(false);

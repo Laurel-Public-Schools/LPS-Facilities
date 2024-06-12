@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { unstable_cache as cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -14,16 +15,39 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { GetEvents } from "@/functions/events/googleAPI";
 import { api } from "@/trpc/server";
+
+export async function generateStaticParams() {
+  const facilities = await api.facility.allIds();
+  return facilities.map((facility) => ({
+    id: facility.id.toString(),
+  }));
+}
+
+async function getData(id: string) {
+  const facilityPromise = api.facility.byId({ id: parseInt(id) });
+  const eventsPromise = GetEvents(parseInt(id));
+  const [facility, events] = await Promise.all([
+    facilityPromise,
+    eventsPromise,
+  ]);
+  return { facility, events };
+}
+
+const cachedData = cache(
+  async (id: string) => getData(id),
+  ["facilities", "events"],
+);
 
 export default async function facilityPage({
   params,
 }: {
   params: {
-    id: number;
+    id: string;
   };
 }) {
-  const facility = await api.facility.byId({ id: params.id });
+  const { facility, events } = await cachedData(params.id);
   if (!facility) return notFound();
 
   const map = `https://www.google.com/maps/search/?api=1&query=${facility.address}`;
@@ -129,15 +153,15 @@ export default async function facilityPage({
           <Suspense fallback={<LoadingScreen />}>
             <ScrollArea className="h-[400px] w-[340px] rounded-md border p-4 sm:h-[400px] sm:w-[480px]">
               <h1 className="border-b-2 text-2xl font-bold">Upcoming Events</h1>
-              {facility.Events &&
-                [...facility.Events]
+              {events &&
+                [...events]
                   .sort(
                     (a, b) =>
                       new Date(a.start!).getTime() -
                       new Date(b.start!).getTime(),
                   )
                   .map((event) => (
-                    <div key={event.id}>
+                    <div key={event.title!}>
                       <div className="grid grid-cols-2 border-b p-4">
                         <h3 className="col-start-1">{event.title}</h3>
                         <p className="bg-transparent text-sm">

@@ -4,13 +4,11 @@ import type { GoogleEvents } from "@/lib/types";
 import { OAuth2Client } from "google-auth-library";
 import { google } from "googleapis";
 
-import { FacilityQuery, GetApprovedDates } from "@local/db/queries";
-
 import { env } from "@/env";
 import { api } from "@/trpc/server";
 
-export async function GetEvents(id: number | string) {
-  const res = await FacilityQuery.execute({ id: id });
+export async function GetEvents(id: number) {
+  const res = await api.facility.byId({ id: id });
 
   const calID = res?.googleCalendarId;
 
