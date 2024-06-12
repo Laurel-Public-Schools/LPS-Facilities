@@ -13,12 +13,12 @@ export async function GetEvents(id: number) {
   const calID = res?.googleCalendarId;
 
   const oauth2Client = new OAuth2Client({
-    clientId: env.GOOGLE_CLIENT_ID,
-    clientSecret: env.GOOGLE_CLIENT_SECRET,
-    redirectUri: env.GOOGLE_REDIRECT_URI,
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    redirectUri: process.env.GOOGLE_REDIRECT_URI,
   });
   oauth2Client.setCredentials({
-    refresh_token: env.GOOGLE_REFRESH_TOKEN,
+    refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
   });
   const calendar = google.calendar({ version: "v3", auth: oauth2Client });
   try {
@@ -56,12 +56,12 @@ export async function GetEvents(id: number) {
 
 export async function GetAllEvents() {
   const oauth2Client = new OAuth2Client({
-    clientId: env.GOOGLE_CLIENT_ID,
-    clientSecret: env.GOOGLE_CLIENT_SECRET,
-    redirectUri: env.GOOGLE_REDIRECT_URI,
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    redirectUri: process.env.GOOGLE_REDIRECT_URI,
   });
   oauth2Client.setCredentials({
-    refresh_token: env.GOOGLE_REFRESH_TOKEN,
+    refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
   });
   const calendar = google.calendar({ version: "v3", auth: oauth2Client });
   try {
