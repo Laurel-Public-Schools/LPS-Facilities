@@ -133,7 +133,7 @@
     "@types/react-datepicker": "^4.19.6",
     "@types/react-dom": "18.2.4",
     "@types/react-modal": "^3.16.3",
-    "argon2": "^0.30.3",
+    "argon2": "^0.40.3",
     "dotenv-cli": "^7.4.2",
     "drizzle-kit": "^0.22.7",
     "eslint-config-prettier": "^8.10.0",
