@@ -130,7 +130,7 @@ importers:
         version: 1.0.12(next@15.0.0-canary.12(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(react-dom@19.0.0-rc-f994737d14-20240522(react@19.0.0-rc-f994737d14-20240522))(react@19.0.0-rc-f994737d14-20240522))(react@19.0.0-rc-f994737d14-20240522)
       autoprefixer:
         specifier: 10.4.19
-        version: 10.4.19(postcss@8.4.23)
+        version: 10.4.19(postcss@8.4.38)
       bcryptjs:
         specifier: ^2.4.3
         version: 2.4.3
@@ -198,8 +198,8 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1(next@15.0.0-canary.12(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(react-dom@19.0.0-rc-f994737d14-20240522(react@19.0.0-rc-f994737d14-20240522))(react@19.0.0-rc-f994737d14-20240522))(react-dom@19.0.0-rc-f994737d14-20240522(react@19.0.0-rc-f994737d14-20240522))(react@19.0.0-rc-f994737d14-20240522)
       postcss:
-        specifier: 8.4.23
-        version: 8.4.23
+        specifier: 8.4.38
+        version: 8.4.38
       react:
         specifier: 19.0.0-rc-f994737d14-20240522
         version: 19.0.0-rc-f994737d14-20240522
@@ -4990,10 +4990,6 @@ packages:
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
 
-  postcss@8.4.23:
-    resolution: {integrity: sha512-bQ3qMcpF6A/YjR55xtoTr0jGOlnPOKAIMdOWiv0EIT6HVPEaJiJB4NLljSbiHoC2RX7DN5Uvjtpbg1NPdwv1oA==}
-    engines: {node: ^10 || ^12 || >=14}
-
   postcss@8.4.31:
     resolution: {integrity: sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==}
     engines: {node: ^10 || ^12 || >=14}
@@ -8367,14 +8363,14 @@ snapshots:
 
   asynckit@0.4.0: {}
 
-  autoprefixer@10.4.19(postcss@8.4.23):
+  autoprefixer@10.4.19(postcss@8.4.38):
     dependencies:
       browserslist: 4.23.1
       caniuse-lite: 1.0.30001632
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.1
-      postcss: 8.4.23
+      postcss: 8.4.38
       postcss-value-parser: 4.2.0
 
   available-typed-arrays@1.0.7:
@@ -11003,29 +10999,29 @@ snapshots:
 
   possible-typed-array-names@1.0.0: {}
 
-  postcss-import@15.1.0(postcss@8.4.23):
+  postcss-import@15.1.0(postcss@8.4.38):
     dependencies:
-      postcss: 8.4.23
+      postcss: 8.4.38
       postcss-value-parser: 4.2.0
       read-cache: 1.0.0
       resolve: 1.22.8
 
-  postcss-js@4.0.1(postcss@8.4.23):
+  postcss-js@4.0.1(postcss@8.4.38):
     dependencies:
       camelcase-css: 2.0.1
-      postcss: 8.4.23
+      postcss: 8.4.38
 
-  postcss-load-config@4.0.2(postcss@8.4.23)(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)):
+  postcss-load-config@4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)):
     dependencies:
       lilconfig: 3.1.2
       yaml: 2.4.5
     optionalDependencies:
-      postcss: 8.4.23
+      postcss: 8.4.38
       ts-node: 10.9.2(@types/node@20.14.2)(typescript@5.4.5)
 
-  postcss-nested@6.0.1(postcss@8.4.23):
+  postcss-nested@6.0.1(postcss@8.4.38):
     dependencies:
-      postcss: 8.4.23
+      postcss: 8.4.38
       postcss-selector-parser: 6.1.0
 
   postcss-selector-parser@6.0.10:
@@ -11039,12 +11035,6 @@ snapshots:
       util-deprecate: 1.0.2
 
   postcss-value-parser@4.2.0: {}
-
-  postcss@8.4.23:
-    dependencies:
-      nanoid: 3.3.7
-      picocolors: 1.0.1
-      source-map-js: 1.2.0
 
   postcss@8.4.31:
     dependencies:
@@ -11751,11 +11741,11 @@ snapshots:
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.0.1
-      postcss: 8.4.23
-      postcss-import: 15.1.0(postcss@8.4.23)
-      postcss-js: 4.0.1(postcss@8.4.23)
-      postcss-load-config: 4.0.2(postcss@8.4.23)(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))
-      postcss-nested: 6.0.1(postcss@8.4.23)
+      postcss: 8.4.38
+      postcss-import: 15.1.0(postcss@8.4.38)
+      postcss-js: 4.0.1(postcss@8.4.38)
+      postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))
+      postcss-nested: 6.0.1(postcss@8.4.38)
       postcss-selector-parser: 6.1.0
       postcss-value-parser: 4.2.0
       resolve: 1.22.8

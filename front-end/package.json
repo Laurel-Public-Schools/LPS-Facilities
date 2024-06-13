@@ -73,7 +73,7 @@
     "next": "15.0.0-canary.12",
     "next-auth": "beta",
     "next-themes": "^0.2.1",
-    "postcss": "8.4.23",
+    "postcss": "8.4.38",
     "react": "19.0.0-rc-f994737d14-20240522",
     "react-big-calendar": "^1.12.2",
     "react-calendar": "^4.8.0",
