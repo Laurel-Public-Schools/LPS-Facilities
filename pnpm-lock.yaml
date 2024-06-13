@@ -231,8 +231,8 @@ importers:
         specifier: ^1.4.41
         version: 1.5.0(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
       square:
-        specifier: ^28.0.1
-        version: 28.0.1
+        specifier: ^37.1.0
+        version: 37.1.0
       styled-components:
         specifier: ^6.1.11
         version: 6.1.11(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
@@ -605,8 +605,8 @@ packages:
     resolution: {integrity: sha512-Ld2cHQuwdAMzE0jNzOsUin9kU6QFyXMZcPw4ZoCPi29Vp4I1qWtSbs602p1P4cSv8Yxf47JinaiT6OSMgCrO5g==}
     engines: {node: '>=14.15.0 || >=16.0.0'}
 
-  '@apimatic/axios-client-adapter@0.2.2':
-    resolution: {integrity: sha512-cbMd/CiIUmbtYpHjQgptptkeeWWko8MtuOI5rJfqxL/ElYI0ABSytdO5fuT4Q+hXQHQrkPRgL2z9yUMRoFEARg==}
+  '@apimatic/axios-client-adapter@0.3.1':
+    resolution: {integrity: sha512-DFm9G2dmprYg36PvXYFB3gvKP8OyGY9Y5MJIIO74zbFYOgjRtPOeid3JkGi7QPRjlcDUcc+WhUefb68cL5mqzw==}
     engines: {node: '>=14.15.0 || >=16.0.0'}
 
   '@apimatic/convert-to-stream@0.0.2':
@@ -2811,8 +2811,8 @@ packages:
     resolution: {integrity: sha512-M0JtH+hlOL5pLQwHOLNYZaXuhqmvS8oExsqB1SBYgA4Dk7u/xx+YdGHXaK5pyUfed5mYXdlYiphWq3G8cRi5JQ==}
     engines: {node: '>=4'}
 
-  axios@0.21.4:
-    resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
+  axios@1.7.2:
+    resolution: {integrity: sha512-2A8QhOMrbomlDuiLeK9XibIBzuHeRcqqNOHp0Cyp5EoJ1IFDh+XZH3A6BkXtv0K4gFGCI0Y4BM7B1wOEi0Rmgw==}
 
   axobject-query@3.2.1:
     resolution: {integrity: sha512-jsyHu61e6N4Vbz/v18DHwWYKK0bSWLqn47eeDSKPB7m8tqMHF9YJ+mhIk2lVteyZrY8tnSj/jHOv4YiTCuCJgg==}
@@ -3728,6 +3728,10 @@ packages:
 
   form-data@3.0.1:
     resolution: {integrity: sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==}
+    engines: {node: '>= 6'}
+
+  form-data@4.0.0:
+    resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
     engines: {node: '>= 6'}
 
   fraction.js@4.3.7:
@@ -5465,8 +5469,8 @@ packages:
   sprintf-js@1.1.3:
     resolution: {integrity: sha512-Oo+0REFV59/rz3gfJNKQiBlwfHaSESl1pcGyABQsnnIfWOFt6JNj5gCog2U6MLZ//IGYD+nA8nI+mTShREReaA==}
 
-  square@28.0.1:
-    resolution: {integrity: sha512-xMOgk9obO7QEfPNeoyIrQZ4ffFOK+rpwWOceafdN+xATZrlebhFk7Y3yIsJuF1F6tvBTFzqzjOHgfv0Ihi1aBQ==}
+  square@37.1.0:
+    resolution: {integrity: sha512-+Ng/L2whqKm/JlJwLHDVZyh5L+JaGBlP9cpI6cOUDwkaSdLOhfP49MKmWSZEnV7f28gaGn0qu3AXFfiSZMjeow==}
     engines: {node: '>=14.17.0'}
 
   stack-utils@2.0.6:
@@ -6011,7 +6015,7 @@ snapshots:
       '@apimatic/http-query': 0.3.2
       tslib: 2.6.3
 
-  '@apimatic/axios-client-adapter@0.2.2':
+  '@apimatic/axios-client-adapter@0.3.1':
     dependencies:
       '@apimatic/convert-to-stream': 0.1.2
       '@apimatic/core-interfaces': 0.2.5
@@ -6020,7 +6024,7 @@ snapshots:
       '@apimatic/http-query': 0.3.2
       '@apimatic/json-bigint': 1.2.0
       '@apimatic/schema': 0.7.9
-      axios: 0.21.4
+      axios: 1.7.2
       detect-browser: 5.3.0
       detect-node: 2.1.0
       form-data: 3.0.1
@@ -8340,9 +8344,11 @@ snapshots:
 
   axe-core@4.7.0: {}
 
-  axios@0.21.4:
+  axios@1.7.2:
     dependencies:
       follow-redirects: 1.15.6
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
 
@@ -9491,6 +9497,12 @@ snapshots:
       signal-exit: 4.1.0
 
   form-data@3.0.1:
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.35
+
+  form-data@4.0.0:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
@@ -11496,10 +11508,10 @@ snapshots:
 
   sprintf-js@1.1.3: {}
 
-  square@28.0.1:
+  square@37.1.0:
     dependencies:
       '@apimatic/authentication-adapters': 0.5.3
-      '@apimatic/axios-client-adapter': 0.2.2
+      '@apimatic/axios-client-adapter': 0.3.1
       '@apimatic/core': 0.10.8
       '@apimatic/json-bigint': 1.2.0
       '@apimatic/schema': 0.7.9
