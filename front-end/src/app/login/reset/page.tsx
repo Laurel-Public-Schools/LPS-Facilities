@@ -4,7 +4,7 @@ import ResetPassword from "./form";
 
 export default function ResetPasswordPage() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-12 sm:px-6 lg:px-8">
+    <div className="max-h-100[dvh] fixed inset-0 m-auto flex h-[5rem] w-[12rem] max-w-[100vw] items-center justify-center">
       <ResetPassword />
     </div>
   );

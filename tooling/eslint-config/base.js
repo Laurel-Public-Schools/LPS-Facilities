@@ -2,6 +2,7 @@
 
 import eslint from "@eslint/js";
 import importPlugin from "eslint-plugin-import";
+import reactCompiler from "eslint-plugin-react-compiler";
 import tseslint from "typescript-eslint";
 
 export const restrictEnvAccess = tseslint.config({
@@ -36,6 +37,7 @@ export default tseslint.config(
     files: ["**/*.js", "**/*.ts", "**/*.tsx"],
     plugins: {
       import: importPlugin,
+      "react-compiler": reactCompiler,
     },
     extends: [
       eslint.configs.recommended,
@@ -48,7 +50,7 @@ export default tseslint.config(
       "@typescript-eslint/no-floating-promises": "warn",
       "@typescript-eslint/ban-ts-comment": "warn",
       "@typescript-eslint/no-unsafe-return": "warn",
-
+      "react-compiler/react-compiler": "error",
       "@typescript-eslint/no-non-null-asserted-optional-chain": "warn",
       "@typescript-eslint/no-unsafe-argument": "warn",
       "@typescript-eslint/no-unsafe-assignment": "warn",

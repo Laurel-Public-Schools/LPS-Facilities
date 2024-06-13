@@ -1,6 +1,4 @@
 import type { Config } from "tailwindcss";
-import forms from "@tailwindcss/forms";
-import typography from "@tailwindcss/typography";
 import scrollbar from "tailwind-scrollbar";
 import animate from "tailwindcss-animate";
 import { fontFamily } from "tailwindcss/defaultTheme";
@@ -12,7 +10,7 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  plugins: [forms, scrollbar, animate, typography],
+  plugins: [scrollbar, animate],
   theme: {
     container: {
       center: true,
