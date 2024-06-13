@@ -388,7 +388,7 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@20.14.2)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))
       jiti:
-        specifier: ^1.21.3
+        specifier: ^1.21.6
         version: 1.21.6
       typescript:
         specifier: ^5.4.5
