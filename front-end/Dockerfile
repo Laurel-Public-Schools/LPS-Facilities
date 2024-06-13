@@ -1,6 +1,6 @@
 #base image
 
-FROM node:18-alpine AS base
+FROM node:20.14.0-alpine AS base
 
 
 # Install dependencies only when needed
