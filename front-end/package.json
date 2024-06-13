@@ -76,7 +76,7 @@
     "postcss": "8.4.38",
     "react": "19.0.0-rc-f3e09d6328-20240612",
     "react-big-calendar": "^1.12.2",
-    "react-calendar": "^4.8.0",
+    "react-calendar": "^5.0.0",
     "react-dom": "19.0.0-rc-f3e09d6328-20240612",
     "react-hook-form": "^7.51.5",
     "react-modal": "^3.16.1",
