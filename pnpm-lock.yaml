@@ -250,13 +250,13 @@ importers:
         version: 2.3.0
       tailwind-scrollbar:
         specifier: ^3.1.0
-        version: 3.1.0(tailwindcss@3.3.2(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))
+        version: 3.1.0(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))
       tailwindcss:
-        specifier: 3.3.2
-        version: 3.3.2(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))
+        specifier: 3.4.4
+        version: 3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.3.2(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))
+        version: 1.0.7(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))
       vaul:
         specifier: ^0.9.1
         version: 0.9.1(@types/react-dom@18.2.4)(@types/react@18.3.3)(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
@@ -278,10 +278,10 @@ importers:
         version: link:../tooling/tsconfig
       '@tailwindcss/forms':
         specifier: ^0.5.7
-        version: 0.5.7(tailwindcss@3.3.2(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))
+        version: 0.5.7(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))
       '@tailwindcss/typography':
         specifier: ^0.5.13
-        version: 0.5.13(tailwindcss@3.3.2(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))
+        version: 0.5.13(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))
       '@types/bcrypt':
         specifier: ^5.0.2
         version: 5.0.2
@@ -5612,8 +5612,8 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
 
-  tailwindcss@3.3.2:
-    resolution: {integrity: sha512-9jPkMiIBXvPc2KywkraqsUfbfj+dHDb+JPWtSJa9MLFdrPyazI7q6WX2sUrm7R9eVR7qqv3Pas7EvQFzxKnI6w==}
+  tailwindcss@3.4.4:
+    resolution: {integrity: sha512-ZoyXOdJjISB7/BcLTR6SEsLgKtDStYyYZVLsUtWChO4Ps20CBad7lfJKVDiejocV4ME1hLmyY0WJE3hSDcmQ2A==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -7747,18 +7747,18 @@ snapshots:
     optionalDependencies:
       typescript: 5.4.5
 
-  '@tailwindcss/forms@0.5.7(tailwindcss@3.3.2(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))':
+  '@tailwindcss/forms@0.5.7(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))':
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 3.3.2(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))
+      tailwindcss: 3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))
 
-  '@tailwindcss/typography@0.5.13(tailwindcss@3.3.2(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))':
+  '@tailwindcss/typography@0.5.13(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)))':
     dependencies:
       lodash.castarray: 4.4.0
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.3.2(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))
+      tailwindcss: 3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))
 
   '@tanstack/query-core@5.45.0': {}
 
@@ -11652,15 +11652,15 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.7
 
-  tailwind-scrollbar@3.1.0(tailwindcss@3.3.2(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))):
+  tailwind-scrollbar@3.1.0(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))):
     dependencies:
-      tailwindcss: 3.3.2(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))
+      tailwindcss: 3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))
 
-  tailwindcss-animate@1.0.7(tailwindcss@3.3.2(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))):
+  tailwindcss-animate@1.0.7(tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))):
     dependencies:
-      tailwindcss: 3.3.2(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))
+      tailwindcss: 3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))
 
-  tailwindcss@3.3.2(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)):
+  tailwindcss@3.4.4(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -11682,7 +11682,6 @@ snapshots:
       postcss-load-config: 4.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.14.2)(typescript@5.4.5))
       postcss-nested: 6.0.1(postcss@8.4.38)
       postcss-selector-parser: 6.1.0
-      postcss-value-parser: 4.2.0
       resolve: 1.22.8
       sucrase: 3.35.0
     transitivePeerDependencies:
