@@ -72,7 +72,7 @@
     "moment-timezone": "^0.5.45",
     "next": "15.0.0-rc.0",
     "next-auth": "beta",
-    "next-themes": "^0.2.1",
+    "next-themes": "^0.3.0",
     "postcss": "8.4.38",
     "react": "19.0.0-rc-f3e09d6328-20240612",
     "react-big-calendar": "^1.12.2",
