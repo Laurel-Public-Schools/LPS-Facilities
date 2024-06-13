@@ -6,8 +6,8 @@ on:
 
 env:
   FORCE_COLOR: 3
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+  VERCEL_TOKEN_ID: ${{ secrets.TURBO_TOKEN }}
+  VERCEL_ORG_ID: ${{ vars.TURBO_TEAM }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 jobs:
