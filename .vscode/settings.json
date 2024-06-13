@@ -63,7 +63,17 @@
   "[dotenv]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
-
+  "tailwindCSS.includeLanguages": {
+    "html": "html",
+    "typescriptreact": "typescriptreact",
+    "javascriptreact": "javascriptreact",
+    "typescript": "typescript",
+    "css": "css",
+    "javascript": "javascript"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
   "workbench.editor.customLabels.patterns": {
     "apps/**/src/**/page.tsx": "${dirname}/📄",
     "apps/**/src/**/layout.tsx": "${dirname}/${filename}",

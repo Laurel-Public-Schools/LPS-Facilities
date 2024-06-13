@@ -1,4 +1,5 @@
 import dns from "dns";
+import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import createJiti from "jiti";
 
@@ -17,9 +18,15 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ["bcryptjs", "googleapis"],
     ppr: true,
+    reactCompiler: true,
   },
-  transpilePackages: ["@local/auth", "@local/api"],
-  serverExternalPackages: ["@local/db"],
+  transpilePackages: [
+    "@local/auth",
+    "@local/api",
+    "@local/db",
+    "@local/validators",
+  ],
+  serverExternalPackages: [],
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
 };
 
