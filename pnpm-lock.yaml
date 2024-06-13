@@ -138,8 +138,8 @@ importers:
         specifier: ^0.6.1
         version: 0.6.1
       clsx:
-        specifier: ^1.2.1
-        version: 1.2.1
+        specifier: ^2.1.1
+        version: 2.1.1
       cmdk:
         specifier: ^0.2.1
         version: 0.2.1(@types/react@18.3.3)(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
