@@ -207,8 +207,8 @@ importers:
         specifier: ^1.12.2
         version: 1.13.0(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
       react-calendar:
-        specifier: ^4.8.0
-        version: 4.8.0(@types/react@18.3.3)(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
+        specifier: ^5.0.0
+        version: 5.0.0(@types/react@18.3.3)(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
       react-dom:
         specifier: 19.0.0-rc-f3e09d6328-20240612
         version: 19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612)
@@ -5123,12 +5123,12 @@ packages:
       react: ^16.14.0 || ^17 || ^18
       react-dom: ^16.14.0 || ^17 || ^18
 
-  react-calendar@4.8.0:
-    resolution: {integrity: sha512-qFgwo+p58sgv1QYMI1oGNaop90eJVKuHTZ3ZgBfrrpUb+9cAexxsKat0sAszgsizPMVo7vOXedV7Lqa0GQGMvA==}
+  react-calendar@5.0.0:
+    resolution: {integrity: sha512-bHcE5e5f+VUKLd4R19BGkcSQLpuwjKBVG0fKz74cwPW5xDfNsReHdDbfd4z3mdjuUuZzVtw4Q920mkwK5/ZOEg==}
     peerDependencies:
-      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -11100,12 +11100,11 @@ snapshots:
       react-overlays: 5.2.1(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
       uncontrollable: 7.2.1(react@19.0.0-rc-f3e09d6328-20240612)
 
-  react-calendar@4.8.0(@types/react@18.3.3)(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612):
+  react-calendar@5.0.0(@types/react@18.3.3)(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612):
     dependencies:
       '@wojtekmaj/date-utils': 1.5.1
       clsx: 2.1.1
       get-user-locale: 2.3.2
-      prop-types: 15.8.1
       react: 19.0.0-rc-f3e09d6328-20240612
       react-dom: 19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612)
       warning: 4.0.3
