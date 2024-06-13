@@ -509,10 +509,10 @@ importers:
         specifier: ^14.2.3
         version: 14.2.4
       '@typescript-eslint/eslint-plugin':
-        specifier: ^7.11.0
+        specifier: ^7.13.0
         version: 7.13.0(@typescript-eslint/parser@7.13.0(eslint@9.4.0)(typescript@5.4.5))(eslint@9.4.0)(typescript@5.4.5)
       '@typescript-eslint/parser':
-        specifier: ^7.11.0
+        specifier: ^7.13.0
         version: 7.13.0(eslint@9.4.0)(typescript@5.4.5)
       eslint-config-turbo:
         specifier: ^1.13.4
@@ -533,7 +533,7 @@ importers:
         specifier: ^4.6.2
         version: 4.6.2(eslint@9.4.0)
       typescript-eslint:
-        specifier: ^7.11.0
+        specifier: ^7.13.0
         version: 7.13.0(eslint@9.4.0)(typescript@5.4.5)
     devDependencies:
       '@local/prettier-config':
