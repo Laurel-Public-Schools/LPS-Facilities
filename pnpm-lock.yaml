@@ -18,7 +18,7 @@ importers:
         specifier: ^1.13.4
         version: 1.13.4(@types/node@20.14.2)(typescript@5.4.5)
       prettier:
-        specifier: ^3.3.0
+        specifier: ^3.3.2
         version: 3.3.2
       turbo:
         specifier: ^2.0.3
@@ -428,7 +428,7 @@ importers:
         specifier: ^9.4.0
         version: 9.4.0
       prettier:
-        specifier: ^3.3.0
+        specifier: ^3.3.2
         version: 3.3.2
       typescript:
         specifier: ^5.4.5
@@ -532,7 +532,7 @@ importers:
         specifier: ^8.12.0
         version: 8.12.0
       prettier:
-        specifier: ^3.3.0
+        specifier: ^3.3.2
         version: 3.3.2
       tsx:
         specifier: ^4.11.2
@@ -560,7 +560,7 @@ importers:
         specifier: ^9.4.0
         version: 9.4.0
       prettier:
-        specifier: ^3.3.0
+        specifier: ^3.3.2
         version: 3.3.2
       typescript:
         specifier: ^5.4.5
@@ -618,7 +618,7 @@ importers:
         specifier: ^0.0.93
         version: 0.0.93(@typescript-eslint/parser@7.13.0(eslint@9.4.0)(typescript@5.4.5))(bun-types@1.1.13)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.13.0(eslint@9.4.0)(typescript@5.4.5))(eslint@9.4.0))(eslint@9.4.0)
       prettier:
-        specifier: ^3.3.0
+        specifier: ^3.3.2
         version: 3.3.2
       typescript:
         specifier: ^5.4.5
@@ -632,7 +632,7 @@ importers:
         specifier: ^4.2.1
         version: 4.2.1(prettier@3.3.2)
       prettier:
-        specifier: ^3.3.0
+        specifier: ^3.3.2
         version: 3.3.2
       prettier-plugin-tailwindcss:
         specifier: ^0.6.1
