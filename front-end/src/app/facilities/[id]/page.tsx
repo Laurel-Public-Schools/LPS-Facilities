@@ -152,7 +152,7 @@ export default async function facilityPage({
                       new Date(b.start!).getTime(),
                   )
                   .map((event) => (
-                    <div key={event.title!}>
+                    <div key={event.title}>
                       <div className="grid grid-cols-2 border-b p-4">
                         <h3 className="col-start-1">{event.title}</h3>
                         <p className="bg-transparent text-sm">
