@@ -129,7 +129,7 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       '@vercel/speed-insights':
-        specifier: ^1.0.11
+        specifier: ^1.0.12
         version: 1.0.12(next@15.0.0-canary.28(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@0.0.0-experimental-938cd9a-20240601)(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
       autoprefixer:
         specifier: 10.4.19
