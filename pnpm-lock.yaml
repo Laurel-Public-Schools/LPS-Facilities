@@ -105,7 +105,7 @@ importers:
         specifier: ^0.10.1
         version: 0.10.1(typescript@5.4.5)(zod@3.23.8)
       '@tanstack/react-query':
-        specifier: ^5.40.1
+        specifier: ^5.45.0
         version: 5.45.0(react@19.0.0-rc-f3e09d6328-20240612)
       '@tanstack/react-table':
         specifier: ^8.17.3
