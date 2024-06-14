@@ -199,7 +199,7 @@ importers:
         version: 15.0.0-canary.28(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@0.0.0-experimental-938cd9a-20240601)(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
       next-auth:
         specifier: beta
-        version: 5.0.0-beta.19(next@15.0.0-canary.28(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
+        version: 5.0.0-beta.19(next@15.0.0-canary.28(@babel/core@7.24.7)(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
       next-superjson-plugin:
         specifier: ^0.6.3
         version: 0.6.3(next@15.0.0-canary.28(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@0.0.0-experimental-938cd9a-20240601)(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612))(superjson@2.2.1)
@@ -405,7 +405,7 @@ importers:
         version: 15.0.0-canary.28(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@0.0.0-experimental-938cd9a-20240601)(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
       next-auth:
         specifier: beta
-        version: 5.0.0-beta.19(next@15.0.0-canary.28(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
+        version: 5.0.0-beta.19(next@15.0.0-canary.28(@babel/core@7.24.7)(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
       react:
         specifier: 19.0.0-rc-f3e09d6328-20240612
         version: 19.0.0-rc-f3e09d6328-20240612
@@ -481,7 +481,7 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2
       tsx:
-        specifier: ^4.11.2
+        specifier: ^4.15.4
         version: 4.15.4
       typescript:
         specifier: ^5.4.5
@@ -10619,7 +10619,7 @@ snapshots:
 
   netmask@2.0.2: {}
 
-  next-auth@5.0.0-beta.19(next@15.0.0-canary.28(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612):
+  next-auth@5.0.0-beta.19(next@15.0.0-canary.28(@babel/core@7.24.7)(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612):
     dependencies:
       '@auth/core': 0.32.0
       next: 15.0.0-canary.28(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@0.0.0-experimental-938cd9a-20240601)(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
