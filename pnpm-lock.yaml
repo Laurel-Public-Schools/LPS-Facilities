@@ -36,7 +36,7 @@ importers:
         specifier: ^2.0.1
         version: 2.0.1(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react-hook-form@7.51.5(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
       '@hookform/resolvers':
-        specifier: ^3.4.2
+        specifier: ^3.6.0
         version: 3.6.0(react-hook-form@7.51.5(react@19.0.0-rc-f3e09d6328-20240612))
       '@local/api':
         specifier: workspace:*
