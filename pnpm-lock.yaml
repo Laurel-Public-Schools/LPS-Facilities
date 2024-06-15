@@ -552,7 +552,7 @@ importers:
         specifier: ^8.56.10
         version: 8.56.10
       bun-types:
-        specifier: ^1.1.12
+        specifier: ^1.1.13
         version: 1.1.13
       eslint:
         specifier: ^9.4.0
@@ -597,7 +597,7 @@ importers:
   tooling/tsconfig:
     dependencies:
       bun-types:
-        specifier: ^1.1.12
+        specifier: ^1.1.13
         version: 1.1.13
 
 packages:
