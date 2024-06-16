@@ -213,7 +213,7 @@ importers:
         specifier: 19.0.0-rc-f3e09d6328-20240612
         version: 19.0.0-rc-f3e09d6328-20240612
       react-big-calendar:
-        specifier: ^1.12.2
+        specifier: ^1.13.0
         version: 1.13.0(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
       react-calendar:
         specifier: ^5.0.0
