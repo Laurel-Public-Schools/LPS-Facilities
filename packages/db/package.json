@@ -41,7 +41,7 @@
     "@auth/core": "^0.32.0",
     "@neondatabase/serverless": "^0.9.3",
     "@t3-oss/env-nextjs": "^0.10.1",
-    "drizzle-orm": "^0.31.0",
+    "drizzle-orm": "^0.31.2",
     "drizzle-zod": "^0.5.1",
     "postgres": "^3.4.4",
     "moment": "^2.30.1",
