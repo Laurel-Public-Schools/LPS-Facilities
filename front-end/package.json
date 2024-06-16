@@ -85,7 +85,7 @@
     "react-select": "^5.8.0",
     "react-square-web-payments-sdk": "^3.2.1",
     "recharts": "^2.12.7",
-    "sonner": "^1.4.41",
+    "sonner": "^1.5.0",
     "square": "^37.1.0",
     "styled-components": "^6.1.11",
     "superjson": "^2.2.1",

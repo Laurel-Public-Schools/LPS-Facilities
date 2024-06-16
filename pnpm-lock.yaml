@@ -237,7 +237,7 @@ importers:
         specifier: ^2.12.7
         version: 2.12.7(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
       sonner:
-        specifier: ^1.4.41
+        specifier: ^1.5.0
         version: 1.5.0(react-dom@19.0.0-rc-f3e09d6328-20240612(react@19.0.0-rc-f3e09d6328-20240612))(react@19.0.0-rc-f3e09d6328-20240612)
       square:
         specifier: ^37.1.0
