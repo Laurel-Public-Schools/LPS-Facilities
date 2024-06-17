@@ -21,7 +21,7 @@ import { env } from "@/env";
 import { GetEvents } from "@/functions/events/googleAPI";
 import { api } from "@/trpc/server";
 
-async function getData(id: string) {
+export async function getData(id: string) {
   const facilityPromise = api.facility.byId({ id: parseInt(id) });
   const eventsPromise = GetEvents(parseInt(id));
   const [facility, events] = await Promise.all([
@@ -31,7 +31,7 @@ async function getData(id: string) {
   return { facility, events };
 }
 
-export default async function facilityPage({
+export default async function FacilityPage({
   params,
 }: {
   params: {

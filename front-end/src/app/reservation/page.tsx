@@ -15,7 +15,7 @@ const Loading = () => {
   );
 };
 
-export default async function reservationPage() {
+export default async function ReservationPage() {
   const session = await auth();
 
   return (
