@@ -5,8 +5,6 @@ import { userSideBar } from "@local/validators/constants";
 import { Separator } from "@/components/ui/separator";
 import { SidebarNav } from "@/components/ui/sidebar-nav";
 
-export const dynamic = "force-dynamic";
-
 export default function accountLayout({
   children,
 }: {

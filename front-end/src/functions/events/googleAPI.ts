@@ -1,6 +1,7 @@
 "use server";
 
 import type { GoogleEvents } from "@/lib/types";
+import { cache } from "react";
 import { OAuth2Client } from "google-auth-library";
 import { google } from "googleapis";
 
@@ -8,7 +9,7 @@ import { env } from "@/env";
 import { getClient } from "@/lib/oauth";
 import { api } from "@/trpc/server";
 
-export async function GetEvents(id: number) {
+async function GEvents(id: number) {
   const res = await api.facility.byId({ id: id });
 
   const calID = res?.googleCalendarId;
@@ -48,7 +49,12 @@ export async function GetEvents(id: number) {
   }
 }
 
-export async function GetAllEvents() {
+const cacheEvents = cache(GEvents);
+export async function GetEvents(id: number) {
+  return cacheEvents(id);
+}
+
+async function AllEvents() {
   const oauth2Client = getClient();
   const calendar = google.calendar({ version: "v3", auth: oauth2Client });
   try {
@@ -83,4 +89,9 @@ export async function GetAllEvents() {
     console.log(error);
     throw new Error("Error getting events");
   }
+}
+
+const allCache = cache(AllEvents);
+export async function GetAllEvents() {
+  return allCache();
 }

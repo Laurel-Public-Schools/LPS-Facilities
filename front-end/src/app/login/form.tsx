@@ -5,14 +5,7 @@ import { AuthError } from "next-auth";
 import { signIn } from "@local/auth";
 
 import { Button } from "@/components/ui/buttons";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
 async function Login(formData: FormData) {
@@ -27,7 +20,7 @@ async function Login(formData: FormData) {
 
 export default function LoginForm() {
   return (
-    <Card className="flex w-full max-w-sm flex-col items-center justify-center p-2 text-center align-middle">
+    <Card className="flex w-full max-w-3xl flex-col items-center justify-center p-2 text-center align-middle">
       <CardContent>
         <form
           action={async () => {
