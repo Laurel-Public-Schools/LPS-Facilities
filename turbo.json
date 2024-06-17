@@ -1,8 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": [
-    "**/.env"
-  ],
+  "globalDependencies": ["**/.env"],
   "globalEnv": [
     "DIRECT_URL",
     "DATABASE_URL",
@@ -17,14 +15,10 @@
   ],
   "tasks": {
     "topo": {
-      "dependsOn": [
-        "^topo"
-      ]
+      "dependsOn": ["^topo"]
     },
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["^build"],
       "outputs": [
         ".next/**",
         "!.next/cache/**",
@@ -49,38 +43,28 @@
       "cache": false
     },
     "build:libs": {
-      "dependsOn": [
-        "^topo"
-      ],
-      "outputs": [
-        "dist/**",
-        ".vercel/output/**"
-      ]
+      "dependsOn": ["^topo"],
+      "outputs": ["dist/**", ".vercel/output/**"]
     },
     "db": {
       "cache": false
     },
     "format": {
-      "outputs": [
-        ".turbo/.cache/.prettiercache"
-      ],
+      "outputs": [".turbo/.cache/.prettiercache"],
       "outputLogs": "new-only"
     },
+    "test": {
+      "cache": false,
+      "outputs": [".turbo/.cache/.jestcache"],
+      "dependsOn": ["^topo"]
+    },
     "lint": {
-      "dependsOn": [
-        "^topo"
-      ],
-      "outputs": [
-        ".turbo/.cache/.eslintcache"
-      ]
+      "dependsOn": ["^topo"],
+      "outputs": [".turbo/.cache/.eslintcache"]
     },
     "typecheck": {
-      "dependsOn": [
-        "^topo"
-      ],
-      "outputs": [
-        ".turbo/.cache/tsbuildinfo.json"
-      ]
+      "dependsOn": ["^topo"],
+      "outputs": [".turbo/.cache/tsbuildinfo.json"]
     }
   }
 }

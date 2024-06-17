@@ -4,21 +4,6 @@ import LoadingScreen from "@/components/ui/loadingScreen";
 import { api } from "@/trpc/server";
 import CardLayout from "./cardLayout";
 
-// #TODO: delete this
-
-// type PartialFacility = Partial<FacilityWithCategory>;
-
-// async function getFacilities() {
-//   const res = await fetch(process.env.NEXT_PUBLIC_HOST + '/api/facilities', {
-//     next: {
-//       revalidate: 3600,
-//       tags: ['facilities'],
-//     },
-//   });
-//   const facilities = await res.json();
-//   return mappedFacilities(facilities);
-// }
-
 export default function FacilitiesPage() {
   const facilities = api.facility.all();
 
