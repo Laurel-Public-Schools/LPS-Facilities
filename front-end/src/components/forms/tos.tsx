@@ -24,7 +24,7 @@ export default function TosModal() {
         isOpen={!!isVisible}
       >
         <div className="align-center min-w-lg flex max-h-fit max-w-6xl flex-col flex-wrap justify-center self-center rounded-lg bg-white p-4">
-          <article className="dark:prose-dark prose max-h-screen w-full max-w-none overflow-auto p-4 prose-headings:my-2 prose-headings:underline prose-h2:font-bold prose-p:p-5 prose-ul:list-decimal prose-ul:text-sm sm:max-h-[720px]">
+          <article className="dark:prose-dark prose prose-headings:my-2 prose-headings:underline prose-h2:font-bold prose-p:p-5 prose-ul:list-decimal prose-ul:text-sm max-h-screen w-full max-w-none overflow-auto p-4 sm:max-h-[720px]">
             <h1 className="text-3xl font-bold">Rules and Regulations</h1>
             <h2>Premises and Conditions</h2>
             <p>

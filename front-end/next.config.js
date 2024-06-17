@@ -18,6 +18,7 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ["bcryptjs", "googleapis"],
     ppr: true,
+    reactCompiler: true,
   },
   transpilePackages: [
     "@local/auth",
