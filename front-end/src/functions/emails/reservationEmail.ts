@@ -12,9 +12,9 @@ export default async function reservationEmail(data: emailData) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "x-api-key": process.env.EMAIL_API_KEY!,
       },
       body: JSON.stringify({
-        key: process.env.EMAIL_API_KEY,
         to: data.to,
         from: "Laurel Facility Rental",
         subject: data.subject,
@@ -64,9 +64,9 @@ export async function newReservationEmail(data: data) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "x-api-key": process.env.EMAIL_API_KEY!,
       },
       body: JSON.stringify({
-        key: process.env.EMAIL_API_KEY,
         to: to,
         from: "Facility Rental",
         subject: "New Facility Reservation",

@@ -46,9 +46,9 @@ export async function Email(formData: FormData) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "x-api-key": process.env.EMAIL_API_KEY!,
       },
       body: JSON.stringify({
-        key: process.env.EMAIL_API_KEY,
         to: email,
         from: "Laurel Public Schools",
         subject: "Password Reset",
