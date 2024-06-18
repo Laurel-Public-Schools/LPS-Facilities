@@ -9,9 +9,9 @@ export default async function updateEmail(id: number) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "x-api-key": process.env.EMAIL_API_KEY!,
     },
     body: JSON.stringify({
-      key: process.env.EMAIL_API_KEY,
       to: reservation?.User.email!,
       from: "Laurel Facility Rental",
       subject: "Laurel Facility Reservation Update",

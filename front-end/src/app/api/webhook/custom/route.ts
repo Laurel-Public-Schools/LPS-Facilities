@@ -8,6 +8,8 @@ import moment from "moment-timezone";
 import { SortedEventsQuery } from "@local/db/queries";
 import { calendarIDs } from "@local/validators/constants";
 
+import { env } from "@/env";
+
 export function GET(req: NextRequest) {
   return NextResponse.error();
 }
@@ -122,9 +124,9 @@ export async function POST(req: NextRequest) {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "x-api-key": process.env.EMAIL_API_KEY!,
           },
           body: JSON.stringify({
-            key: process.env.EMAIL_API_KEY,
             to: school.email,
             from: "Weekly Events",
             subject: "Weekly Events",

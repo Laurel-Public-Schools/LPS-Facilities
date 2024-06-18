@@ -68,9 +68,9 @@ export async function GeneratePaymentLink(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-api-key": process.env.EMAIL_API_KEY!,
         },
         body: JSON.stringify({
-          key: env.EMAIL_API_KEY,
           to: email,
           from: "Facility Rental",
           subject: "Facility Rental Payment Link",
