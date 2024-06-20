@@ -163,7 +163,7 @@ importers:
         version: 16.4.5
       drizzle-orm:
         specifier: ^0.31.2
-        version: 0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.13)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-f3e09d6328-20240612)
+        version: 0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.15)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-f3e09d6328-20240612)
       encoding:
         specifier: ^0.1.13
         version: 0.1.13
@@ -454,10 +454,10 @@ importers:
         version: 0.10.1(typescript@5.4.5)(zod@3.23.8)
       drizzle-orm:
         specifier: ^0.31.2
-        version: 0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.13)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-f3e09d6328-20240612)
+        version: 0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.15)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-f3e09d6328-20240612)
       drizzle-zod:
         specifier: ^0.5.1
-        version: 0.5.1(drizzle-orm@0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.13)(pg@8.12.0)(postgres@3.4.4))(zod@3.23.8)
+        version: 0.5.1(drizzle-orm@0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.15)(pg@8.12.0)(postgres@3.4.4))(zod@3.23.8)
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -570,14 +570,14 @@ importers:
         specifier: ^8.56.10
         version: 8.56.10
       bun-types:
-        specifier: ^1.1.13
-        version: 1.1.13
+        specifier: ^1.1.15
+        version: 1.1.15
       eslint:
         specifier: ^9.5.0
         version: 9.5.0
       eslint-import-resolver-typescript-bun:
         specifier: ^0.0.94
-        version: 0.0.94(@typescript-eslint/parser@7.13.1(eslint@9.5.0)(typescript@5.4.5))(bun-types@1.1.13)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.13.1(eslint@9.5.0)(typescript@5.4.5))(eslint@9.5.0))(eslint@9.5.0)
+        version: 0.0.94(@typescript-eslint/parser@7.13.1(eslint@9.5.0)(typescript@5.4.5))(bun-types@1.1.15)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.13.1(eslint@9.5.0)(typescript@5.4.5))(eslint@9.5.0))(eslint@9.5.0)
       eslint-plugin-react-compiler:
         specifier: ^0.0.0-experimental-51a85ea-20240601
         version: 0.0.0-experimental-51a85ea-20240601(eslint@9.5.0)
@@ -615,8 +615,8 @@ importers:
   tooling/tsconfig:
     dependencies:
       bun-types:
-        specifier: ^1.1.13
-        version: 1.1.13
+        specifier: ^1.1.15
+        version: 1.1.15
 
 packages:
 
@@ -3039,8 +3039,8 @@ packages:
   buffer@5.7.1:
     resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
 
-  bun-types@1.1.13:
-    resolution: {integrity: sha512-G/TqF0SsMQGLr4g7K3B2BK8BrPEA1EqCNwxZbyRdj5M4t54zvwyaqvRJOW34kuPqc2IvNNalRU3swc8B4oc4FA==}
+  bun-types@1.1.15:
+    resolution: {integrity: sha512-p2sr1myN18JkfKCsBCeffII2GlCMdMrB+4R9TURwqocTF1NfwIjktrEN97NWCVyMfj5hCukfIo/S9jY5QeC6Jg==}
 
   busboy@1.6.0:
     resolution: {integrity: sha512-8SFQbg/0hQ9xy3UNTB0YEnsNBbWfhf7RtnzpL7TkBiTBRfrQ9Fxcnz7VJsleJpyp6rVLvXiuORqjlHi5q+PYuA==}
@@ -9071,7 +9071,7 @@ snapshots:
       base64-js: 1.5.1
       ieee754: 1.2.1
 
-  bun-types@1.1.13:
+  bun-types@1.1.15:
     dependencies:
       '@types/node': 20.12.14
       '@types/ws': 8.5.10
@@ -9521,19 +9521,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.13)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-f3e09d6328-20240612):
+  drizzle-orm@0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.15)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-f3e09d6328-20240612):
     optionalDependencies:
       '@neondatabase/serverless': 0.9.3
       '@types/pg': 8.11.6
       '@types/react': 18.3.3
-      bun-types: 1.1.13
+      bun-types: 1.1.15
       pg: 8.12.0
       postgres: 3.4.4
       react: 19.0.0-rc-f3e09d6328-20240612
 
-  drizzle-zod@0.5.1(drizzle-orm@0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.13)(pg@8.12.0)(postgres@3.4.4))(zod@3.23.8):
+  drizzle-zod@0.5.1(drizzle-orm@0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.15)(pg@8.12.0)(postgres@3.4.4))(zod@3.23.8):
     dependencies:
-      drizzle-orm: 0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.13)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-f3e09d6328-20240612)
+      drizzle-orm: 0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.15)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-f3e09d6328-20240612)
       zod: 3.23.8
 
   eastasianwidth@0.2.0: {}
@@ -9788,9 +9788,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript-bun@0.0.94(@typescript-eslint/parser@7.13.1(eslint@9.5.0)(typescript@5.4.5))(bun-types@1.1.13)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.13.1(eslint@9.5.0)(typescript@5.4.5))(eslint@9.5.0))(eslint@9.5.0):
+  eslint-import-resolver-typescript-bun@0.0.94(@typescript-eslint/parser@7.13.1(eslint@9.5.0)(typescript@5.4.5))(bun-types@1.1.15)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.13.1(eslint@9.5.0)(typescript@5.4.5))(eslint@9.5.0))(eslint@9.5.0):
     dependencies:
-      bun-types: 1.1.13
+      bun-types: 1.1.15
       debug: 4.3.5
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.13.1(eslint@9.5.0)(typescript@5.4.5))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.13.1(eslint@9.5.0)(typescript@5.4.5))(eslint@9.5.0))(eslint@9.5.0)
     transitivePeerDependencies:
