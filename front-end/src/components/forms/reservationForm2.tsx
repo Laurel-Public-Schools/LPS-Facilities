@@ -389,7 +389,7 @@ export default function ReservationForm(props: {
                             : "Select a Facility"}
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="h-[180px] text-white">
+                      <SelectContent className="h-[180px]">
                         {locations.map((location) => (
                           <SelectItem
                             key={location.value}
