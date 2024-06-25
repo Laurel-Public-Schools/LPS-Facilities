@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "clean": "git clean -xdf .next .turbo node_modules",
-    "dev": "pnpm with-env:dev next dev --turbo ",
+    "dev": "pnpm with-env:dev next dev ",
     "build": "next build",
     "start": "pnpm with-env next start",
     "lint": "eslint",

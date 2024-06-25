@@ -56,10 +56,44 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import submitReservation from "@/functions/reservations/createReservation";
-import { categoryOptions, locations } from "@/lib/formOptions";
+import { categoryOptions } from "@/lib/formOptions";
 import { cn } from "@/lib/utils";
 
 type formValues = z.infer<typeof formSchema>;
+
+const locations = [
+  { label: "Administration Board Room", value: "1" },
+  { label: "Graff Classroom", value: "2" },
+  { label: "Graff Field", value: "3" },
+  { label: "Graff Gym", value: "4 " },
+  { label: "Graff Cafeteria", value: "5" },
+  { label: "Graff Library", value: "6" },
+  { label: "LHS Auditorium", value: "7" },
+  { label: "LHS Band Room", value: "8" },
+  { label: "LHS Choir Room", value: "9" },
+  { label: "LHS Classroom-FACS", value: "10" },
+  { label: "LHS Classroom", value: "11" },
+  { label: "LHS Depot", value: "12" },
+  { label: "LHS Gym", value: "13" },
+  { label: "LHS Library", value: "14" },
+  { label: "LHS Parking Lot", value: "15" },
+  { label: "LHS Practice Field", value: "16" },
+  { label: "LMS Band Room", value: "17" },
+  { label: "LMS Classroom FACS", value: "18" },
+  { label: "LMS Classroom", value: "19" },
+  { label: "LMS Commons", value: "20" },
+  { label: "LMS Gym", value: "21" },
+  { label: "LMS Library", value: "22" },
+  { label: "LMS Mogan Field", value: "23" },
+  { label: "South Elementary Cafeteria", value: "24" },
+  { label: "South Elementary Baseball Field", value: "25" },
+  { label: "South Elementary Classroom", value: "26" },
+  { label: "Laurel Stadium", value: "27" },
+  { label: "Laurel Stadium Warming Rooms", value: "28" },
+  { label: "West Elementary Baseball Field", value: "29" },
+  { label: "West Elementary Classroom", value: "30" },
+  { label: "West Elementary Gym", value: "31" },
+];
 
 export default function ReservationForm(props: {
   userId: string;
@@ -72,12 +106,12 @@ export default function ReservationForm(props: {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const hideModal = () => setIsVisible(false);
 
-  let selectedFacility = 0;
+  let selectedFacility = "0";
   const router = useRouter();
 
   const searchParams = useSearchParams();
   if (searchParams.has("id")) {
-    selectedFacility = Number(searchParams.get("id"));
+    selectedFacility = searchParams.get("id")!;
   }
   const form = useForm<formValues>({
     resolver: zodResolver(formSchema),
@@ -342,57 +376,30 @@ export default function ReservationForm(props: {
                       Select A Facility
                     </FormLabel>
                     <div />
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground",
-                            )}
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          {field.value
+                            ? locations.find(
+                                (location) => location.value === field.value,
+                              )?.label
+                            : "Select a Facility"}
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent className="h-[180px] text-white">
+                        {locations.map((location) => (
+                          <SelectItem
+                            key={location.value}
+                            value={location.value}
                           >
-                            {field.value
-                              ? locations.find(
-                                  (location) => location.value === field.value,
-                                )?.label
-                              : "Select a Facility"}
-                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="h-[400px] w-[200px] overflow-y-scroll">
-                        <Command>
-                          <CommandInput
-                            className="h-2"
-                            placeholder="Search..."
-                          />
-                          <CommandEmpty>Not Found</CommandEmpty>
-                          <CommandGroup className="overflow-y-scroll">
-                            {locations.map((location) => (
-                              <CommandItem
-                                value={location.label}
-                                key={location.value}
-                                onSelect={() => {
-                                  form.setValue("facility", location.value);
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    location.value === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0",
-                                  )}
-                                />
-                                {location.label}
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
+                            {location.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormDescription>
                       May only select one facility per form
                     </FormDescription>

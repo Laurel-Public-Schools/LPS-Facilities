@@ -20,12 +20,12 @@ export default async function submitReservation(data: formValues) {
   try {
     // Helper database function to find a category by facility and category name
     const categoryId = await api.category.byFacility({
-      facilityId: data.facility,
+      facilityId: parseInt(data.facility),
       name: `%${data.category}%`,
     });
 
     // Helper database function to find a facility by id
-    const Facility = await api.facility.byId({ id: data.facility });
+    const Facility = await api.facility.byId({ id: parseInt(data.facility) });
     // Helper database function to find a building by id
     const Building = Facility?.building!;
 
@@ -33,7 +33,7 @@ export default async function submitReservation(data: formValues) {
     const NReservation: NewReservation = {
       userId: data.userId,
       eventName: data.eventName,
-      facilityId: data.facility,
+      facilityId: parseInt(data.facility),
       details: data.details,
       insurance: false,
       categoryId: Number(categoryId?.id) || 0,
