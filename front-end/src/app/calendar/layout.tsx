@@ -13,13 +13,9 @@ export default function calendarLayout({
 }) {
   return (
     <div className="container relative">
-      <div className="sm:hidden">
-        <Suspense fallback={<Skeleton className="h-auto w-auto" />}>
-          {children}
-        </Suspense>
-      </div>
-      <div className="hidden space-y-6 p-10 pb-16 sm:block lg:p-2">
-        <Suspense fallback={<Skeleton className="h-auto w-auto" />}>
+      <Suspense fallback={<Skeleton className="h-auto w-auto" />}>
+        <div className="sm:hidden">{children}</div>
+        <div className="hidden space-y-6 p-10 pb-16 sm:block lg:p-2">
           <div className="space-y-0.5">
             <h1 className="text-2xl font-bold">Calendar</h1>
           </div>
@@ -30,8 +26,8 @@ export default function calendarLayout({
             </aside>
             <div className="flex-1 lg:max-w-2xl">{children}</div>
           </div>
-        </Suspense>
-      </div>
+        </div>
+      </Suspense>
     </div>
   );
 }
