@@ -183,8 +183,8 @@ importers:
         specifier: ^1.3.0
         version: 1.3.0(next@15.0.0-canary.35(@babel/core@7.24.7)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@0.0.0-experimental-938cd9a-20240601)(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614))
       googleapis:
-        specifier: ^140.0.0
-        version: 140.0.0(encoding@0.1.13)
+        specifier: ^140.0.1
+        version: 140.0.1(encoding@0.1.13)
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -4361,8 +4361,8 @@ packages:
     resolution: {integrity: sha512-/fhDZEJZvOV3X5jmD+fKxMqma5q2Q9nZNSF3kn1F18tpxmA86BcTxAGBQdM0N89Z3bEaIs+HVznSmFJEAmMTjA==}
     engines: {node: '>=14.0.0'}
 
-  googleapis@140.0.0:
-    resolution: {integrity: sha512-r8i++0lnexrvRA0/uogz3N3eJprddjxAcueTO5f09D/U5yxaOm5G+a892QkHsV+o15NP9whlLUiJr9zazb9ePg==}
+  googleapis@140.0.1:
+    resolution: {integrity: sha512-ZGvBX4mQcFXO9ACnVNg6Aqy3KtBPB5zTuue43YVLxwn8HSv8jB7w+uDKoIPSoWuxGROgnj2kbng6acXncOQRNA==}
     engines: {node: '>=14.0.0'}
 
   gopd@1.0.1:
@@ -10913,7 +10913,7 @@ snapshots:
       - encoding
       - supports-color
 
-  googleapis@140.0.0(encoding@0.1.13):
+  googleapis@140.0.1(encoding@0.1.13):
     dependencies:
       google-auth-library: 9.11.0(encoding@0.1.13)
       googleapis-common: 7.2.0(encoding@0.1.13)
