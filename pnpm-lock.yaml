@@ -163,7 +163,7 @@ importers:
         version: 16.4.5
       drizzle-orm:
         specifier: ^0.31.2
-        version: 0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.17)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
+        version: 0.31.2(@neondatabase/serverless@0.9.4)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.17)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
       encoding:
         specifier: ^0.1.13
         version: 0.1.13
@@ -447,17 +447,17 @@ importers:
         specifier: ^0.34.1
         version: 0.34.1
       '@neondatabase/serverless':
-        specifier: ^0.9.3
-        version: 0.9.3
+        specifier: ^0.9.4
+        version: 0.9.4
       '@t3-oss/env-nextjs':
         specifier: ^0.10.1
         version: 0.10.1(typescript@5.5.2)(zod@3.23.8)
       drizzle-orm:
         specifier: ^0.31.2
-        version: 0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.17)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
+        version: 0.31.2(@neondatabase/serverless@0.9.4)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.17)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
       drizzle-zod:
         specifier: ^0.5.1
-        version: 0.5.1(drizzle-orm@0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.17)(pg@8.12.0)(postgres@3.4.4))(zod@3.23.8)
+        version: 0.5.1(drizzle-orm@0.31.2(@neondatabase/serverless@0.9.4)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.17)(pg@8.12.0)(postgres@3.4.4))(zod@3.23.8)
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1691,14 +1691,14 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240614':
-    resolution: {integrity: sha512-AP5vMbwe31OWgG2rIyWkUIPFCnCBgLIoKZE9gY6lKwryjuEb2TJamTd2scohNaJULXwtIY+Y2OA11zM6hSKSGA==}
+  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240621':
+    resolution: {integrity: sha512-iOccHe3Xzdta6gss3b15GRQyVhxfXUbCeM7I1QHSyZk1Vm6Pu8i4GMts26mcIxPLyuqK7TtynE/UvQ0/5g/Wgw==}
 
   '@maxim_mazurok/gapi.client.discovery-v1@0.1.20200806':
     resolution: {integrity: sha512-Wl6UfmZVDdWbY3PUu8E2ULk9RPLjnMqp/iOA4tcK8Ne+U/GmlnWP/e34IaZNGArfl7iXJNOG+/3Rj9L9jQyF9Q==}
 
-  '@neondatabase/serverless@0.9.3':
-    resolution: {integrity: sha512-6ZBK8asl2Z3+ADEaELvbaVVGVlmY1oAzkxxZfpmXPKFuJhbDN+5fU3zYBamsahS/Ch1zE+CVWB3R+8QEI2LMSw==}
+  '@neondatabase/serverless@0.9.4':
+    resolution: {integrity: sha512-D0AXgJh6xkf+XTlsO7iwE2Q1w8981E1cLCPAALMU2YKtkF/1SF6BiAzYARZFYo175ON+b1RNIy9TdSFHm5nteg==}
 
   '@next/env@15.0.0-canary.35':
     resolution: {integrity: sha512-0e/NE9bFrPH1UMkFDKd3ZOc2341hp4lAh1EXDL9uFsseAuffNLtlDzgsa4nM+AkohGS2lNtexfmryMVDoz4c7Q==}
@@ -7856,7 +7856,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240614':
+  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240621':
     dependencies:
       '@types/gapi.client': 1.0.8
       '@types/gapi.client.discovery-v1': 0.0.4
@@ -7866,7 +7866,7 @@ snapshots:
       '@types/gapi.client': 1.0.8
       '@types/gapi.client.discovery-v1': 0.0.4
 
-  '@neondatabase/serverless@0.9.3':
+  '@neondatabase/serverless@0.9.4':
     dependencies:
       '@types/pg': 8.11.6
 
@@ -8971,7 +8971,7 @@ snapshots:
 
   '@types/gapi.client.calendar-v3@0.0.4':
     dependencies:
-      '@maxim_mazurok/gapi.client.calendar-v3': 0.0.20240614
+      '@maxim_mazurok/gapi.client.calendar-v3': 0.0.20240621
 
   '@types/gapi.client.discovery-v1@0.0.4':
     dependencies:
@@ -10043,9 +10043,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.17)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614):
+  drizzle-orm@0.31.2(@neondatabase/serverless@0.9.4)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.17)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614):
     optionalDependencies:
-      '@neondatabase/serverless': 0.9.3
+      '@neondatabase/serverless': 0.9.4
       '@types/pg': 8.11.6
       '@types/react': 18.3.3
       bun-types: 1.1.17
@@ -10053,9 +10053,9 @@ snapshots:
       postgres: 3.4.4
       react: 19.0.0-rc-fb9a90fa48-20240614
 
-  drizzle-zod@0.5.1(drizzle-orm@0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.17)(pg@8.12.0)(postgres@3.4.4))(zod@3.23.8):
+  drizzle-zod@0.5.1(drizzle-orm@0.31.2(@neondatabase/serverless@0.9.4)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.17)(pg@8.12.0)(postgres@3.4.4))(zod@3.23.8):
     dependencies:
-      drizzle-orm: 0.31.2(@neondatabase/serverless@0.9.3)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.17)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
+      drizzle-orm: 0.31.2(@neondatabase/serverless@0.9.4)(@types/pg@8.11.6)(@types/react@18.3.3)(bun-types@1.1.17)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
       zod: 3.23.8
 
   eastasianwidth@0.2.0: {}
