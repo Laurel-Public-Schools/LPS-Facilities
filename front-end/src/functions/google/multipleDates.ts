@@ -23,7 +23,7 @@ export default async function CreateGoogleEvents(id: number) {
   const approvedReservation = await api.reservation.byId({ id: id });
 
   const calendar = google.calendar({ version: "v3", auth: oauth2Client });
-  //@ts-expect-error
+  //@ts-expect-error - googleCalendarId is not undefined
   for (const reservationDate of approvedReservation.ReservationDate) {
     const startDateTime = moment
       .tz(
