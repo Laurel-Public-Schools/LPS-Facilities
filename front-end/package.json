@@ -92,7 +92,7 @@
     "superjson": "^2.2.1",
     "sweetalert2": "^11.12.2",
     "sweetalert2-react-content": "^5.0.7",
-    "tailwind-merge": "^2.3.0",
+    "tailwind-merge": "^2.4.0",
     "tailwind-scrollbar": "^3.1.0",
     "tailwindcss": "3.4.4",
     "tailwindcss-animate": "^1.0.7",
