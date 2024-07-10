@@ -189,8 +189,8 @@ importers:
         specifier: ^9.0.2
         version: 9.0.2
       lucide-react:
-        specifier: ^0.403.0
-        version: 0.403.0(react@19.0.0-rc-fb9a90fa48-20240614)
+        specifier: ^0.407.0
+        version: 0.407.0(react@19.0.0-rc-fb9a90fa48-20240614)
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1748,8 +1748,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240621':
-    resolution: {integrity: sha512-iOccHe3Xzdta6gss3b15GRQyVhxfXUbCeM7I1QHSyZk1Vm6Pu8i4GMts26mcIxPLyuqK7TtynE/UvQ0/5g/Wgw==}
+  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240705':
+    resolution: {integrity: sha512-WTtL3tKGXIyEQC+xwgYBtG7i3ccggjZZnD5ENy7XqRtxuoWxwmudkZoMVOlOa65kx+7Wt2P2hPOjSIiuEva9lQ==}
 
   '@maxim_mazurok/gapi.client.discovery-v1@0.1.20200806':
     resolution: {integrity: sha512-Wl6UfmZVDdWbY3PUu8E2ULk9RPLjnMqp/iOA4tcK8Ne+U/GmlnWP/e34IaZNGArfl7iXJNOG+/3Rj9L9jQyF9Q==}
@@ -5128,8 +5128,8 @@ packages:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
 
-  lucide-react@0.403.0:
-    resolution: {integrity: sha512-ldD3NT444k4Mi+n+43xC8XaHr88MNdhOIApIE15r7O+PcVYEBXNOOFo904cBC6Hsja+zHc1lqw0mqUgBECeisw==}
+  lucide-react@0.407.0:
+    resolution: {integrity: sha512-+dRIu9Sry+E8wPF9+sY5eKld2omrU4X5IKXxrgqBt+o11IIHVU0QOfNoVWFuj0ZRDrxr4Wci26o2mKZqLGE0lA==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -8068,7 +8068,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240621':
+  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240705':
     dependencies:
       '@types/gapi.client': 1.0.8
       '@types/gapi.client.discovery-v1': 0.0.4
@@ -9070,7 +9070,7 @@ snapshots:
 
   '@types/gapi.client.calendar-v3@0.0.4':
     dependencies:
-      '@maxim_mazurok/gapi.client.calendar-v3': 0.0.20240621
+      '@maxim_mazurok/gapi.client.calendar-v3': 0.0.20240705
 
   '@types/gapi.client.discovery-v1@0.0.4':
     dependencies:
@@ -12055,7 +12055,7 @@ snapshots:
 
   lru-cache@7.18.3: {}
 
-  lucide-react@0.403.0(react@19.0.0-rc-fb9a90fa48-20240614):
+  lucide-react@0.407.0(react@19.0.0-rc-fb9a90fa48-20240614):
     dependencies:
       react: 19.0.0-rc-fb9a90fa48-20240614
 
