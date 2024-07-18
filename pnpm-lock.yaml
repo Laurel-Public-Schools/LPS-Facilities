@@ -243,8 +243,8 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)
       square:
-        specifier: ^37.1.0
-        version: 37.1.0
+        specifier: ^37.1.1
+        version: 37.1.1
       styled-components:
         specifier: ^6.1.11
         version: 6.1.11(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)
@@ -632,8 +632,8 @@ packages:
     resolution: {integrity: sha512-Ld2cHQuwdAMzE0jNzOsUin9kU6QFyXMZcPw4ZoCPi29Vp4I1qWtSbs602p1P4cSv8Yxf47JinaiT6OSMgCrO5g==}
     engines: {node: '>=14.15.0 || >=16.0.0'}
 
-  '@apimatic/axios-client-adapter@0.3.1':
-    resolution: {integrity: sha512-DFm9G2dmprYg36PvXYFB3gvKP8OyGY9Y5MJIIO74zbFYOgjRtPOeid3JkGi7QPRjlcDUcc+WhUefb68cL5mqzw==}
+  '@apimatic/axios-client-adapter@0.3.3':
+    resolution: {integrity: sha512-sQmT2Kbs8Lq4Bz/TLOBjH+CNd1QfjTDMbmwyxFpRSzusta6cAl7EcaR2JcCiOeuu2J1fr61tTRUFMwqlDliJqg==}
     engines: {node: '>=14.15.0 || >=16.0.0'}
 
   '@apimatic/convert-to-stream@0.0.2':
@@ -648,8 +648,8 @@ packages:
     resolution: {integrity: sha512-73NLoa1OG5RHP+9f76/bhOAYmkhay0lGDlsffmwU2W1zQ16JB5U6y5lpjnHCWku7VN5MfXYK2UXaPJWO8+xG5g==}
     engines: {node: '>=14.15.0 || >=16.0.0'}
 
-  '@apimatic/core@0.10.8':
-    resolution: {integrity: sha512-rkKdeo1MA3eC6sE6psSxHVikbPyQM7K+5zgvfBRiveIq3Uxj4UK/TetD9Yg2zJRP8O1l/F88Cv7Nr6QxapFXaw==}
+  '@apimatic/core@0.10.11':
+    resolution: {integrity: sha512-CL6Bzxs8U2qki0hTZ+I9WSn20ht0J+biiFsxlD8Ruk7vL6f91VcNByoOO7lf1VfO2XM5BJ18TWkHA5/KtRuZkg==}
     engines: {node: '>=14.15.0 || >=16.0.0'}
 
   '@apimatic/file-wrapper@0.3.2':
@@ -667,8 +667,8 @@ packages:
   '@apimatic/json-bigint@1.2.0':
     resolution: {integrity: sha512-+bmVzYMdZu0Ya5L+my4FXFUih54OvQA/qlZsFOYdOoostyUuB27UDrVWQs/WVCmS0ADdo5vTU0eeTrrBkHoySw==}
 
-  '@apimatic/schema@0.7.9':
-    resolution: {integrity: sha512-Fu8GECS3NoHK7eCGf7KV0Uecopf4ot1K8ikpQdBGZVSOOmcBpegADaWZC92rhVBpmX78GzWj7bu7BTLBKY0JfA==}
+  '@apimatic/schema@0.7.11':
+    resolution: {integrity: sha512-lsCngEepI7We27bVcRNU1rWvq2300iVeZ2go5WCLbnGlIy6xmmx4Nw4TACWMe9ZRFyvlIMMFvBSxzV61orYwjA==}
     engines: {node: '>=14.15.0 || >=16.0.0'}
 
   '@auth/core@0.32.0':
@@ -6165,8 +6165,8 @@ packages:
   sprintf-js@1.1.3:
     resolution: {integrity: sha512-Oo+0REFV59/rz3gfJNKQiBlwfHaSESl1pcGyABQsnnIfWOFt6JNj5gCog2U6MLZ//IGYD+nA8nI+mTShREReaA==}
 
-  square@37.1.0:
-    resolution: {integrity: sha512-+Ng/L2whqKm/JlJwLHDVZyh5L+JaGBlP9cpI6cOUDwkaSdLOhfP49MKmWSZEnV7f28gaGn0qu3AXFfiSZMjeow==}
+  square@37.1.1:
+    resolution: {integrity: sha512-YBUML5ifpuSiGlj5JrbrJ6Z5x5MQ+nOlWoXCnaEkTX5mrjjE/yBuDIGOLDzA/QLDLSltGQKPyG1AU52xB/Ak5g==}
     engines: {node: '>=14.17.0'}
 
   stack-utils@2.0.6:
@@ -6923,7 +6923,7 @@ snapshots:
       '@apimatic/http-query': 0.3.2
       tslib: 2.6.3
 
-  '@apimatic/axios-client-adapter@0.3.1':
+  '@apimatic/axios-client-adapter@0.3.3':
     dependencies:
       '@apimatic/convert-to-stream': 0.1.2
       '@apimatic/core-interfaces': 0.2.5
@@ -6931,7 +6931,7 @@ snapshots:
       '@apimatic/http-headers': 0.3.2
       '@apimatic/http-query': 0.3.2
       '@apimatic/json-bigint': 1.2.0
-      '@apimatic/schema': 0.7.9
+      '@apimatic/schema': 0.7.11
       axios: 1.7.2
       detect-browser: 5.3.0
       detect-node: 2.1.0
@@ -6951,7 +6951,7 @@ snapshots:
       '@apimatic/file-wrapper': 0.3.2
       tslib: 2.6.3
 
-  '@apimatic/core@0.10.8':
+  '@apimatic/core@0.10.11':
     dependencies:
       '@apimatic/convert-to-stream': 0.0.2
       '@apimatic/core-interfaces': 0.2.5
@@ -6959,7 +6959,7 @@ snapshots:
       '@apimatic/http-headers': 0.3.2
       '@apimatic/http-query': 0.3.2
       '@apimatic/json-bigint': 1.2.0
-      '@apimatic/schema': 0.7.9
+      '@apimatic/schema': 0.7.11
       detect-browser: 5.3.0
       detect-node: 2.1.0
       form-data: 3.0.1
@@ -6984,7 +6984,7 @@ snapshots:
 
   '@apimatic/json-bigint@1.2.0': {}
 
-  '@apimatic/schema@0.7.9':
+  '@apimatic/schema@0.7.11':
     dependencies:
       tslib: 2.6.3
 
@@ -13105,13 +13105,13 @@ snapshots:
 
   sprintf-js@1.1.3: {}
 
-  square@37.1.0:
+  square@37.1.1:
     dependencies:
       '@apimatic/authentication-adapters': 0.5.3
-      '@apimatic/axios-client-adapter': 0.3.1
-      '@apimatic/core': 0.10.8
+      '@apimatic/axios-client-adapter': 0.3.3
+      '@apimatic/core': 0.10.11
       '@apimatic/json-bigint': 1.2.0
-      '@apimatic/schema': 0.7.9
+      '@apimatic/schema': 0.7.11
       '@types/node': 14.18.63
     transitivePeerDependencies:
       - debug
