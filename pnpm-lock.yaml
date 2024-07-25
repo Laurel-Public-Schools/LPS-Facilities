@@ -18,8 +18,8 @@ importers:
         specifier: ^2.0.9
         version: 2.0.9(@types/node@20.14.12)(typescript@5.5.4)
       eslint-plugin-react-compiler:
-        specifier: ^0.0.0-experimental-51a85ea-20240601
-        version: 0.0.0-experimental-51a85ea-20240601(eslint@9.7.0)
+        specifier: ^0.0.0-experimental-9ed098e-20240725
+        version: 0.0.0-experimental-9ed098e-20240725(eslint@9.7.0)
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
@@ -174,8 +174,8 @@ importers:
         specifier: 14.2.5
         version: 14.2.5(eslint@9.7.0)(typescript@5.5.4)
       eslint-plugin-react-compiler:
-        specifier: ^0.0.0-experimental-51a85ea-20240601
-        version: 0.0.0-experimental-51a85ea-20240601(eslint@9.7.0)
+        specifier: ^0.0.0-experimental-9ed098e-20240725
+        version: 0.0.0-experimental-9ed098e-20240725(eslint@9.7.0)
       fs:
         specifier: 0.0.1-security
         version: 0.0.1-security
@@ -579,8 +579,8 @@ importers:
         specifier: ^0.0.99
         version: 0.0.99(@typescript-eslint/parser@7.17.0(eslint@9.7.0)(typescript@5.5.4))(bun-types@1.1.20)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.17.0(eslint@9.7.0)(typescript@5.5.4))(eslint@9.7.0))(eslint@9.7.0)
       eslint-plugin-react-compiler:
-        specifier: ^0.0.0-experimental-51a85ea-20240601
-        version: 0.0.0-experimental-51a85ea-20240601(eslint@9.7.0)
+        specifier: ^0.0.0-experimental-9ed098e-20240725
+        version: 0.0.0-experimental-9ed098e-20240725(eslint@9.7.0)
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
@@ -4057,8 +4057,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
 
-  eslint-plugin-react-compiler@0.0.0-experimental-51a85ea-20240601:
-    resolution: {integrity: sha512-ROiKTVu9pZsNHyJepZj/JULWnkw8+I8+9gOF/MkJ8Q22/9f9MkPQkD2f6FXzVH+iyWbp7DQ3RXKhB3hWhf8AIg==}
+  eslint-plugin-react-compiler@0.0.0-experimental-9ed098e-20240725:
+    resolution: {integrity: sha512-Xv2iD8kU6R4Wdjdh1WhdP8UnSqSV+/XcadxwBCmMr836fQUoXGuw/uVGc01v9opZs9SwKzo+8My6ayVCgAinPA==}
     engines: {node: ^14.17.0 || ^16.0.0 || >= 18.0.0}
     peerDependencies:
       eslint: '>=7'
@@ -10657,7 +10657,7 @@ snapshots:
       safe-regex-test: 1.0.3
       string.prototype.includes: 2.0.0
 
-  eslint-plugin-react-compiler@0.0.0-experimental-51a85ea-20240601(eslint@9.7.0):
+  eslint-plugin-react-compiler@0.0.0-experimental-9ed098e-20240725(eslint@9.7.0):
     dependencies:
       '@babel/core': 7.24.7
       '@babel/parser': 7.24.7
