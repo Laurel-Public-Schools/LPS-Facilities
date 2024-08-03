@@ -51,7 +51,7 @@
     "@vercel/kv": "^2.0.0",
     "@vercel/speed-insights": "^1.0.12",
     "auth": "^1.1.1",
-    "autoprefixer": "10.4.19",
+    "autoprefixer": "10.4.20",
     "babel-plugin-react-compiler": "0.0.0-experimental-938cd9a-20240601",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
