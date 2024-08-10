@@ -487,8 +487,8 @@ importers:
         specifier: ^7.4.2
         version: 7.4.2
       drizzle-kit:
-        specifier: ^0.23.2
-        version: 0.23.2
+        specifier: ^0.24.0
+        version: 0.24.0
       eslint:
         specifier: ^9.8.0
         version: 9.8.0
@@ -1737,8 +1737,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240726':
-    resolution: {integrity: sha512-nGpQdK6sBZuEgR9dNEJdloiRIXJ8ygpaHUMPjDdNJRBpOczWLVfJRw32f7KqIRkB1j44xy23MLXEz+QpEgPZtw==}
+  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240806':
+    resolution: {integrity: sha512-zW9ZJ2KJIXs2aMOtBLH5MuBTMp59QQwGTot6mtaHK/FtH3GpKOjtrWVm1Sqt0mxcE2yp2QMe8i32UiK6ZIIEUw==}
 
   '@maxim_mazurok/gapi.client.discovery-v1@0.1.20200806':
     resolution: {integrity: sha512-Wl6UfmZVDdWbY3PUu8E2ULk9RPLjnMqp/iOA4tcK8Ne+U/GmlnWP/e34IaZNGArfl7iXJNOG+/3Rj9L9jQyF9Q==}
@@ -3786,8 +3786,8 @@ packages:
     resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
     engines: {node: '>=12'}
 
-  drizzle-kit@0.23.2:
-    resolution: {integrity: sha512-NWkQ7GD2OTbQ7HzcjsaCOf3n0tlFPSEAF38fvDpwDj8jRbGWGFtN2cD8I8wp4lU+5Os/oyP2xycTKGLHdPipUw==}
+  drizzle-kit@0.24.0:
+    resolution: {integrity: sha512-rUl5Rf5HLOVkAwHEVEi8xgulIRWzoys0q77RHGCxv5e9v8AI3JGFg7Ug5K1kn513RwNZbuNJMUKOXo0j8kPRgg==}
     hasBin: true
 
   drizzle-orm@0.32.2:
@@ -8084,7 +8084,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240726':
+  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240806':
     dependencies:
       '@types/gapi.client': 1.0.8
       '@types/gapi.client.discovery-v1': 0.0.4
@@ -9086,7 +9086,7 @@ snapshots:
 
   '@types/gapi.client.calendar-v3@0.0.4':
     dependencies:
-      '@maxim_mazurok/gapi.client.calendar-v3': 0.0.20240726
+      '@maxim_mazurok/gapi.client.calendar-v3': 0.0.20240806
 
   '@types/gapi.client.discovery-v1@0.0.4':
     dependencies:
@@ -10236,7 +10236,7 @@ snapshots:
 
   dotenv@16.4.5: {}
 
-  drizzle-kit@0.23.2:
+  drizzle-kit@0.24.0:
     dependencies:
       '@drizzle-team/brocli': 0.8.2
       '@esbuild-kit/esm-loader': 2.6.5
