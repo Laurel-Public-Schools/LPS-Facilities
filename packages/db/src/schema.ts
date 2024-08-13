@@ -330,6 +330,36 @@ export const AccountRelations = relations(accounts, ({ one }) => ({
     references: [User.id],
   }),
 }));
+export const EmailNotifications = facilities_db.table("EmailNotifications", {
+  id: bigserial("id", { mode: "number" }).primaryKey().notNull(),
+  email: varchar("email", { length: 191 }).notNull(),
+  HsEmails: boolean("HsEmails").default(false).notNull(),
+  MsEmails: boolean("MsEmails").default(false).notNull(),
+  GrEmails: boolean("GrEmails").default(false).notNull(),
+  WeEmails: boolean("WeEmails").default(false).notNull(),
+  SoEmails: boolean("SoEmails").default(false).notNull(),
+  StEmails: boolean("StEmails").default(false).notNull(),
+});
+
+export const EmailNotificationsSchema = createSelectSchema(EmailNotifications);
+export const EmailNotificationsArray = z.array(EmailNotificationsSchema);
+export type EmailNotificationsType = z.infer<typeof EmailNotificationsSchema>;
+export const CreateEmailNotificationsSchema = createInsertSchema(
+  EmailNotifications,
+  {
+    email: z.string().max(191),
+    HsEmails: z.boolean().default(false),
+    MsEmails: z.boolean().default(false),
+    GrEmails: z.boolean().default(false),
+    WeEmails: z.boolean().default(false),
+    SoEmails: z.boolean().default(false),
+  },
+).omit({
+  id: true,
+});
+export const CreateEmailNotificationsArray = z.array(
+  CreateEmailNotificationsSchema,
+);
 
 export const Reservation = facilities_db.table(
   "Reservation",

@@ -1,5 +1,3 @@
-import { headers } from "next/headers";
-
 import { DataTable } from "@/components/ui/tables/users/data-table";
 import { api } from "@/trpc/server";
 import { columns } from "./columns";

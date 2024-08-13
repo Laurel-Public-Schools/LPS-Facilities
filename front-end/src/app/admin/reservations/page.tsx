@@ -1,5 +1,4 @@
-import React, { Suspense } from "react";
-import { headers } from "next/headers";
+import React from "react";
 
 import { DataTable } from "@/components/ui/tables";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,7 +7,6 @@ import {
   mapReservations,
 } from "@/functions/calculations/tableData";
 import { api } from "@/trpc/server";
-import TableSkeleton from "../requests/skeleton";
 import { columns } from "./columns";
 
 async function getReservations() {

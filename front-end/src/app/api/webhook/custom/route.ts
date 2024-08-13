@@ -1,14 +1,14 @@
-import { time } from "console";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { OAuth2Client } from "google-auth-library";
 import { google } from "googleapis";
 import moment from "moment-timezone";
+import { z } from "zod";
 
-import { SortedEventsQuery } from "@local/db/queries";
+import { CreateEmailNotificationsSchema } from "@local/db/schema";
 import { calendarIDs } from "@local/validators/constants";
 
-import { env } from "@/env";
+import { api } from "@/trpc/server";
 
 export function GET(req: NextRequest) {
   return NextResponse.error();
@@ -49,55 +49,18 @@ export async function POST(req: NextRequest) {
     .toDate();
 
   const calendar = google.calendar({ version: "v3", auth: oauth2Client });
-  const schools = [
-    {
-      name: "Laurel High School",
-      email:
-        "lillian_kooistra@laurel.k12.mt.us, lpsactivities@laurel.k12.mt.us, elliana_kerns@laurel.k12.mt.us, stacy_hall@laurel.k12.mt.us, john_stilson@laurel.k12.mt.us, tamara_raty@laurel.k12.mt.us, wendi_clark@laurel.k12.mt.us, paul_damjanovich@laurel.k12.mt.us, austin_anderson@laurel.k12.mt.us, mischele_miller@laurel.k12.mt.us, hsmessage@laurel.k12.mt.us  ",
-    },
-    {
-      name: "Laurel Middle School",
-      email:
-        "lillian_kooistra@laurel.k12.mt.us, lpsactivities@laurel.k12.mt.us, justin_klebe@laurel.k12.mt.us, allyson_robertus@laurel.k12.mt.us, amanda_nelson@laurel.k12.mt.us, gayle_wisecup@laurel.k12.mt.us, sam_spitzer@laurel.k12.mt.us, nigel_oloughlin@laurel.k12.mt.us ",
-    },
-    {
-      name: "Graff Elementary",
-      email:
-        "lillian_kooistra@laurel.k12.mt.us, lpsactivities@laurel.k12.mt.us, lynne_peterson@laurel.k12.mt.us, roberto_holloway@laurel.k12.mt.us ",
-    },
-    {
-      name: "West Elementary",
-      email:
-        "lillian_kooistra@laurel.k12.mt.us, lpsactivities@laurel.k12.mt.us, bethany_fuchs@laurel.k12.mt.us, marla_adams@laurel.k12.mt.us, ",
-    },
-    {
-      name: "South Elementary",
-      email:
-        "lillian_kooistra@laurel.k12.mt.us, lpsactivities@laurel.k12.mt.us, tom_williams@laurel.k12.mt.us, katherine_dawe@laurel.k12.mt.us ",
-    },
-    {
-      name: "Laurel Stadium",
-      email:
-        "lillian_kooistra@laurel.k12.mt.us, lpsactivities@laurel.k12.mt.us, stacy_hall@laurel.k12.mt.us, john_stilson@laurel.k12.mt.us, tamara_raty@laurel.k12.mt.us, wendi_clark@laurel.k12.mt.us, paul_damjanovich@laurel.k12.mt.us, austin_anderson@laurel.k12.mt.us, mischele_miller@laurel.k12.mt.us, hsmessage@laurel.k12.mt.us",
-    },
-  ] as const;
 
-  //match the school name from the school array to the calendarIDs array
+  const EmailUsers = await api.user.GetAllEmailPrefs();
 
-  for (const school of schools) {
-    const schoolBuilding = calendarIDs.find((building) => {
-      return building.school === school.name;
-    });
-
+  for (const school of calendarIDs) {
     const events = await calendar.events.list({
-      calendarId: schoolBuilding?.calendar,
+      calendarId: school?.calendar,
       maxResults: 100,
       singleEvents: true,
       orderBy: "startTime",
       timeMin: currentDate.toISOString(),
       timeMax: sevenDaysFromNow.toISOString(),
     });
-    console.log(events.data.items);
     if (events.data.items) {
       const eventsInMST = events.data.items.map((event) => {
         return {
@@ -119,6 +82,29 @@ export async function POST(req: NextRequest) {
         )
         .join("");
 
+      const filtered = EmailUsers.filter((user) => {
+        switch (school.school) {
+          case "Laurel Stadium":
+            return user.StEmails === true;
+          case "West Elementary":
+            return user.WeEmails === true;
+          case "South Elementary":
+            return user.SoEmails === true;
+          case "Graff Elementary":
+            return user.GrEmails === true;
+          case "Laurel High School":
+            return user.HsEmails === true;
+          case "Laurel Middle School":
+            return user.MsEmails === true;
+          case "Administration Building":
+            return user.email === "null@null.null";
+        }
+      })
+        .map((user) => user.email)
+        .join(", ");
+      if (filtered === "") {
+        continue;
+      }
       try {
         await fetch(`${process.env.NEXT_PUBLIC_EMAIL_API}`, {
           method: "POST",
@@ -127,10 +113,10 @@ export async function POST(req: NextRequest) {
             "x-api-key": process.env.EMAIL_API_KEY!,
           },
           body: JSON.stringify({
-            to: school.email,
+            to: filtered,
             from: "Weekly Events",
             subject: "Weekly Events",
-            html: `<h1>Here are the events happening in your building this week: </h1><ul>${eventList}</ul>`,
+            html: `<h1>Here are the events happening at ${school.school} this week: </h1><ul>${eventList}</ul>`,
           }),
         });
       } catch (error) {

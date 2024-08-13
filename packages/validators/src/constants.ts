@@ -11,6 +11,15 @@ enum BuildingAll {
   Stadium = "Laurel Stadium",
 }
 
+const buildingShort = [
+  "West",
+  "South",
+  "MS",
+  "HS",
+  "Graff",
+  "Stadium",
+] as const;
+
 enum Building {
   West = "West Elementary",
   South = "South Elementary",
@@ -123,6 +132,7 @@ const adminSideBar: SideBarType = [
   { title: "Requests", href: "/admin/requests" },
   { title: "Users", href: "/admin/users" },
   { title: "Facilities", href: "/admin/facilities" },
+  { title: "Settings", href: "/admin/settings" },
 ];
 
 const buildingNames = [
@@ -341,6 +351,7 @@ export {
   buildingNames,
   Building,
   BuildingAll,
+  buildingShort,
   buildingColors,
   userSideBar,
   CategoryDescriptions,
