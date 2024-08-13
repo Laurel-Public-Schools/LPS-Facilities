@@ -330,6 +330,15 @@ export const AccountRelations = relations(accounts, ({ one }) => ({
     references: [User.id],
   }),
 }));
+export const EmailNotifications = facilities_db.table("EmailNotifications", {
+  id: bigserial("id", { mode: "number" }).primaryKey().notNull(),
+  email: varchar("email", { length: 191 }).notNull(),
+  HsEmails: boolean("HsEmails").default(false).notNull(),
+  MsEmails: boolean("McEmails").default(false).notNull(),
+  GrEmails: boolean("GrEmails").default(false).notNull(),
+  WeEmails: boolean("WeEmails").default(false).notNull(),
+  SoEmails: boolean("SoEmails").default(false).notNull(),
+});
 
 export const Reservation = facilities_db.table(
   "Reservation",
