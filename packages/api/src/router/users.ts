@@ -2,8 +2,13 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import { format } from "date-fns";
 import { z } from "zod";
 
-import { and, eq, gte, or, sql } from "@local/db";
-import { ReservationDate, User } from "@local/db/schema";
+import { eq, gte } from "@local/db";
+import {
+  CreateEmailNotificationsSchema,
+  EmailNotifications,
+  ReservationDate,
+  User,
+} from "@local/db/schema";
 
 import { protectedProcedure, publicProcedure } from "../trpc";
 
@@ -51,4 +56,32 @@ export const UserRouter = {
         },
       });
     }),
+  GetEmailPrefsByAddress: protectedProcedure.query(({ ctx }) => {
+    return ctx.db.query.EmailNotifications.findFirst({
+      where: eq(EmailNotifications.email, ctx.session.User.email!),
+    });
+  }),
+  DeleteEmailPrefsByAddress: protectedProcedure
+    .input(z.object({ email: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db
+        .delete(EmailNotifications)
+        .where(eq(EmailNotifications.email, input.email));
+    }),
+  UpdateEmailPrefs: protectedProcedure
+    .input(CreateEmailNotificationsSchema)
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db
+        .update(EmailNotifications)
+        .set(input)
+        .where(eq(EmailNotifications.email, input.email));
+    }),
+  CreateEmailPrefs: protectedProcedure
+    .input(CreateEmailNotificationsSchema)
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.insert(EmailNotifications).values(input);
+    }),
+  GetAllEmailPrefs: publicProcedure.query(({ ctx }) => {
+    return ctx.db.query.EmailNotifications.findMany();
+  }),
 } satisfies TRPCRouterRecord;

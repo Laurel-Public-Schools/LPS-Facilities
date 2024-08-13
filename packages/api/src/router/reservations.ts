@@ -2,7 +2,7 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import { addDays, format } from "date-fns";
 import { z } from "zod";
 
-import { and, count, eq, gte, lte, or, sql } from "@local/db";
+import { and, count, eq, gte, lte, or } from "@local/db";
 import {
   CreateReservationDateArray,
   CreateReservationSchema,
@@ -11,7 +11,7 @@ import {
   ReservationDate,
 } from "@local/db/schema";
 
-import { protectedProcedure, publicProcedure } from "../trpc";
+import { protectedProcedure } from "../trpc";
 
 const today = new Date();
 const sevenDaysFromNow = addDays(today, 7);

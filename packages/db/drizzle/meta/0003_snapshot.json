@@ -62,12 +62,8 @@
           "tableFrom": "Category",
           "tableTo": "Facility",
           "schemaTo": "facilities_db",
-          "columnsFrom": [
-            "facilityId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["facilityId"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "cascade"
         }
@@ -173,12 +169,8 @@
           "tableFrom": "Events",
           "tableTo": "Facility",
           "schemaTo": "facilities_db",
-          "columnsFrom": [
-            "facilityId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["facilityId"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -341,12 +333,8 @@
           "tableFrom": "InsuranceFiles",
           "tableTo": "Reservation",
           "schemaTo": "facilities_db",
-          "columnsFrom": [
-            "reservationId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["reservationId"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -602,12 +590,8 @@
           "tableFrom": "Reservation",
           "tableTo": "user",
           "schemaTo": "facilities_db",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "cascade"
         },
@@ -616,12 +600,8 @@
           "tableFrom": "Reservation",
           "tableTo": "Facility",
           "schemaTo": "facilities_db",
-          "columnsFrom": [
-            "facilityId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["facilityId"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "cascade"
         },
@@ -630,12 +610,8 @@
           "tableFrom": "Reservation",
           "tableTo": "Category",
           "schemaTo": "facilities_db",
-          "columnsFrom": [
-            "categoryId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["categoryId"],
+          "columnsTo": ["id"],
           "onDelete": "restrict",
           "onUpdate": "cascade"
         }
@@ -721,12 +697,8 @@
           "tableFrom": "ReservationDate",
           "tableTo": "Reservation",
           "schemaTo": "facilities_db",
-          "columnsFrom": [
-            "reservationId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["reservationId"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         },
@@ -735,12 +707,8 @@
           "tableFrom": "ReservationDate",
           "tableTo": "Events",
           "schemaTo": "facilities_db",
-          "columnsFrom": [
-            "gcal_eventid"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["gcal_eventid"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "cascade"
         }
@@ -800,12 +768,8 @@
           "tableFrom": "ReservationFees",
           "tableTo": "Reservation",
           "schemaTo": "facilities_db",
-          "columnsFrom": [
-            "reservationId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["reservationId"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -880,12 +844,8 @@
           "tableFrom": "session",
           "tableTo": "user",
           "schemaTo": "facilities_db",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -1243,12 +1203,8 @@
           "tableFrom": "account",
           "tableTo": "user",
           "schemaTo": "facilities_db",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "cascade"
         }
@@ -1261,22 +1217,12 @@
     "public.ReservationDate_approved": {
       "name": "ReservationDate_approved",
       "schema": "public",
-      "values": [
-        "pending",
-        "approved",
-        "denied",
-        "canceled"
-      ]
+      "values": ["pending", "approved", "denied", "canceled"]
     },
     "public.Reservation_approved": {
       "name": "Reservation_approved",
       "schema": "public",
-      "values": [
-        "pending",
-        "approved",
-        "denied",
-        "canceled"
-      ]
+      "values": ["pending", "approved", "denied", "canceled"]
     },
     "public.User_role": {
       "name": "User_role",
@@ -1296,45 +1242,27 @@
     "public.aal_level": {
       "name": "aal_level",
       "schema": "public",
-      "values": [
-        "aal1",
-        "aal2",
-        "aal3"
-      ]
+      "values": ["aal1", "aal2", "aal3"]
     },
     "public.code_challenge_method": {
       "name": "code_challenge_method",
       "schema": "public",
-      "values": [
-        "s256",
-        "plain"
-      ]
+      "values": ["s256", "plain"]
     },
     "public.factor_status": {
       "name": "factor_status",
       "schema": "public",
-      "values": [
-        "unverified",
-        "verified"
-      ]
+      "values": ["unverified", "verified"]
     },
     "public.factor_type": {
       "name": "factor_type",
       "schema": "public",
-      "values": [
-        "totp",
-        "webauthn"
-      ]
+      "values": ["totp", "webauthn"]
     },
     "public.key_status": {
       "name": "key_status",
       "schema": "public",
-      "values": [
-        "default",
-        "valid",
-        "invalid",
-        "expired"
-      ]
+      "values": ["default", "valid", "invalid", "expired"]
     },
     "public.key_type": {
       "name": "key_type",

@@ -1,12 +1,7 @@
 import type { TRPCRouterRecord } from "@trpc/server";
 import { z } from "zod";
 
-import { and, asc, count, eq, gte, like, lt, lte, or, sql } from "@local/db";
-import {
-  BuildingnameQuery,
-  BuildingQuery,
-  FacilityQuery,
-} from "@local/db/queries";
+import { eq } from "@local/db";
 import { Category, CreateFacilitySchema, Facility } from "@local/db/schema";
 import { CategoryDescriptions } from "@local/validators/constants";
 
