@@ -344,15 +344,29 @@ export const EmailNotifications = facilities_db.table("EmailNotifications", {
 export const EmailNotificationsSchema = createSelectSchema(EmailNotifications);
 export const EmailNotificationsArray = z.array(EmailNotificationsSchema);
 export type EmailNotificationsType = z.infer<typeof EmailNotificationsSchema>;
+export const UpdateEmailNotificationsSchema = createInsertSchema(
+  EmailNotifications,
+  {
+    id: z.number().min(1),
+    email: z.string().max(191).optional,
+    HsEmails: z.boolean().optional,
+    MsEmails: z.boolean().optional,
+    GrEmails: z.boolean().optional,
+    WeEmails: z.boolean().optional,
+    SoEmails: z.boolean().optional,
+    StEmails: z.boolean().optional,
+  },
+);
 export const CreateEmailNotificationsSchema = createInsertSchema(
   EmailNotifications,
   {
     email: z.string().max(191),
-    HsEmails: z.boolean().default(false),
-    MsEmails: z.boolean().default(false),
-    GrEmails: z.boolean().default(false),
-    WeEmails: z.boolean().default(false),
-    SoEmails: z.boolean().default(false),
+    HsEmails: z.boolean().optional,
+    MsEmails: z.boolean().optional,
+    GrEmails: z.boolean().optional,
+    WeEmails: z.boolean().optional,
+    SoEmails: z.boolean().optional,
+    StEmails: z.boolean().optional,
   },
 ).omit({
   id: true,
