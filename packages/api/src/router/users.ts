@@ -7,6 +7,7 @@ import {
   CreateEmailNotificationsSchema,
   EmailNotifications,
   ReservationDate,
+  UpdateEmailNotificationsSchema,
   User,
 } from "@local/db/schema";
 
@@ -69,12 +70,13 @@ export const UserRouter = {
         .where(eq(EmailNotifications.email, input.email));
     }),
   UpdateEmailPrefs: protectedProcedure
-    .input(CreateEmailNotificationsSchema)
+    .input(UpdateEmailNotificationsSchema)
     .mutation(async ({ ctx, input }) => {
+      if (input.id === undefined) throw new Error();
       return ctx.db
         .update(EmailNotifications)
         .set(input)
-        .where(eq(EmailNotifications.email, input.email));
+        .where(eq(EmailNotifications.id, input.id));
     }),
   CreateEmailPrefs: protectedProcedure
     .input(CreateEmailNotificationsSchema)
