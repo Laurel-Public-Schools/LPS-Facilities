@@ -30,7 +30,7 @@
     "bun-types": "^1.1.24",
     "eslint": "^9.9.0",
     "eslint-import-resolver-typescript-bun": "^0.0.102",
-    "eslint-plugin-react-compiler": "^0.0.0-experimental-9ed098e-20240725",
+    "eslint-plugin-react-compiler": "^0.0.0-experimental-d0e920e-20240815",
     "prettier": "^3.3.3",
     "typescript": "^5.5.4"
   },
