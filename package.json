@@ -31,7 +31,7 @@
     "@turbo/gen": "^2.0.13",
     "eslint-plugin-react-compiler": "^0.0.0-experimental-9ed098e-20240725",
     "prettier": "^3.3.3",
-    "turbo": "^2.0.12",
+    "turbo": "^2.0.13",
     "typescript": "^5.5.4"
   },
   "prettier": "@local/prettier-config",
