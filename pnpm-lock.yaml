@@ -576,8 +576,8 @@ importers:
         specifier: ^9.9.0
         version: 9.9.0(jiti@1.21.6)
       eslint-import-resolver-typescript-bun:
-        specifier: ^0.0.102
-        version: 0.0.102(@typescript-eslint/parser@8.1.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(bun-types@1.1.24)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@8.1.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6)))(eslint@9.9.0(jiti@1.21.6))
+        specifier: ^0.0.103
+        version: 0.0.103(@typescript-eslint/parser@8.1.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(bun-types@1.1.24)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@8.1.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6)))(eslint@9.9.0(jiti@1.21.6))
       eslint-plugin-react-compiler:
         specifier: ^0.0.0-experimental-d0e920e-20240815
         version: 0.0.0-experimental-d0e920e-20240815(eslint@9.9.0(jiti@1.21.6))
@@ -4148,8 +4148,8 @@ packages:
   eslint-import-resolver-node@0.3.9:
     resolution: {integrity: sha512-WFj2isz22JahUv+B788TlO3N6zL3nNJGU8CcZbPZvVEkBPaJdCV4vy5wyghty5ROFbCRnm132v8BScu5/1BQ8g==}
 
-  eslint-import-resolver-typescript-bun@0.0.102:
-    resolution: {integrity: sha512-IsrLRtQiduwRgcQSPRWEvFWETYGpzvks39pOX6XM5qvVsDBZRlcIOyjN4uTAMEFnDuC5ulWptYT3oFa6Vf48Lg==}
+  eslint-import-resolver-typescript-bun@0.0.103:
+    resolution: {integrity: sha512-1SLdRKaBrI7F5XJ6jCBZ9yhEiALICEy2jlUju05Kh49+Wr8JKQ5XQ2npNqqiUcVvvHWgSnDZtm5V4fY116FIhg==}
     peerDependencies:
       bun-types: ^0.8.1
 
@@ -10745,7 +10745,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript-bun@0.0.102(@typescript-eslint/parser@8.1.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(bun-types@1.1.24)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@8.1.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6)))(eslint@9.9.0(jiti@1.21.6)):
+  eslint-import-resolver-typescript-bun@0.0.103(@typescript-eslint/parser@8.1.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(bun-types@1.1.24)(eslint-plugin-import@2.29.1(@typescript-eslint/parser@8.1.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6)))(eslint@9.9.0(jiti@1.21.6)):
     dependencies:
       bun-types: 1.1.24
       debug: 4.3.6
