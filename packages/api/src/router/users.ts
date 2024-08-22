@@ -5,6 +5,7 @@ import { z } from "zod";
 import { eq, gte } from "@local/db";
 import {
   CreateEmailNotificationsSchema,
+  CreateUserSchema,
   EmailNotifications,
   ReservationDate,
   UpdateEmailNotificationsSchema,
@@ -56,6 +57,11 @@ export const UserRouter = {
           },
         },
       });
+    }),
+  NewUser: publicProcedure
+    .input(CreateUserSchema)
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.insert(User).values(input);
     }),
   GetEmailPrefsByAddress: protectedProcedure.query(({ ctx }) => {
     return ctx.db.query.EmailNotifications.findFirst({

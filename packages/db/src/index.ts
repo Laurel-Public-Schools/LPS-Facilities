@@ -1,5 +1,6 @@
 export * from "drizzle-orm/sql";
 export {
+  uuid,
   alias,
   pgTable,
   PgDatabase,
