@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { redirect } from "next/navigation";
 
 import { auth } from "@local/auth";
 
@@ -17,14 +18,13 @@ const Loading = () => {
 
 export default async function ReservationPage() {
   const session = await auth();
-
+  if (!session) {
+    redirect("/login");
+  }
   return (
     <section className="my-4 flex flex-col justify-center sm:flex-row">
       <Suspense fallback={<Loading />}>
-        <ReservationForm
-          email={session?.user.email!}
-          userId={session?.user.id!}
-        />
+        <ReservationForm email={session.user.email!} userId={session.user.id} />
       </Suspense>
     </section>
   );

@@ -650,7 +650,8 @@ export const User = facilities_db.table(
     };
   },
 );
-
+export const CreateUserSchema = createInsertSchema(User);
+export type CreateUserType = z.infer<typeof CreateUserSchema>;
 export const UserSchema = createSelectSchema(User);
 export const UserArray = z.array(UserSchema);
 export type UserType = z.infer<typeof UserSchema>;
