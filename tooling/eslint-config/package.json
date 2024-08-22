@@ -27,7 +27,7 @@
     "@local/prettier-config": "workspace:*",
     "@local/tsconfig": "workspace:*",
     "@types/eslint": "^9.6.0",
-    "bun-types": "^1.1.24",
+    "bun-types": "^1.1.25",
     "eslint": "^9.9.0",
     "eslint-import-resolver-typescript-bun": "^0.0.103",
     "eslint-plugin-react-compiler": "^0.0.0-experimental-d0e920e-20240815",
