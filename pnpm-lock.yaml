@@ -34,10 +34,10 @@ importers:
     dependencies:
       '@hookform/error-message':
         specifier: ^2.0.1
-        version: 2.0.1(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react-hook-form@7.52.2(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)
+        version: 2.0.1(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react-hook-form@7.53.0(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)
       '@hookform/resolvers':
         specifier: ^3.9.0
-        version: 3.9.0(react-hook-form@7.52.2(react@19.0.0-rc-fb9a90fa48-20240614))
+        version: 3.9.0(react-hook-form@7.53.0(react@19.0.0-rc-fb9a90fa48-20240614))
       '@local/api':
         specifier: workspace:*
         version: link:../packages/api
@@ -225,8 +225,8 @@ importers:
         specifier: 19.0.0-rc-fb9a90fa48-20240614
         version: 19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614)
       react-hook-form:
-        specifier: ^7.52.2
-        version: 7.52.2(react@19.0.0-rc-fb9a90fa48-20240614)
+        specifier: ^7.53.0
+        version: 7.53.0(react@19.0.0-rc-fb9a90fa48-20240614)
       react-modal:
         specifier: ^3.16.1
         version: 3.16.1(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)
@@ -5959,8 +5959,8 @@ packages:
     peerDependencies:
       react: 19.0.0-rc-fb9a90fa48-20240614
 
-  react-hook-form@7.52.2:
-    resolution: {integrity: sha512-pqfPEbERnxxiNMPd0bzmt1tuaPcVccywFDpyk2uV5xCIBphHV5T8SVnX9/o3kplPE1zzKt77+YIoq+EMwJp56A==}
+  react-hook-form@7.53.0:
+    resolution: {integrity: sha512-M1n3HhqCww6S2hxLxciEXy2oISPnAzxY7gvwVPrtlczTM/1dDadXgUxDpHMrMTblDOcm/AXtXxHwZ3jpg1mqKQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
@@ -7884,15 +7884,15 @@ snapshots:
 
   '@floating-ui/utils@0.2.2': {}
 
-  '@hookform/error-message@2.0.1(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react-hook-form@7.52.2(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)':
+  '@hookform/error-message@2.0.1(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react-hook-form@7.53.0(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)':
     dependencies:
       react: 19.0.0-rc-fb9a90fa48-20240614
       react-dom: 19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614)
-      react-hook-form: 7.52.2(react@19.0.0-rc-fb9a90fa48-20240614)
+      react-hook-form: 7.53.0(react@19.0.0-rc-fb9a90fa48-20240614)
 
-  '@hookform/resolvers@3.9.0(react-hook-form@7.52.2(react@19.0.0-rc-fb9a90fa48-20240614))':
+  '@hookform/resolvers@3.9.0(react-hook-form@7.53.0(react@19.0.0-rc-fb9a90fa48-20240614))':
     dependencies:
-      react-hook-form: 7.52.2(react@19.0.0-rc-fb9a90fa48-20240614)
+      react-hook-form: 7.53.0(react@19.0.0-rc-fb9a90fa48-20240614)
 
   '@humanwhocodes/module-importer@1.0.1': {}
 
@@ -12921,7 +12921,7 @@ snapshots:
       react: 19.0.0-rc-fb9a90fa48-20240614
       scheduler: 0.25.0-rc-fb9a90fa48-20240614
 
-  react-hook-form@7.52.2(react@19.0.0-rc-fb9a90fa48-20240614):
+  react-hook-form@7.53.0(react@19.0.0-rc-fb9a90fa48-20240614):
     dependencies:
       react: 19.0.0-rc-fb9a90fa48-20240614
 
