@@ -292,8 +292,8 @@ importers:
         specifier: workspace:*
         version: link:../tooling/tsconfig
       '@tailwindcss/forms':
-        specifier: ^0.5.7
-        version: 0.5.7(tailwindcss@3.4.10(ts-node@10.9.2(@types/node@20.16.2)(typescript@5.5.4)))
+        specifier: ^0.5.8
+        version: 0.5.8(tailwindcss@3.4.10(ts-node@10.9.2(@types/node@20.16.2)(typescript@5.5.4)))
       '@tailwindcss/typography':
         specifier: ^0.5.14
         version: 0.5.14(tailwindcss@3.4.10(ts-node@10.9.2(@types/node@20.16.2)(typescript@5.5.4)))
@@ -1887,8 +1887,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240816':
-    resolution: {integrity: sha512-e2MLHaKeUJZDg4OmhhzqBjLL18C99Bd2NwZYD2Y4N5Hbh5N1d5qWhkFp6y9Q9ko+oqp+/wxxbPtAIFQyzi7dSw==}
+  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240823':
+    resolution: {integrity: sha512-51R6IBRmsEOqhf3RUnx7MyobpsRONulGGyL2+ba414Ls4a+qb4ABBCA3dyAOs4yE159Dc6FFYUFV4M+aT6zUjQ==}
 
   '@maxim_mazurok/gapi.client.discovery-v1@0.1.20200806':
     resolution: {integrity: sha512-Wl6UfmZVDdWbY3PUu8E2ULk9RPLjnMqp/iOA4tcK8Ne+U/GmlnWP/e34IaZNGArfl7iXJNOG+/3Rj9L9jQyF9Q==}
@@ -2752,10 +2752,10 @@ packages:
       typescript:
         optional: true
 
-  '@tailwindcss/forms@0.5.7':
-    resolution: {integrity: sha512-QE7X69iQI+ZXwldE+rzasvbJiyV/ju1FGHH0Qn2W3FKbuYtqp8LKcy6iSw79fVUT5/Vvf+0XgLCeYVG+UV6hOw==}
+  '@tailwindcss/forms@0.5.8':
+    resolution: {integrity: sha512-DJs7B7NPD0JH7BVvdHWNviWmunlFhuEkz7FyFxE4japOWYMLl9b1D6+Z9mivJJPWr6AEbmlPqgiFRyLwFB1SgQ==}
     peerDependencies:
-      tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
+      tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1 || >= 4.0.0-alpha.20'
 
   '@tailwindcss/typography@0.5.14':
     resolution: {integrity: sha512-ZvOCjUbsJBjL9CxQBn+VEnFpouzuKhxh2dH8xMIWHILL+HfOYtlAkWcyoon8LlzE53d2Yo6YO6pahKKNW3q1YQ==}
@@ -8290,7 +8290,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240816':
+  '@maxim_mazurok/gapi.client.calendar-v3@0.0.20240823':
     dependencies:
       '@types/gapi.client': 1.0.8
       '@types/gapi.client.discovery-v1': 0.0.4
@@ -9116,7 +9116,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.5.4
 
-  '@tailwindcss/forms@0.5.7(tailwindcss@3.4.10(ts-node@10.9.2(@types/node@20.16.2)(typescript@5.5.4)))':
+  '@tailwindcss/forms@0.5.8(tailwindcss@3.4.10(ts-node@10.9.2(@types/node@20.16.2)(typescript@5.5.4)))':
     dependencies:
       mini-svg-data-uri: 1.4.4
       tailwindcss: 3.4.10(ts-node@10.9.2(@types/node@20.16.2)(typescript@5.5.4))
@@ -9292,7 +9292,7 @@ snapshots:
 
   '@types/gapi.client.calendar-v3@0.0.4':
     dependencies:
-      '@maxim_mazurok/gapi.client.calendar-v3': 0.0.20240816
+      '@maxim_mazurok/gapi.client.calendar-v3': 0.0.20240823
 
   '@types/gapi.client.discovery-v1@0.0.4':
     dependencies:
