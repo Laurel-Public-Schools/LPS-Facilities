@@ -29,7 +29,7 @@
     "bcryptjs": "^2.4.3"
   },
   "devDependencies": {
-    "@types/node": "^20.16.1",
+    "@types/node": "^20.16.2",
     "typescript": "^5.5.4"
   }
 }
