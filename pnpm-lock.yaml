@@ -325,8 +325,8 @@ importers:
         specifier: ^18.3.3
         version: 18.3.3
       '@types/react-big-calendar':
-        specifier: ^1.8.9
-        version: 1.8.9
+        specifier: ^1.8.10
+        version: 1.8.10
       '@types/react-datepicker':
         specifier: ^7.0.0
         version: 7.0.0(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)
@@ -2972,8 +2972,8 @@ packages:
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
 
-  '@types/react-big-calendar@1.8.9':
-    resolution: {integrity: sha512-HIHLUxR3PzWHrFdZ00VnCMvDjAh5uzlL0vMC2b7tL3bKaAJsqq9T8h+x0GVeDbZfMfHAd1cs5tZBhVvourNJXQ==}
+  '@types/react-big-calendar@1.8.10':
+    resolution: {integrity: sha512-HczsLxbLic0wppijPYay9fNaJjYAM9umdKY/0Jats1u3RyYHl+6uHX+uwMVk/ssX6JfuP6tKOhvVld/9xgtFgA==}
 
   '@types/react-datepicker@7.0.0':
     resolution: {integrity: sha512-4tWwOUq589tozyQPBVEqGNng5DaZkomx5IVNuur868yYdgjH6RaL373/HKiVt1IDoNNXYiTGspm1F7kjrarM8Q==}
@@ -9371,7 +9371,7 @@ snapshots:
 
   '@types/prop-types@15.7.12': {}
 
-  '@types/react-big-calendar@1.8.9':
+  '@types/react-big-calendar@1.8.10':
     dependencies:
       '@types/date-arithmetic': 4.1.4
       '@types/prop-types': 15.7.12
