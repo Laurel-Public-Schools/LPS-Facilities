@@ -37,7 +37,7 @@ interface data {
 }
 
 export async function newReservationEmail(data: data) {
-  const EmailUsers = await api.user.GetAllEmailPrefs();
+  const EmailUsers = await api.user.GetEmailsForAdminUsers();
 
   const filtered = EmailUsers.filter((user) => {
     switch (data.building) {

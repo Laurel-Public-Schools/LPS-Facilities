@@ -2,7 +2,7 @@ import type { TRPCRouterRecord } from "@trpc/server";
 import { format } from "date-fns";
 import { z } from "zod";
 
-import { eq, gte } from "@local/db";
+import { eq, gte, inArray, or } from "@local/db";
 import {
   CreateEmailNotificationsSchema,
   CreateUserSchema,
@@ -13,6 +13,27 @@ import {
 } from "@local/db/schema";
 
 import { protectedProcedure, publicProcedure } from "../trpc";
+
+const adminRoles: (
+  | "ADMIN_ADMIN"
+  | "CAL_ADMIN"
+  | "GR_ADMIN"
+  | "LHS_ADMIN"
+  | "LMS_ADMIN"
+  | "WE_ADMIN"
+  | "SO_ADMIN"
+  | "SUP_ADMIN"
+)[] = [
+  "ADMIN_ADMIN",
+  "CAL_ADMIN",
+  "GR_ADMIN",
+  "LHS_ADMIN",
+  "LMS_ADMIN",
+  "WE_ADMIN",
+  "SO_ADMIN",
+  "SUP_ADMIN",
+];
+const adminCondition = or(...adminRoles.map((role) => eq(User.role, role)));
 
 const today = new Date();
 export const UserRouter = {
@@ -66,6 +87,16 @@ export const UserRouter = {
   GetEmailPrefsByAddress: protectedProcedure.query(({ ctx }) => {
     return ctx.db.query.EmailNotifications.findFirst({
       where: eq(EmailNotifications.email, ctx.session.User.email!),
+    });
+  }),
+
+  GetEmailsForAdminUsers: protectedProcedure.query(async ({ ctx }) => {
+    const admins = await ctx.db.query.User.findMany({
+      where: adminCondition,
+    });
+    const adminEmails = admins.map((admin) => admin.email);
+    return ctx.db.query.EmailNotifications.findMany({
+      where: inArray(EmailNotifications.email, adminEmails),
     });
   }),
   DeleteEmailPrefsByAddress: protectedProcedure
