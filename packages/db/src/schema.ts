@@ -339,6 +339,7 @@ export const EmailNotifications = facilities_db.table("EmailNotifications", {
   WeEmails: boolean("WeEmails").default(false).notNull(),
   SoEmails: boolean("SoEmails").default(false).notNull(),
   StEmails: boolean("StEmails").default(false).notNull(),
+  AdminEmails: boolean("AdminEmails").default(false).notNull(),
 });
 
 export const EmailNotificationsSchema = createSelectSchema(EmailNotifications);
