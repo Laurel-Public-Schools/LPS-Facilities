@@ -12,8 +12,8 @@ importers:
         specifier: workspace:*
         version: link:tooling/prettier-config
       '@total-typescript/ts-reset':
-        specifier: ^0.6.0
-        version: 0.6.0
+        specifier: ^0.6.1
+        version: 0.6.1
       '@turbo/gen':
         specifier: ^2.1.1
         version: 2.1.1(@types/node@20.16.2)(typescript@5.5.4)
@@ -2803,8 +2803,8 @@ packages:
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
-  '@total-typescript/ts-reset@0.6.0':
-    resolution: {integrity: sha512-HWZnkM+5z3INAUZMohVXvX8/vm9sjmfmV2NRAswvv5WsU2m+OZsHAVZ0fl8xf2QH9kyPkinghVW6g3DOQ2xt5Q==}
+  '@total-typescript/ts-reset@0.6.1':
+    resolution: {integrity: sha512-cka47fVSo6lfQDIATYqb/vO1nvFfbPw7uWLayIXIhGETj0wcOOlrlkobOMDNQOFr9QOafegUPq13V2+6vtD7yg==}
 
   '@trpc/client@11.0.0-rc.490':
     resolution: {integrity: sha512-rfAzHF27osuP36JWGzq9TgXMnNc5kk1oAIoMafVHkCu3XlEZH3Ym2BpucHBWp/b5JYrtvzM91jskzvE0yO3mYw==}
@@ -9167,7 +9167,7 @@ snapshots:
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
-  '@total-typescript/ts-reset@0.6.0': {}
+  '@total-typescript/ts-reset@0.6.1': {}
 
   '@trpc/client@11.0.0-rc.490(@trpc/server@11.0.0-rc.490)':
     dependencies:
