@@ -21,12 +21,12 @@
     "@local/db": "workspace:*",
     "@local/tsconfig": "workspace:*",
     "@t3-oss/env-nextjs": "^0.11.1",
+    "bcryptjs": "^2.4.3",
     "next": "15.0.0-rc.0",
     "next-auth": "beta",
     "react": "19.0.0-rc-fb9a90fa48-20240614",
     "react-dom": "19.0.0-rc-fb9a90fa48-20240614",
-    "zod": "^3.23.8",
-    "bcryptjs": "^2.4.3"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20.16.2",
