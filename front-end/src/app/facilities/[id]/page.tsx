@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import { unstable_cache as cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";

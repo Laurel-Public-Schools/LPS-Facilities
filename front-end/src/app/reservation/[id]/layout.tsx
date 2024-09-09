@@ -1,6 +1,5 @@
 import type { ReservationClassType } from "@/lib/classes";
 import React, { Suspense } from "react";
-import { unstable_cache as cache } from "next/cache";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 
@@ -21,7 +20,7 @@ export default async function reservationLayout({
   children: React.ReactNode;
   params: { id: string };
 }) {
-  const [data, isAdmin] = await cachedData(parseInt(params.id));
+  const [data, isAdmin] = await getData(parseInt(params.id));
   const reservation = data;
   if (!reservation) return notFound();
   const { id, eventName, Facility } = reservation;
@@ -91,4 +90,4 @@ async function getData(id: number) {
   return Promise.all([res, isAdmin]);
 }
 
-const cachedData = cache(async (id: number) => getData(id), ["reservations"]);
+// const cachedData = cache(async (id: number) => getData(id), ["reservations"]);
