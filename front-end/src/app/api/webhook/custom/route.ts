@@ -97,7 +97,7 @@ export async function POST(req: NextRequest) {
           case "Laurel Middle School":
             return user.MsEmails === true;
           case "Administration Building":
-            return user.email === "null@null.null";
+            return user.AdminEmails === true;
         }
       })
         .map((user) => user.email)
@@ -106,6 +106,8 @@ export async function POST(req: NextRequest) {
         continue;
       }
       try {
+        console.log(filtered);
+        console.log(school);
         await fetch(`${process.env.NEXT_PUBLIC_EMAIL_API}`, {
           method: "POST",
           headers: {
@@ -127,10 +129,10 @@ export async function POST(req: NextRequest) {
         });
       }
     }
-    return NextResponse.json({
-      ok: true,
-      status: 200,
-      message: "Success",
-    });
   }
+  return NextResponse.json({
+    ok: true,
+    status: 200,
+    message: "Success",
+  });
 }
