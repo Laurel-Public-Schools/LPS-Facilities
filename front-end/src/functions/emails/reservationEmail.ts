@@ -1,5 +1,7 @@
 "use server";
 
+import { api } from "@/trpc/server";
+
 interface emailData {
   to: string;
   message: string;
@@ -35,29 +37,31 @@ interface data {
 }
 
 export async function newReservationEmail(data: data) {
-  let to = "";
+  const EmailUsers = await api.user.GetAllEmailPrefs();
 
-  if (data.building === "Laurel High School") {
-    to =
-      "geralyn_hill@laurel.k12.mt.us, lpsactivities@laurel.k12.mt.us, stacy_hall@laurel.k12.mt.us, john_stilson@laurel.k12.mt.us";
-  } else if (data.building === "Laurel Middle School") {
-    to =
-      "justin_klebe@laurel.k12.mt.us, allyson_robertus@laurel.k12.mt.us, geralyn_hill@laurel.k12.mt.us, lpsactivities@laurel.k12.mt.us";
-  } else if (data.building === "South Elementary") {
-    to =
-      "geralyn_hill@laurel.k12.mt.us, lpsactivities@laurel.k12.mt.us, katherine_dawe@laurel.k12.mt.us";
-  } else if (data.building === "West Elementary") {
-    to =
-      "geralyn_hill@laurel.k12.mt.us, lpsactivities@laurel.k12.mt.us, bethany_fuchs@laurel.k12.mt.us";
-  } else if (data.building === "Graff Elementary") {
-    to =
-      "geralyn_hill@laurel.k12.mt.us, lpsactivities@laurel.k12.mt.us, lynne_peterson@laurel.k12.mt.us, sunny_denz@laurel.k12.mt.us";
-  } else if (data.building === "Laurel Stadium") {
-    to = "geralyn_hill@laurel.k12.mt.us, lpsactivities@laurel.k12.mt.us";
-  } else if (data.building === "Administration Building") {
-    to =
-      "elliana_kerns@laurel.k12.mt.us, geralyn_hill@laurel.k12.mt.us, lpsactivities@laurel.k12.mt.us";
-  } else to = "geralyn_hill@laurel.k12.mt.us, lpsactivities@laurel.k12.mt.us";
+  const filtered = EmailUsers.filter((user) => {
+    switch (data.building) {
+      case "Laurel Stadium":
+        return user.StEmails === true;
+      case "West Elementary":
+        return user.WeEmails === true;
+      case "South Elementary":
+        return user.SoEmails === true;
+      case "Graff Elementary":
+        return user.GrEmails === true;
+      case "Laurel High School":
+        return user.HsEmails === true;
+      case "Laurel Middle School":
+        return user.MsEmails === true;
+      case "Administration Building":
+        return user.AdminEmails === true;
+    }
+  })
+    .map((user) => user.email)
+    .join(", ");
+  if (filtered === "") {
+    return;
+  }
 
   try {
     await fetch(`${process.env.NEXT_PUBLIC_EMAIL_API}`, {
@@ -67,7 +71,7 @@ export async function newReservationEmail(data: data) {
         "x-api-key": process.env.EMAIL_API_KEY!,
       },
       body: JSON.stringify({
-        to: to,
+        to: filtered,
         from: "Facility Rental",
         subject: "New Facility Reservation",
         html: `<h1> New Facility Reservation </h1> <p>A new reservation request has been submitted by ${data.name} for ${data.eventName}. You can view the reservation here: https://facilities.laurel.k12.mt.us/reservation/${data.reservationId}</p>`,
