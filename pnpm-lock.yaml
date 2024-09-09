@@ -163,7 +163,7 @@ importers:
         version: 16.4.5
       drizzle-orm:
         specifier: ^0.33.0
-        version: 0.33.0(@neondatabase/serverless@0.9.4)(@types/pg@8.11.8)(@types/react@18.3.3)(bun-types@1.1.26)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
+        version: 0.33.0(@neondatabase/serverless@0.9.5)(@types/pg@8.11.8)(@types/react@18.3.3)(bun-types@1.1.26)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
       encoding:
         specifier: ^0.1.13
         version: 0.1.13
@@ -453,17 +453,17 @@ importers:
         specifier: ^0.34.2
         version: 0.34.2
       '@neondatabase/serverless':
-        specifier: ^0.9.4
-        version: 0.9.4
+        specifier: ^0.9.5
+        version: 0.9.5
       '@t3-oss/env-nextjs':
         specifier: ^0.11.1
         version: 0.11.1(typescript@5.5.4)(zod@3.23.8)
       drizzle-orm:
         specifier: ^0.33.0
-        version: 0.33.0(@neondatabase/serverless@0.9.4)(@types/pg@8.11.8)(@types/react@18.3.3)(bun-types@1.1.26)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
+        version: 0.33.0(@neondatabase/serverless@0.9.5)(@types/pg@8.11.8)(@types/react@18.3.3)(bun-types@1.1.26)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
       drizzle-zod:
         specifier: ^0.5.1
-        version: 0.5.1(drizzle-orm@0.33.0(@neondatabase/serverless@0.9.4)(@types/pg@8.11.8)(@types/react@18.3.3)(bun-types@1.1.26)(pg@8.12.0)(postgres@3.4.4))(zod@3.23.8)
+        version: 0.5.1(drizzle-orm@0.33.0(@neondatabase/serverless@0.9.5)(@types/pg@8.11.8)(@types/react@18.3.3)(bun-types@1.1.26)(pg@8.12.0)(postgres@3.4.4))(zod@3.23.8)
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -1893,8 +1893,8 @@ packages:
   '@maxim_mazurok/gapi.client.discovery-v1@0.1.20200806':
     resolution: {integrity: sha512-Wl6UfmZVDdWbY3PUu8E2ULk9RPLjnMqp/iOA4tcK8Ne+U/GmlnWP/e34IaZNGArfl7iXJNOG+/3Rj9L9jQyF9Q==}
 
-  '@neondatabase/serverless@0.9.4':
-    resolution: {integrity: sha512-D0AXgJh6xkf+XTlsO7iwE2Q1w8981E1cLCPAALMU2YKtkF/1SF6BiAzYARZFYo175ON+b1RNIy9TdSFHm5nteg==}
+  '@neondatabase/serverless@0.9.5':
+    resolution: {integrity: sha512-siFas6gItqv6wD/pZnvdu34wEqgG3nSE6zWZdq5j2DEsa+VvX8i/5HXJOo06qrw5axPXn+lGCxeR+NLaSPIXug==}
 
   '@next/env@15.0.0-rc.0':
     resolution: {integrity: sha512-6W0ndQvHR9sXcqcKeR/inD2UTRCs9+VkSK3lfaGmEuZs7EjwwXMO2BPYjz9oBrtfPL3xuTjtXsHKSsalYQ5l1Q==}
@@ -8325,7 +8325,7 @@ snapshots:
       '@types/gapi.client': 1.0.8
       '@types/gapi.client.discovery-v1': 0.0.4
 
-  '@neondatabase/serverless@0.9.4':
+  '@neondatabase/serverless@0.9.5':
     dependencies:
       '@types/pg': 8.11.6
 
@@ -10468,9 +10468,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.33.0(@neondatabase/serverless@0.9.4)(@types/pg@8.11.8)(@types/react@18.3.3)(bun-types@1.1.26)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614):
+  drizzle-orm@0.33.0(@neondatabase/serverless@0.9.5)(@types/pg@8.11.8)(@types/react@18.3.3)(bun-types@1.1.26)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614):
     optionalDependencies:
-      '@neondatabase/serverless': 0.9.4
+      '@neondatabase/serverless': 0.9.5
       '@types/pg': 8.11.8
       '@types/react': 18.3.3
       bun-types: 1.1.26
@@ -10478,9 +10478,9 @@ snapshots:
       postgres: 3.4.4
       react: 19.0.0-rc-fb9a90fa48-20240614
 
-  drizzle-zod@0.5.1(drizzle-orm@0.33.0(@neondatabase/serverless@0.9.4)(@types/pg@8.11.8)(@types/react@18.3.3)(bun-types@1.1.26)(pg@8.12.0)(postgres@3.4.4))(zod@3.23.8):
+  drizzle-zod@0.5.1(drizzle-orm@0.33.0(@neondatabase/serverless@0.9.5)(@types/pg@8.11.8)(@types/react@18.3.3)(bun-types@1.1.26)(pg@8.12.0)(postgres@3.4.4))(zod@3.23.8):
     dependencies:
-      drizzle-orm: 0.33.0(@neondatabase/serverless@0.9.4)(@types/pg@8.11.8)(@types/react@18.3.3)(bun-types@1.1.26)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
+      drizzle-orm: 0.33.0(@neondatabase/serverless@0.9.5)(@types/pg@8.11.8)(@types/react@18.3.3)(bun-types@1.1.26)(pg@8.12.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
       zod: 3.23.8
 
   eastasianwidth@0.2.0: {}
