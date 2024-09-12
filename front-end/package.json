@@ -90,7 +90,7 @@
     "square": "^38.0.0",
     "styled-components": "^6.1.13",
     "superjson": "^2.2.1",
-    "sweetalert2": "^11.12.4",
+    "sweetalert2": "^11.14.0",
     "sweetalert2-react-content": "^5.0.7",
     "tailwind-merge": "^2.5.2",
     "tailwind-scrollbar": "^3.1.0",
