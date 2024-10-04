@@ -28,7 +28,7 @@
     "@local/tsconfig": "workspace:*",
     "@types/eslint": "^9.6.1",
     "bun-types": "^1.1.29",
-    "eslint": "^9.11.1",
+    "eslint": "^9.12.0",
     "eslint-import-resolver-typescript-bun": "^0.0.104",
     "eslint-plugin-react-compiler": "^0.0.0-experimental-d0e920e-20240815",
     "prettier": "^3.3.3",
