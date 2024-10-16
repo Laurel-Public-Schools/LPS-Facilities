@@ -162,8 +162,8 @@ importers:
         specifier: ^16.4.5
         version: 16.4.5
       drizzle-orm:
-        specifier: ^0.34.1
-        version: 0.34.1(@neondatabase/serverless@0.10.1)(@types/pg@8.11.10)(@types/react@18.3.3)(bun-types@1.1.30)(pg@8.13.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
+        specifier: ^0.35.1
+        version: 0.35.1(@neondatabase/serverless@0.10.1)(@types/pg@8.11.10)(@types/react@18.3.3)(bun-types@1.1.30)(pg@8.13.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
       encoding:
         specifier: ^0.1.13
         version: 0.1.13
@@ -459,11 +459,11 @@ importers:
         specifier: ^0.11.1
         version: 0.11.1(typescript@5.6.3)(zod@3.23.8)
       drizzle-orm:
-        specifier: ^0.34.1
-        version: 0.34.1(@neondatabase/serverless@0.10.1)(@types/pg@8.11.10)(@types/react@18.3.3)(bun-types@1.1.30)(pg@8.13.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
+        specifier: ^0.35.1
+        version: 0.35.1(@neondatabase/serverless@0.10.1)(@types/pg@8.11.10)(@types/react@18.3.3)(bun-types@1.1.30)(pg@8.13.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
       drizzle-zod:
         specifier: ^0.5.1
-        version: 0.5.1(drizzle-orm@0.34.1(@neondatabase/serverless@0.10.1)(@types/pg@8.11.10)(@types/react@18.3.3)(bun-types@1.1.30)(pg@8.13.0)(postgres@3.4.4))(zod@3.23.8)
+        version: 0.5.1(drizzle-orm@0.35.1(@neondatabase/serverless@0.10.1)(@types/pg@8.11.10)(@types/react@18.3.3)(bun-types@1.1.30)(pg@8.13.0)(postgres@3.4.4))(zod@3.23.8)
       moment:
         specifier: ^2.30.1
         version: 2.30.1
@@ -4023,8 +4023,8 @@ packages:
     resolution: {integrity: sha512-5/e1tzOPicPDooCm/uJIU9mWK3eD5dhW5EY61TQyVVo29xYxFLmZpXlBdOYlbfDHBsNhVzhb0XjWFmAAj7d7WA==}
     hasBin: true
 
-  drizzle-orm@0.34.1:
-    resolution: {integrity: sha512-t+zCwyWWt8xTqtYV4doE/xYmT7hpv1L8pQ66zddEz+3VWyedBBtctjMAp22mAJPfyWurRQXUJ1nrTtqLq+DqNA==}
+  drizzle-orm@0.35.1:
+    resolution: {integrity: sha512-HQxDdYuXlZFuvDPztlUIzrX8TqWa/Ej6uN6L0hkbuGL4slexOUMc3u4nXVU15RQ5QYbk+uLQnR6v1+OIrdCTXQ==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
       '@cloudflare/workers-types': '>=3'
@@ -10651,7 +10651,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.34.1(@neondatabase/serverless@0.10.1)(@types/pg@8.11.10)(@types/react@18.3.3)(bun-types@1.1.30)(pg@8.13.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614):
+  drizzle-orm@0.35.1(@neondatabase/serverless@0.10.1)(@types/pg@8.11.10)(@types/react@18.3.3)(bun-types@1.1.30)(pg@8.13.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614):
     optionalDependencies:
       '@neondatabase/serverless': 0.10.1
       '@types/pg': 8.11.10
@@ -10661,9 +10661,9 @@ snapshots:
       postgres: 3.4.4
       react: 19.0.0-rc-fb9a90fa48-20240614
 
-  drizzle-zod@0.5.1(drizzle-orm@0.34.1(@neondatabase/serverless@0.10.1)(@types/pg@8.11.10)(@types/react@18.3.3)(bun-types@1.1.30)(pg@8.13.0)(postgres@3.4.4))(zod@3.23.8):
+  drizzle-zod@0.5.1(drizzle-orm@0.35.1(@neondatabase/serverless@0.10.1)(@types/pg@8.11.10)(@types/react@18.3.3)(bun-types@1.1.30)(pg@8.13.0)(postgres@3.4.4))(zod@3.23.8):
     dependencies:
-      drizzle-orm: 0.34.1(@neondatabase/serverless@0.10.1)(@types/pg@8.11.10)(@types/react@18.3.3)(bun-types@1.1.30)(pg@8.13.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
+      drizzle-orm: 0.35.1(@neondatabase/serverless@0.10.1)(@types/pg@8.11.10)(@types/react@18.3.3)(bun-types@1.1.30)(pg@8.13.0)(postgres@3.4.4)(react@19.0.0-rc-fb9a90fa48-20240614)
       zod: 3.23.8
 
   eastasianwidth@0.2.0: {}
